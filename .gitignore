@@ -82,9 +82,7 @@ ESStatistikListeModtag-20240721-194743.zip
 *.user
 *.mstest
 *.cache
-*.csproj
 *.vbproj
-*.sln
 *.suo
 *.tmp
 *.user
@@ -96,6 +94,8 @@ ESStatistikListeModtag-20240721-194743.zip
 
 # Chutzpah Test files
 _Chutzpah*
+
+*.zip
 
 # Visual C++ cache files
 ipch/

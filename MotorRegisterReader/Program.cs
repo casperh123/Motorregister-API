@@ -3,8 +3,10 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Xml;
+using System.Xml.Serialization;
+using MotorRegister.Core.Models;
 
-string zipFilePath = "../../../../ESStatistikListeModtag-20240721-194743.zip";
+string zipFilePath = "../../../../ESStatistikListeModtag-20240728-193626.zip";
 string fileName = "ESStatistikListeModtag.xml";
 const int bufferSize = 81920;
 
@@ -22,27 +24,28 @@ if (xmlFile is not null)
         IgnoreProcessingInstructions = true,
     };
     using XmlReader reader = XmlReader.Create(bufferedStream, settings);
-    
+
+    XmlSerializer xmlSerializer = new XmlSerializer(typeof(Statistik));
+
+    List<Statistik> biler = [];
+
     Stopwatch stopwatch = Stopwatch.StartNew();
 
     while (reader.Read())
     {
-        if (reader.NodeType == XmlNodeType.Element)
+        if (reader.Name == "ns:Statistik")
         {
-            if (reader.Depth == 0 || reader.LocalName == "StatistikSamling")
-            {
-                continue;
-            }
 
-            Console.WriteLine($"NodeType: {reader.NodeType}, Name: {reader.Name}, Depth: {reader.Depth}");
+            Statistik bil = xmlSerializer.Deserialize(reader) as Statistik;
+
+            if (bil != null && bil.KoeretoejRegistreringStatus != "Afmeldt")
+            {
+                biler.Add(bil);
+
+
+            }
         }
     }
-
     stopwatch.Stop();
-
     Console.WriteLine($"Time taken: {stopwatch.ElapsedMilliseconds} ms");
-}
-else
-{
-    Console.WriteLine($"File {fileName} not found in the ZIP archive.");
 }

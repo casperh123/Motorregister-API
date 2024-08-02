@@ -2,7 +2,7 @@ using System.Xml.Serialization;
 
 namespace MotorRegister.Core.Models;
 
-public class KoeretoejAnvendelseStruktur
+public record KoeretoejAnvendelseStruktur
 {
     [XmlElement(ElementName = "KoeretoejAnvendelseNummer")]
     public string KoeretoejAnvendelseNummer { get; set; }

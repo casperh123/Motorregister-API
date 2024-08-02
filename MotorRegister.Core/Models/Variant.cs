@@ -3,7 +3,7 @@ using System.Xml.Serialization;
 namespace MotorRegister.Core.Models;
 
 
-public class Variant
+public record Variant
 {
     [XmlElement(ElementName = "KoeretoejVariantTypeNummer")]
     public string KoeretoejVariantTypeNummer { get; set; }

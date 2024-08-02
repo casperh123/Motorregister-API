@@ -2,7 +2,7 @@ using System.Xml.Serialization;
 
 namespace MotorRegister.Core.Models;
 
-public class Type
+public record Type
 {
     [XmlElement(ElementName = "KoeretoejTypeTypeNummer")]
     public string KoeretoejTypeTypeNummer { get; set; }

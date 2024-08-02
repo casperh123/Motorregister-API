@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorRegisterReader", "MotorRegisterReader\MotorRegisterReader.csproj", "{2C542445-A6ED-48B7-B154-BBB8557AAAF5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorRegister.Core", "MotorRegister.Core\MotorRegister.Core.csproj", "{0AF2E7BE-0EA1-4112-B595-65E25909E438}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2C542445-A6ED-48B7-B154-BBB8557AAAF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C542445-A6ED-48B7-B154-BBB8557AAAF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C542445-A6ED-48B7-B154-BBB8557AAAF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C542445-A6ED-48B7-B154-BBB8557AAAF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AF2E7BE-0EA1-4112-B595-65E25909E438}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AF2E7BE-0EA1-4112-B595-65E25909E438}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AF2E7BE-0EA1-4112-B595-65E25909E438}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AF2E7BE-0EA1-4112-B595-65E25909E438}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

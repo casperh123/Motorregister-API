@@ -2,7 +2,7 @@ using System.Xml.Serialization;
 
 namespace MotorRegister.Core.Models;
 
-public class KoeretoejOplysningGrundStruktur
+public record KoeretoejOplysningGrundStruktur
 {
     [XmlElement(ElementName = "KoeretoejOplysningOprettetUdFra")]
     public string KoeretoejOplysningOprettetUdFra { get; set; }
@@ -11,10 +11,10 @@ public class KoeretoejOplysningGrundStruktur
     public string KoeretoejOplysningStatus { get; set; }
 
     [XmlElement(ElementName = "KoeretoejOplysningStatusDato")]
-    public DateTime KoeretoejOplysningStatusDato { get; set; }
+    public string KoeretoejOplysningStatusDato { get; set; }
 
     [XmlElement(ElementName = "KoeretoejOplysningFoersteRegistreringDato")]
-    public DateTime KoeretoejOplysningFoersteRegistreringDato { get; set; }
+    public string KoeretoejOplysningFoersteRegistreringDato { get; set; }
 
     [XmlElement(ElementName = "KoeretoejOplysningStelNummer")]
     public string KoeretoejOplysningStelNummer { get; set; }
@@ -26,10 +26,10 @@ public class KoeretoejOplysningGrundStruktur
     public int KoeretoejOplysningEgenVaegt { get; set; }
 
     [XmlElement(ElementName = "KoeretoejOplysningTekniskTotalVaegt")]
-    public int KoeretoejOplysningTekniskTotalVaegt { get; set; }
+    public long KoeretoejOplysningTekniskTotalVaegt { get; set; }
 
     [XmlElement(ElementName = "KoeretoejOplysningAkselAntal")]
-    public int KoeretoejOplysningAkselAntal { get; set; }
+    public short KoeretoejOplysningAkselAntal { get; set; }
 
     [XmlElement(ElementName = "KoeretoejOplysningStoersteAkselTryk")]
     public int KoeretoejOplysningStoersteAkselTryk { get; set; }

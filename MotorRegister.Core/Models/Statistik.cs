@@ -1,13 +1,16 @@
 
 using System.Xml.Serialization;
+using MotorRegister.Core.Models;
 
-public class Statistik
+
+[XmlRoot(ElementName = "Statistik", Namespace = "http://skat.dk/dmr/2007/05/31/")]
+public record Statistik
 {
     [XmlElement(ElementName = "KoeretoejIdent")]
     public string KoeretoejIdent { get; set; }
 
     [XmlElement(ElementName = "KoeretoejArtNummer")]
-    public string KoeretoejArtNummer { get; set; }
+    public int KoeretoejArtNummer { get; set; }
 
     [XmlElement(ElementName = "KoeretoejArtNavn")]
     public string KoeretoejArtNavn { get; set; }
@@ -19,7 +22,7 @@ public class Statistik
     public string RegistreringNummerNummer { get; set; }
 
     [XmlElement(ElementName = "RegistreringNummerUdloebDato")]
-    public DateTime RegistreringNummerUdloebDato { get; set; }
+    public string RegistreringNummerUdloebDato { get; set; }
 
     [XmlElement(ElementName = "KoeretoejOplysningGrundStruktur")]
     public KoeretoejOplysningGrundStruktur KoeretoejOplysningGrundStruktur { get; set; }
@@ -31,8 +34,8 @@ public class Statistik
     public string KoeretoejRegistreringStatus { get; set; }
 
     [XmlElement(ElementName = "KoeretoejRegistreringStatusDato")]
-    public DateTime KoeretoejRegistreringStatusDato { get; set; }
+    public string KoeretoejRegistreringStatusDato { get; set; }
 
     [XmlElement(ElementName = "TilladelseSamling")]
-    public TilladelseSamling TilladelseSamling { get; set; }
+    public List<Tilladelse> TilladelseSamling { get; set; }
 }
