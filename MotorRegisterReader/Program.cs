@@ -36,10 +36,6 @@ if (xmlFile is not null)
 
             Console.WriteLine($"NodeType: {reader.NodeType}, Name: {reader.Name}, Depth: {reader.Depth}");
         }
-        else if (reader.NodeType == XmlNodeType.Attribute)
-        {
-            Console.WriteLine($"Attribute - Name: {reader.Name}, Value: {reader.Value}");
-        }
     }
 
     stopwatch.Stop();
