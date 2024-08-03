@@ -12,22 +12,13 @@ const int bufferSize = 81920;
 
 RegisterFileDownloader registerDownloader = new RegisterFileDownloader();
 
-(string zipFileName, string fileName) = registerDownloader.DownloadAndSaveRegisterFile();
+(string zipFileName, string fileName) = await registerDownloader.DownloadAndSaveRegisterFileAsync();
 
-using (ZipArchive zipArchive = ZipFile.OpenRead("MotorRegister.zip"))
-{
-    ZipArchiveEntry? xmlFileEntry = zipArchive.GetEntry("ESStatistikListeModtag.xml");
+using ZipArchive zipArchive = ZipFile.OpenRead(zipFileName);
+ZipArchiveEntry? xmlFileEntry = zipArchive.GetEntry(fileName);
 
-    if (xmlFileEntry is not null)
-    {
-        using Stream xmlFileStream = xmlFileEntry.Open();
-        ProcessXmlFile(xmlFileStream);
-    }
-    else
-    {
-        Console.WriteLine("XML file not found in the ZIP archive.");
-    }
-}
+await using Stream xmlFileStream = xmlFileEntry.Open();
+ProcessXmlFile(xmlFileStream);
 
 void ProcessXmlFile(Stream xmlFileStream)
 {
