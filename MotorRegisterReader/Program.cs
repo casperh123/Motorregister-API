@@ -10,7 +10,9 @@ using MotorRegister.Core.Models;
 
 const int bufferSize = 81920;
 
-(string zipFileName, string fileName) = RegisterFileDownloader.DownloadAndSaveRegisterFile();
+RegisterFileDownloader registerDownloader = new RegisterFileDownloader();
+
+(string zipFileName, string fileName) = registerDownloader.DownloadAndSaveRegisterFile();
 
 using (ZipArchive zipArchive = ZipFile.OpenRead("MotorRegister.zip"))
 {

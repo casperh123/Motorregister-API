@@ -4,10 +4,16 @@ namespace MotorRegisterReader.FtpDownloader;
 
 public class RegisterFileDownloader
 {
-    public static (string, string) DownloadAndSaveRegisterFile()
+    private FtpClient _ftpClient;
+
+    public RegisterFileDownloader()
     {
-        (string ftpAddress, string username, string password) = ("ftp://5.44.137.84/ESStatistikListeModtag", "dmr-ftp-user", "dmrpassword");
-        (Stream ftpStream, string zipFileName, long contentLength) = FtpClient.GetFtpFile(ftpAddress, username, password);
+        _ftpClient = new FtpClient("ftp://5.44.137.84", "dmr-ftp-user", "dmrpassword");
+    }
+    
+    public (string, string) DownloadAndSaveRegisterFile()
+    {
+        (Stream ftpStream, string zipFileName, long contentLength) = _ftpClient.GetRegisterFileFromPath("ESStatistikListeModtag");
 
         string newFileName = "MotorRegister.zip";
         

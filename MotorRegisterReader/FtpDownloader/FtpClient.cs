@@ -10,16 +10,25 @@ namespace MotorRegisterReader.FtpDownloader;
 
 public class FtpClient
 {
-    private static readonly char[] separator = new[] { ' ', '\t' };
-
-    public static (Stream, string, long) GetFtpFile(string address, string username, string password)
+    private string _baseAddress;
+    private NetworkCredential _networkCredential;
+    
+    public FtpClient(string baseAddress, string username, string password)
     {
-        FtpWebResponse directoryListing = GetDirectoryListing(address, username, password);
+        _baseAddress = baseAddress;
+        _networkCredential = new NetworkCredential(username, password);
+    }
+    
+    public (Stream, string, long) GetRegisterFileFromPath(string path)
+    {
+        string fullPath = Path.Combine(_baseAddress, path);
+        
+        FtpWebResponse directoryListing = GetDirectoryListing(fullPath);
         string fileName = GetLatestFileName(directoryListing);
 
-        FtpWebRequest downloadRequest = (FtpWebRequest)WebRequest.Create(Path.Combine(address, fileName));
+        FtpWebRequest downloadRequest = (FtpWebRequest)WebRequest.Create(Path.Combine(fullPath, fileName));
         downloadRequest.Method = WebRequestMethods.Ftp.DownloadFile;
-        downloadRequest.Credentials = new NetworkCredential(username, password);
+        downloadRequest.Credentials = _networkCredential;
 
         FtpWebResponse downloadResponse = (FtpWebResponse)downloadRequest.GetResponse();
         Stream responseStream = downloadResponse.GetResponseStream();
@@ -29,16 +38,16 @@ public class FtpClient
         return (responseStream, fileName, contentLength);
     }
 
-    private static FtpWebResponse GetDirectoryListing(string address, string password, string username)
+    private FtpWebResponse GetDirectoryListing(string address)
     {
         FtpWebRequest listRequest = (FtpWebRequest)WebRequest.Create(address);
         listRequest.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
-        listRequest.Credentials = new NetworkCredential(username, password);
+        listRequest.Credentials = _networkCredential;
 
         return (FtpWebResponse)listRequest.GetResponse();
     }
     
-    private static string GetLatestFileName(FtpWebResponse response)
+    private string GetLatestFileName(FtpWebResponse response)
     {
         using StreamReader listReader = new StreamReader(response.GetResponseStream());
 
@@ -46,7 +55,7 @@ public class FtpClient
 
         while (listReader.ReadLine() is { } line)
         {
-            string[] fileDetailsArray = line.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+            string[] fileDetailsArray = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
             fileDetails.Add(fileDetailsArray);
         }
 
