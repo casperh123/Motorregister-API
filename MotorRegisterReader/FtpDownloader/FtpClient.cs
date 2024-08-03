@@ -51,6 +51,7 @@ public class FtpClient
         }
 
         string[] latestFileDetails = fileDetails[^1];
-        string fileName = latestFileDetails[8];
+        
+        return latestFileDetails[8];
     }
 }
