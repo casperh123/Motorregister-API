@@ -1,0 +1,14 @@
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+
+COPY ["MotorRegister.Infrastructure/MotorRegister.Infrastructure.csproj", "MotorRegister.Infrastructure/"]
+COPY ["MotorRegister.Core/MotorRegister.Core.csproj", "MotorRegister.Core/"]
+
+RUN dotnet restore "MotorRegister.Infrastructure/MotorRegister.Infrastructure.csproj"
+RUN dotnet restore "MotorRegister.Core/MotorRegister.Core.csproj"
+
+COPY ["MotorRegister.Infrastructure/", "MotorRegister.Infrastructure/"]
+COPY ["MotorRegister.Core/", "MotorRegister.Core/"]
+
+RUN dotnet build "MotorRegister.Infrastructure/MotorRegister.Infrastructure.csproj" -c Release
+RUN dotnet build "MotorRegister.Core/MotorRegister.Core.csproj" -c Release
