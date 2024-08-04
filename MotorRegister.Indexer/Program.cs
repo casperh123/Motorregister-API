@@ -31,7 +31,7 @@ void ProcessXmlFile(Stream xmlFileStream)
     {
         XmlSerializer xmlSerializer = new XmlSerializer(typeof(Vehicle));
 
-        List<Vehicle> biler = new List<Vehicle>();
+        List<Vehicle> vehicles = new List<Vehicle>();
 
         Stopwatch stopwatch = Stopwatch.StartNew();
 
@@ -39,13 +39,13 @@ void ProcessXmlFile(Stream xmlFileStream)
         {
             if (reader.NodeType == XmlNodeType.Element && reader.Name == "ns:Statistik")
             {
-                Vehicle bil = xmlSerializer.Deserialize(reader) as Vehicle;
-                if (bil != null && bil.KoeretoejRegistreringStatus != "Afmeldt")
+                Vehicle vehicle = xmlSerializer.Deserialize(reader) as Vehicle;
+                if (vehicle != null && vehicle.RegistrationStatus != "Afmeldt")
                 {
-                    biler.Add(bil);
-                    if (biler.Count % 10000 == 0)
+                    vehicles.Add(vehicle);
+                    if (vehicles.Count % 10000 == 0)
                     {
-                        Console.WriteLine($"Read {biler.Count} Cars");
+                        Console.WriteLine($"Read {vehicles.Count} Cars");
                     }
                 }
             }

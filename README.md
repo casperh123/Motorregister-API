@@ -14,6 +14,6 @@ Once a week, the database is synchronized to the latest XML file release from **
 Build all the included docker images.
 
     docker build -t motorregister-base -f DockerfileBase .
-    docker build -t motorregister-api -f DockerfileApi .
-    docker build -t motorregister-indexer -f DockerfileIndexer .
+    docker build -t motorregister-api -f ./MotorRegister.Api/Dockerfile .
+    docker build -t motorregister-indexer -f ./MotorRegister.Api/Dockerfile .
 

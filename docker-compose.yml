@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  motorregister_api:
+    image: motorregister-api
+    container_name: motorregister_api
+    build:
+      context: .
+      dockerfile: ./MotorRegister.Api/Dockerfile
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=MotorRegisterDb;User=sa;Password=YourStrong!Passw0rd;
+    ports:
+      - "5000:80"
+
+  motorregister_indexer:
+    image: motorregister_indexer_image
+    container_name: motorregister_indexer
+    build:
+      context: .
+      dockerfile: ./MotorRegister.Indexer/Dockerfile
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=MotorRegisterDb;User=sa;Password=YourStrong!Passw0rd;
+    ports:
+      - "5001:80"
