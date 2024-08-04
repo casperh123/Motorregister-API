@@ -22,7 +22,7 @@ namespace MotorRegisterReader.FtpDownloader
             string fullPath = Path.Combine(_baseAddress, path);
             
             FtpWebResponse directoryListing = await GetDirectoryListingAsync(fullPath);
-            string fileName = GetLatestFileName(directoryListing);
+            string fileName = await GetLatestFileNameAsync(directoryListing);
 
             return await DownloadFileAsync(fullPath, fileName);
   
@@ -35,29 +35,31 @@ namespace MotorRegisterReader.FtpDownloader
             return listResponse;
         }
 
-        private string GetLatestFileName(FtpWebResponse response)
+        private async Task<string> GetLatestFileNameAsync(FtpWebResponse response)
         {
-            using StreamReader listReader = new StreamReader(response.GetResponseStream());
-            List<string[]> fileDetails = new List<string[]>();
-
-            while (listReader.ReadLine() is string line)
+            using var listReader = new StreamReader(response.GetResponseStream());
+            string lastLine = null;
+            string line;
+            while ((line = await listReader.ReadLineAsync()) != null)
             {
-                string[] fileDetailsArray = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-                fileDetails.Add(fileDetailsArray);
+                lastLine = line;
             }
-
-            string[] latestFileDetails = fileDetails[^1];
+            string[] latestFileDetails = lastLine.Split(' ', StringSplitOptions.RemoveEmptyEntries);
             return latestFileDetails[8];
         }
+
 
         private async Task<(Stream, string, long)> DownloadFileAsync(string address, string fileName)
         {
             FtpWebRequest downloadRequest = CreateFtpWebRequest(Path.Combine(address, fileName), WebRequestMethods.Ftp.DownloadFile);
+            downloadRequest.UseBinary = true;
+            downloadRequest.UsePassive = true;
+            
             FtpWebResponse downloadResponse = (FtpWebResponse)await downloadRequest.GetResponseAsync();
             Stream responseStream = downloadResponse.GetResponseStream();
             long contentLength = downloadResponse.ContentLength;
 
-            return (responseStream, fileName, contentLength);
+            return (new BufferedStream(responseStream), fileName, contentLength);
         }
 
         private FtpWebRequest CreateFtpWebRequest(string address, string method)

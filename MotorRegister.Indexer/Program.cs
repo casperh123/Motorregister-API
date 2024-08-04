@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
+﻿using System.Diagnostics;
 using System.IO.Compression;
 using System.Xml;
 using System.Xml.Serialization;
-using MotorRegisterReader.FtpDownloader;
 using MotorRegister.Core.Models;
+using MotorRegisterReader.FtpDownloader;
 
 const int bufferSize = 81920;
 
 RegisterFileDownloader registerDownloader = new RegisterFileDownloader();
 
-(string zipFileName, string fileName) = await registerDownloader.DownloadAndSaveRegisterFileAsync();
+(string zipFileName, string fileName) = await registerDownloader.DownloadAndSaveRegisterFileAsync(Directory.GetCurrentDirectory());
 
 using ZipArchive zipArchive = ZipFile.OpenRead(zipFileName);
 ZipArchiveEntry? xmlFileEntry = zipArchive.GetEntry(fileName);
@@ -32,9 +29,9 @@ void ProcessXmlFile(Stream xmlFileStream)
 
     using (XmlReader reader = XmlReader.Create(bufferedStream, settings))
     {
-        XmlSerializer xmlSerializer = new XmlSerializer(typeof(Statistik));
+        XmlSerializer xmlSerializer = new XmlSerializer(typeof(Vehicle));
 
-        List<Statistik> biler = new List<Statistik>();
+        List<Vehicle> biler = new List<Vehicle>();
 
         Stopwatch stopwatch = Stopwatch.StartNew();
 
@@ -42,7 +39,7 @@ void ProcessXmlFile(Stream xmlFileStream)
         {
             if (reader.NodeType == XmlNodeType.Element && reader.Name == "ns:Statistik")
             {
-                Statistik bil = xmlSerializer.Deserialize(reader) as Statistik;
+                Vehicle bil = xmlSerializer.Deserialize(reader) as Vehicle;
                 if (bil != null && bil.KoeretoejRegistreringStatus != "Afmeldt")
                 {
                     biler.Add(bil);

@@ -1,10 +1,9 @@
-
 using System.Xml.Serialization;
-using MotorRegister.Core.Models;
 
+namespace MotorRegister.Core.Models;
 
 [XmlRoot(ElementName = "Statistik", Namespace = "http://skat.dk/dmr/2007/05/31/")]
-public record Statistik
+public record Vehicle
 {
     [XmlElement(ElementName = "KoeretoejIdent")]
     public string KoeretoejIdent { get; set; }

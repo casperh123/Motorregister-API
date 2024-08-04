@@ -14,15 +14,18 @@ namespace MotorRegisterReader.FtpDownloader
             _ftpClient = new FtpClient("ftp://5.44.137.84", "dmr-ftp-user", "dmrpassword");
         }
         
-        public async Task<(string, string)> DownloadAndSaveRegisterFileAsync()
+        public async Task<(string, string)> DownloadAndSaveRegisterFileAsync(string path)
         {
             (Stream ftpStream, string zipFileName, long contentLength) = await _ftpClient.GetRegisterFileFromPathAsync("ESStatistikListeModtag");
 
-            string newFileName = "MotorRegister.zip";
+            string newFileName = Path.Combine(path, "MotorRegister.zip");
 
+            Console.WriteLine($"Saving file to {path}");
+
+            
             await using FileStream outputFileStream = new FileStream(newFileName, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize: 64 * 1024, useAsync: true);
             await CopyStreamWithProgressAsync(ftpStream, outputFileStream, contentLength);
-
+            
             return (zipFileName, newFileName);
         }
         
