@@ -2,13 +2,14 @@ using System.Xml.Serialization;
 
 namespace MotorRegister.Core.Models;
 
-public record KoeretoejBetegnelseStruktur
+[XmlRoot(ElementName = "KoeretoejBetegnelseStruktur", Namespace = "http://skat.dk/dmr/2007/05/31/")]
+public record VehicleDesignation
 {
     [XmlElement(ElementName = "KoeretoejMaerkeTypeNummer")]
-    public string KoeretoejMaerkeTypeNummer { get; set; }
+    public string ManufacturerId { get; set; }
 
     [XmlElement(ElementName = "KoeretoejMaerkeTypeNavn")]
-    public string KoeretoejMaerkeTypeNavn { get; set; }
+    public string ManufacturerName { get; set; }
 
     [XmlElement(ElementName = "Model")]
     public Model Model { get; set; }

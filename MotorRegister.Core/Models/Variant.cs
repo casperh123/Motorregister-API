@@ -6,8 +6,8 @@ namespace MotorRegister.Core.Models;
 public record Variant
 {
     [XmlElement(ElementName = "KoeretoejVariantTypeNummer")]
-    public string KoeretoejVariantTypeNummer { get; set; }
+    public string Id { get; set; }
 
     [XmlElement(ElementName = "KoeretoejVariantTypeNavn")]
-    public string KoeretoejVariantTypeNavn { get; set; }
+    public string Name { get; set; }
 }

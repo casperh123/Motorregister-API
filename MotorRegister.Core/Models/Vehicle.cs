@@ -6,35 +6,35 @@ namespace MotorRegister.Core.Models;
 public record Vehicle
 {
     [XmlElement(ElementName = "KoeretoejIdent")]
-    public string KoeretoejIdent { get; set; }
+    public string Id { get; set; }
 
     [XmlElement(ElementName = "KoeretoejArtNummer")]
-    public int KoeretoejArtNummer { get; set; }
+    public int VehicleTypeNumber { get; set; }
 
     [XmlElement(ElementName = "KoeretoejArtNavn")]
-    public string KoeretoejArtNavn { get; set; }
+    public string VehicleTypeName { get; set; }
 
     [XmlElement(ElementName = "KoeretoejAnvendelseStruktur")]
-    public KoeretoejAnvendelseStruktur KoeretoejAnvendelseStruktur { get; set; }
+    public VehicleUsage Usage { get; set; }
 
     [XmlElement(ElementName = "RegistreringNummerNummer")]
-    public string RegistreringNummerNummer { get; set; }
+    public string RegistrationNumber { get; set; }
 
     [XmlElement(ElementName = "RegistreringNummerUdloebDato")]
-    public string RegistreringNummerUdloebDato { get; set; }
+    public string RegistrationNumberExpirationDate { get; set; }
 
     [XmlElement(ElementName = "KoeretoejOplysningGrundStruktur")]
-    public KoeretoejOplysningGrundStruktur KoeretoejOplysningGrundStruktur { get; set; }
+    public VehicleInformation Information { get; set; }
 
     [XmlElement(ElementName = "SynResultatStruktur")]
-    public SynResultatStruktur SynResultatStruktur { get; set; }
+    public InspectionResult InspectionResult { get; set; }
 
     [XmlElement(ElementName = "KoeretoejRegistreringStatus")]
-    public string KoeretoejRegistreringStatus { get; set; }
+    public string RegistrationStatus { get; set; }
 
     [XmlElement(ElementName = "KoeretoejRegistreringStatusDato")]
-    public string KoeretoejRegistreringStatusDato { get; set; }
+    public string RegistrationStatusDate { get; set; }
 
     [XmlElement(ElementName = "TilladelseSamling")]
-    public List<Tilladelse> TilladelseSamling { get; set; }
+    public List<Permit> Permissions { get; set; }
 }

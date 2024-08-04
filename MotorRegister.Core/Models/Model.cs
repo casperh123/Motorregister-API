@@ -5,8 +5,8 @@ namespace MotorRegister.Core.Models;
 public record Model
 {
     [XmlElement(ElementName = "KoeretoejModelTypeNummer")]
-    public string KoeretoejModelTypeNummer { get; set; }
+    public string Id { get; set; }
 
     [XmlElement(ElementName = "KoeretoejModelTypeNavn")]
-    public string KoeretoejModelTypeNavn { get; set; }
+    public string Name { get; set; }
 }

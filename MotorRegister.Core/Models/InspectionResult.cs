@@ -2,20 +2,21 @@ using System.Xml.Serialization;
 
 namespace MotorRegister.Core.Models;
 
-public record SynResultatStruktur
+[XmlRoot(ElementName = "SynResultatStruktur", Namespace = "http://skat.dk/dmr/2007/05/31/")]
+public record InspectionResult
 {
     [XmlElement(ElementName = "SynResultatSynsType")]
-    public string SynResultatSynsType { get; set; }
+    public string Type { get; set; }
 
     [XmlElement(ElementName = "SynResultatSynsDato")]
-    public string SynResultatSynsDato { get; set; }
+    public string Date { get; set; }
 
     [XmlElement(ElementName = "SynResultatSynsResultat")]
-    public string SynResultatSynsResultat { get; set; }
+    public string Result { get; set; }
 
     [XmlElement(ElementName = "SynResultatSynStatus")]
-    public string SynResultatSynStatus { get; set; }
+    public string Status { get; set; }
 
     [XmlElement(ElementName = "SynResultatSynStatusDato")]
-    public string SynResultatSynStatusDato { get; set; }
+    public string StatusDate { get; set; }
 }

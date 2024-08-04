@@ -2,47 +2,48 @@ using System.Xml.Serialization;
 
 namespace MotorRegister.Core.Models;
 
-public record KoeretoejOplysningGrundStruktur
+[XmlRoot(ElementName = "KoeretoejOplysningGrundStruktur", Namespace = "http://skat.dk/dmr/2007/05/31/")]
+public record VehicleInformation
 {
     [XmlElement(ElementName = "KoeretoejOplysningOprettetUdFra")]
-    public string KoeretoejOplysningOprettetUdFra { get; set; }
+    public string CreatedFrom { get; set; }
 
     [XmlElement(ElementName = "KoeretoejOplysningStatus")]
-    public string KoeretoejOplysningStatus { get; set; }
+    public string Status { get; set; }
 
     [XmlElement(ElementName = "KoeretoejOplysningStatusDato")]
-    public string KoeretoejOplysningStatusDato { get; set; }
+    public string StatusDate { get; set; }
 
     [XmlElement(ElementName = "KoeretoejOplysningFoersteRegistreringDato")]
-    public string KoeretoejOplysningFoersteRegistreringDato { get; set; }
+    public string FirstRegistrationDate { get; set; }
 
     [XmlElement(ElementName = "KoeretoejOplysningStelNummer")]
-    public string KoeretoejOplysningStelNummer { get; set; }
+    public string ChassisNumber { get; set; }
 
     [XmlElement(ElementName = "KoeretoejOplysningTotalVaegt")]
-    public int KoeretoejOplysningTotalVaegt { get; set; }
+    public int TotalWeight { get; set; }
 
     [XmlElement(ElementName = "KoeretoejOplysningEgenVaegt")]
-    public int KoeretoejOplysningEgenVaegt { get; set; }
+    public int CurbWeight { get; set; }
 
     [XmlElement(ElementName = "KoeretoejOplysningTekniskTotalVaegt")]
-    public long KoeretoejOplysningTekniskTotalVaegt { get; set; }
+    public long TechnicalTotalWeight { get; set; }
 
     [XmlElement(ElementName = "KoeretoejOplysningAkselAntal")]
-    public short KoeretoejOplysningAkselAntal { get; set; }
+    public short AxleCount { get; set; }
 
     [XmlElement(ElementName = "KoeretoejOplysningStoersteAkselTryk")]
-    public int KoeretoejOplysningStoersteAkselTryk { get; set; }
+    public int MaxAxleLoad { get; set; }
 
     [XmlElement(ElementName = "KoeretoejOplysningPassagerAntal")]
-    public int KoeretoejOplysningPassagerAntal { get; set; }
+    public int PassengerCount { get; set; }
 
     [XmlElement(ElementName = "KoeretoejOplysningTilkoblingMulighed")]
-    public bool KoeretoejOplysningTilkoblingMulighed { get; set; }
+    public bool TowingCapability { get; set; }
 
     [XmlElement(ElementName = "KoeretoejOplysningKommentar")]
-    public string KoeretoejOplysningKommentar { get; set; }
+    public string Comment { get; set; }
 
     [XmlElement(ElementName = "KoeretoejBetegnelseStruktur")]
-    public KoeretoejBetegnelseStruktur KoeretoejBetegnelseStruktur { get; set; }
+    public VehicleDesignation Designation { get; set; }
 }
