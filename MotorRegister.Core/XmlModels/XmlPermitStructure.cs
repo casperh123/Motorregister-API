@@ -11,32 +11,6 @@ namespace MotorRegister.Core.XmlModels
         [XmlElement(ElementName ="TilladelseKommentar")]
         public string Comment { get; set; }
 
-        [XmlIgnore]
-        public string PermitTypeId
-        {
-            get => XmlPermitType?.Id;
-            set
-            {
-                if (XmlPermitType != null)
-                {
-                    XmlPermitType.Id = value;
-                }
-            }
-        }
-
-        [XmlIgnore]
-        public string PermitTypeName
-        {
-            get => XmlPermitType?.Name;
-            set
-            {
-                if (XmlPermitType != null)
-                {
-                    XmlPermitType.Name = value;
-                }
-            }
-        }
-
         [XmlElement(ElementName = "TilladelseTypeStruktur")]
         public XmlPermitType XmlPermitType { get; set; }
     }
