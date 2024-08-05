@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using MotorRegister.Core.Models;
 using MotorRegister.Core.Repository;
+using MotorRegister.Infrastrucutre.Database;
 
 namespace MotorRegister.Infrastrucutre.Repository;
 

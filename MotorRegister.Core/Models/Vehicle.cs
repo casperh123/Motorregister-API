@@ -34,7 +34,7 @@ public record Vehicle
 
     [XmlElement(ElementName = "KoeretoejRegistreringStatusDato")]
     public string RegistrationStatusDate { get; set; }
-
-    [XmlElement(ElementName = "TilladelseSamling")]
-    public PermitCollection Permissions { get; set; }
+    
+    [XmlElement(ElementName = "Tilladelse")]
+    public List<PermitStructure> Permissions { get; set; }
 }

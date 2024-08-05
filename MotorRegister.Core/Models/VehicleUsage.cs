@@ -6,7 +6,7 @@ namespace MotorRegister.Core.Models;
 public record VehicleUsage
 {
     [XmlElement(ElementName = "KoeretoejAnvendelseNummer")]
-    public string Id { get; set; }
+    public int Id { get; set; }
 
     [XmlElement(ElementName = "KoeretoejAnvendelseNavn")]
     public string Name { get; set; }

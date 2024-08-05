@@ -18,7 +18,7 @@ public record VehicleInformation
     public string FirstRegistrationDate { get; set; }
 
     [XmlElement(ElementName = "KoeretoejOplysningStelNummer")]
-    public string ChassisNumber { get; set; }
+    public int ChassisNumber { get; set; }
 
     [XmlElement(ElementName = "KoeretoejOplysningTotalVaegt")]
     public int TotalWeight { get; set; }
