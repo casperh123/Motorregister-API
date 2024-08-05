@@ -1,16 +1,13 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk.Worker">
 
     <PropertyGroup>
-        <OutputType>Exe</OutputType>
         <TargetFramework>net8.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <RootNamespace>MotorRegisterReader</RootNamespace>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>dotnet-MotorRegister.Indexer-A1E477C2-80EE-4CA5-95EF-8A194EB02CB1</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\MotorRegister.Core\MotorRegister.Core.csproj" />
-      <ProjectReference Include="..\MotorRegister.Infrastructure\MotorRegister.Infrastructure.csproj" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0"/>
     </ItemGroup>
-
 </Project>
