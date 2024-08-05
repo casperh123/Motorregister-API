@@ -31,26 +31,26 @@ namespace MotorRegister.Indexer
 
             while (true)
             {
-                await WaitForNextRunTime(nextRunTime, stoppingToken);
-                await IndexXmlToDatabaseAsync(stoppingToken);
+                await WaitForNextRunTime(nextRunTime);
+                await IndexXmlToDatabaseAsync();
 
                 nextRunTime = CalculateNextRunTime(nextRunTime);
             }
         }
 
-        private async Task WaitForNextRunTime(DateTimeOffset nextRunTime, CancellationToken stoppingToken)
+        private async Task WaitForNextRunTime(DateTimeOffset nextRunTime)
         {
             TimeSpan delay = nextRunTime - DateTimeOffset.Now;
             if (delay > TimeSpan.Zero)
             {
                 _logger.LogInformation("Next indexing scheduled for: {time}", nextRunTime);
-                await Task.Delay(delay, stoppingToken);
+                await Task.Delay(delay);
             }
         }
 
-        private async Task IndexXmlToDatabaseAsync(CancellationToken stoppingToken)
+        private async Task IndexXmlToDatabaseAsync()
         {
-            using var scope = _services.CreateScope();
+            using IServiceScope scope = _services.CreateScope();
             IVehicleRepository vehicleRepository = scope.ServiceProvider.GetRequiredService<IVehicleRepository>();
             RegisterFileDownloader registerFileDownloader = scope.ServiceProvider.GetRequiredService<RegisterFileDownloader>();
             XmlDeserializer xmlDeserializer = scope.ServiceProvider.GetRequiredService<XmlDeserializer>();
@@ -76,7 +76,6 @@ namespace MotorRegister.Indexer
                     
                 }
 
-                // Add any remaining vehicles in the batch
                 if (vehicleBatch.Count > 0)
                 {
                     await vehicleRepository.AddVehiclesAsync(vehicleBatch);
