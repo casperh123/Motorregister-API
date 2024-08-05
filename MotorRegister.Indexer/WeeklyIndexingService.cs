@@ -1,3 +1,4 @@
+using MotorRegister.Core.Models;
 using MotorRegister.Core.Repository;
 using MotorRegister.Core.XmlModels;
 using MotorRegister.Infrastrucutre.FtpDownloader;
@@ -61,13 +62,15 @@ namespace MotorRegister.Indexer
 
                 //(string zipFilePath, string fileName) = await registerFileDownloader.DownloadAndSaveRegisterFileAsync(Directory.GetCurrentDirectory());
 
-                List<XmlVehicle> vehicleBatch = new List<XmlVehicle>();
+                List<Vehicle> vehicleBatch = [];
 
                 string zipFilePath = "../ESStatistikListeModtag-20240804-201652.zip";
                 string fileName = "ESStatistikListeModtag.xml";
                 
-                foreach (XmlVehicle vehicle in xmlDeserializer.DeserializeMotorRegister(zipFilePath, fileName))
+                foreach (XmlVehicle xmlVehicle in xmlDeserializer.DeserializeMotorRegister(zipFilePath, fileName))
                 {
+                    Vehicle vehicle = new Vehicle(xmlVehicle);
+                    
                     if (vehicleBatch.Count < 1000)
                     {
                         vehicleBatch.Add(vehicle);

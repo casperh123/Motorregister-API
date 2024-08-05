@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+using MotorRegister.Core.Models;
 using MotorRegister.Core.Repository;
 using MotorRegister.Core.XmlModels;
 using MotorRegister.Infrastrucutre.Database;
@@ -14,23 +14,24 @@ public class VehicleRepository : IVehicleRepository
         _database = database;
     }
 
-    public async Task SaveVehicle(XmlVehicle xmlVehicle)
+    public async Task SaveVehicle(Vehicle xmlVehicle)
     {
         await _database.AddAsync(xmlVehicle);
         await _database.SaveChangesAsync();
     }
 
-    public async Task<XmlVehicle?> GetVehicleByLicensePlate(string licensePlate)
+    public async Task<Vehicle?> GetVehicleByLicensePlate(string licensePlate)
     {
         return await _database.Vehicles.FindAsync(licensePlate);
     }
 
-    public async Task AddVehiclesAsync(List<XmlVehicle> vehicles)
+    public async Task AddVehiclesAsync(List<Vehicle> vehicles)
     { 
         //await _database.BulkInsertAsync(vehicles);
 
-        foreach (XmlVehicle vehicle in vehicles)
+        foreach (Vehicle vehicle in vehicles)
         {
+            _database.ChangeTracker.Clear();
             await _database.AddAsync(vehicle);
             await _database.SaveChangesAsync();
         }

@@ -7,10 +7,13 @@ public record Model
     public int Id { get; set; }
     public string Name { get; set; }
 
-    // Constructor to initialize from XmlModel
+    public List<Vehicle> Vehicles { get; set; }
+    
+    public Model() {}
+    
     public Model(XmlModel xmlModel)
     {
-        Id = int.Parse(xmlModel.Id); // Assuming XML ID can be parsed to int
+        Id = int.Parse(xmlModel.Id);
         Name = xmlModel.Name;
     }
 }

@@ -1,12 +1,12 @@
-using MotorRegister.Core.XmlModels;
+using MotorRegister.Core.Models;
 
 namespace MotorRegister.Core.Repository;
 
 public interface IVehicleRepository
 {
-    public Task SaveVehicle(XmlVehicle xmlVehicle);
+    public Task SaveVehicle(Vehicle xmlVehicle);
 
-    public Task<XmlVehicle?> GetVehicleByLicensePlate(string licensePlate);
+    public Task<Vehicle?> GetVehicleByLicensePlate(string licensePlate);
 
-    public Task AddVehiclesAsync(List<XmlVehicle> vehicles);
+    public Task AddVehiclesAsync(List<Vehicle> vehicles);
 }

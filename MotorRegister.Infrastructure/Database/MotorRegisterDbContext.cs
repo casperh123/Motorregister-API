@@ -1,16 +1,15 @@
-using System.Net.Http.Headers;
 using Microsoft.EntityFrameworkCore;
-using MotorRegister.Core.XmlModels;
+using MotorRegister.Core.Models;
 
 namespace MotorRegister.Infrastrucutre.Database;
 
 public sealed class MotorRegisterDbContext : DbContext
 {
-    public DbSet<XmlVehicle> Vehicles { get; set; }
-    public DbSet<XmlInspectionResult> InspectionResults { get; set; }
-    public DbSet<XmlModel> Models { get; set; }
-    public DbSet<XmlType> Types { get; set; }
-    public DbSet<XmlVariant> Variants { get; set; }
+    public DbSet<Vehicle> Vehicles { get; set; }
+    public DbSet<InspectionResult> InspectionResults { get; set; }
+    public DbSet<Model> Models { get; set; }
+    public DbSet<VehicleType> Types { get; set; }
+    public DbSet<Variant> Variants { get; set; }
 
     public MotorRegisterDbContext(DbContextOptions<MotorRegisterDbContext> contextOptions) : base(contextOptions)
     {
@@ -21,37 +20,61 @@ public sealed class MotorRegisterDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-       
-        // Configuring owned entities
+        modelBuilder.Entity<InspectionResult>()
+            .HasKey(i => new { i.VehicleId, i.Date });
 
-        modelBuilder.Entity<XmlModel>()
-            .HasKey(v => v.Id);
+        modelBuilder.Entity<Permit>()
+            .HasKey(p => new {p.PermitTypeId, p.Comment, p.ValidFrom});
 
-        modelBuilder.Entity<XmlType>()
-            .HasKey(v => v.Id);
+        modelBuilder.Entity<VehicleInformation>()
+            .HasOne<VehicleDesignation>();
 
-        modelBuilder.Entity<XmlVariant>()
-            .HasKey(v => v.Id);
-            
-
-        modelBuilder.Entity<XmlVehicleInformation>()
-            .OwnsOne<XmlVehicleDesignation>(v => v.Designation);
+        modelBuilder.Entity<VehicleDesignation>(v =>
+        {
+            v.HasKey(vd => new { vd.ManufacturerId, vd.ModelId, vd.TypeId, vd.VariantId });
         
-        
-        modelBuilder.Entity<XmlVehicleInformation>()
-            .HasKey(v => v.ChassisNumber);
+            v.HasOne(vd => vd.Model)
+                .WithMany()
+                .HasForeignKey(vd => vd.ModelId)
+                .OnDelete(DeleteBehavior.Restrict);
 
-        modelBuilder.Entity<XmlInspectionResult>()
-            .HasKey(v => new { v.VehicleId, v.Date });
-        
-        modelBuilder.Entity<XmlPermitStructure>()
-            .HasKey(p => new { p.ValidFrom, p.Comment, p.PermitTypeId });
+            v.HasOne(vd => vd.Variant)
+                .WithMany()
+                .HasForeignKey(vd => vd.VariantId)
+                .OnDelete(DeleteBehavior.Restrict);
 
-        modelBuilder.Entity<XmlPermitStructure>()
-            .OwnsOne(p => p.XmlPermitType, b =>
-            {
-                b.Property(pt => pt.Id).HasColumnName("PermitTypeId");
-                b.Property(pt => pt.Name).HasColumnName("PermitTypeName");
-            });
+            v.HasOne(vd => vd.VehicleType)
+                .WithMany()
+                .HasForeignKey(vd => vd.TypeId)
+                .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        modelBuilder.Entity<Model>(m =>
+        {
+            m.HasKey(md => md.Id);
+            m.HasMany<VehicleDesignation>()
+                .WithOne(vd => vd.Model)
+                .HasForeignKey(vd => vd.ModelId)
+                .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        modelBuilder.Entity<Variant>(v =>
+        {
+            v.HasKey(va => va.Id);
+            v.HasMany<VehicleDesignation>()
+                .WithOne(vd => vd.Variant)
+                .HasForeignKey(vd => vd.VariantId)
+                .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        modelBuilder.Entity<VehicleType>(vt =>
+        {
+            vt.HasKey(t => t.Id);
+            vt.HasMany<VehicleDesignation>()
+                .WithOne(vd => vd.VehicleType)
+                .HasForeignKey(vd => vd.TypeId)
+                .OnDelete(DeleteBehavior.Restrict);
+        });
+
     }
 }

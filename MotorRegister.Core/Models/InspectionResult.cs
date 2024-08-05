@@ -11,17 +11,15 @@ public record InspectionResult
     public string Status { get; set; }
     public DateTime StatusDate { get; set; }
 
-    // Constructor that takes the XML class instance
+    public InspectionResult() { }
+    
     public InspectionResult(XmlInspectionResult xml, string vehicleId)
     {
         VehicleId = vehicleId;
         Type = xml.Type;
-        Date = DateTime.Parse(xml.Date);  // Assuming the date is in a parsable format
+        Date = DateTime.Parse(xml.Date); 
         Result = xml.Result;
         Status = xml.Status;
-        StatusDate = DateTime.Parse(xml.StatusDate);  // Assuming the date is in a parsable format
+        StatusDate = DateTime.Parse(xml.StatusDate); 
     }
-
-    // Parameterless constructor for EF Core
-    public InspectionResult() { }
 }

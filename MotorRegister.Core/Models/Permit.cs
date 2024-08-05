@@ -9,6 +9,8 @@ public record Permit
     public int PermitTypeId { get; set; }
     public PermitType PermitType { get; set; }
     
+    public Permit() {}
+    
     public Permit(XmlPermitStructure xmlPermitStructure)
     {
         ValidFrom = DateTime.Parse(xmlPermitStructure.ValidFrom); 
