@@ -1,8 +1,8 @@
 using System.Xml.Serialization;
 
-namespace MotorRegister.Core.Models;
+namespace MotorRegister.Core.XmlModels;
 
-public record Model
+public record XmlModel
 {
     [XmlElement(ElementName = "KoeretoejModelTypeNummer")]
     public string Id { get; set; }

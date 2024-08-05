@@ -1,9 +1,9 @@
 using System.Xml.Serialization;
 
-namespace MotorRegister.Core.Models;
+namespace MotorRegister.Core.XmlModels;
 
 [XmlRoot(ElementName = "KoeretoejOplysningGrundStruktur", Namespace = "http://skat.dk/dmr/2007/05/31/")]
-public record VehicleInformation
+public record XmlVehicleInformation
 {
     [XmlElement(ElementName = "KoeretoejOplysningOprettetUdFra")]
     public string CreatedFrom { get; set; }
@@ -45,5 +45,5 @@ public record VehicleInformation
     public string Comment { get; set; }
 
     [XmlElement(ElementName = "KoeretoejBetegnelseStruktur")]
-    public VehicleDesignation Designation { get; set; }
+    public XmlVehicleDesignation Designation { get; set; }
 }

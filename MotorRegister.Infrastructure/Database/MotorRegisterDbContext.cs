@@ -1,17 +1,16 @@
 using System.Net.Http.Headers;
 using Microsoft.EntityFrameworkCore;
-using MotorRegister.Core.Models;
-using Type = MotorRegister.Core.Models.Type;
+using MotorRegister.Core.XmlModels;
 
 namespace MotorRegister.Infrastrucutre.Database;
 
 public sealed class MotorRegisterDbContext : DbContext
 {
-    public DbSet<Vehicle> Vehicles { get; set; }
-    public DbSet<InspectionResult> InspectionResults { get; set; }
-    public DbSet<Model> Models { get; set; }
-    public DbSet<Type> Types { get; set; }
-    public DbSet<Variant> Variants { get; set; }
+    public DbSet<XmlVehicle> Vehicles { get; set; }
+    public DbSet<XmlInspectionResult> InspectionResults { get; set; }
+    public DbSet<XmlModel> Models { get; set; }
+    public DbSet<XmlType> Types { get; set; }
+    public DbSet<XmlVariant> Variants { get; set; }
 
     public MotorRegisterDbContext(DbContextOptions<MotorRegisterDbContext> contextOptions) : base(contextOptions)
     {
@@ -25,31 +24,31 @@ public sealed class MotorRegisterDbContext : DbContext
        
         // Configuring owned entities
 
-        modelBuilder.Entity<Model>()
+        modelBuilder.Entity<XmlModel>()
             .HasKey(v => v.Id);
 
-        modelBuilder.Entity<Type>()
+        modelBuilder.Entity<XmlType>()
             .HasKey(v => v.Id);
 
-        modelBuilder.Entity<Variant>()
+        modelBuilder.Entity<XmlVariant>()
             .HasKey(v => v.Id);
             
 
-        modelBuilder.Entity<VehicleInformation>()
-            .OwnsOne<VehicleDesignation>(v => v.Designation);
+        modelBuilder.Entity<XmlVehicleInformation>()
+            .OwnsOne<XmlVehicleDesignation>(v => v.Designation);
         
         
-        modelBuilder.Entity<VehicleInformation>()
+        modelBuilder.Entity<XmlVehicleInformation>()
             .HasKey(v => v.ChassisNumber);
 
-        modelBuilder.Entity<InspectionResult>()
+        modelBuilder.Entity<XmlInspectionResult>()
             .HasKey(v => new { v.VehicleId, v.Date });
         
-        modelBuilder.Entity<PermitStructure>()
+        modelBuilder.Entity<XmlPermitStructure>()
             .HasKey(p => new { p.ValidFrom, p.Comment, p.PermitTypeId });
 
-        modelBuilder.Entity<PermitStructure>()
-            .OwnsOne(p => p.PermitType, b =>
+        modelBuilder.Entity<XmlPermitStructure>()
+            .OwnsOne(p => p.XmlPermitType, b =>
             {
                 b.Property(pt => pt.Id).HasColumnName("PermitTypeId");
                 b.Property(pt => pt.Name).HasColumnName("PermitTypeName");

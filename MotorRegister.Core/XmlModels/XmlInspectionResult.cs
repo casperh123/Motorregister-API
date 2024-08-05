@@ -1,9 +1,9 @@
 using System.Xml.Serialization;
 
-namespace MotorRegister.Core.Models
+namespace MotorRegister.Core.XmlModels
 {
     [XmlRoot(ElementName = "SynResultatStruktur", Namespace = "http://skat.dk/dmr/2007/05/31/")]
-    public record InspectionResult
+    public record XmlInspectionResult
     {
         [XmlIgnore]
         public int VehicleId { get; set; }  // Parent key to be set programmatically

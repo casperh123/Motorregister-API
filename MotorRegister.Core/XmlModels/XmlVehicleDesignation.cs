@@ -1,9 +1,9 @@
 using System.Xml.Serialization;
 
-namespace MotorRegister.Core.Models;
+namespace MotorRegister.Core.XmlModels;
 
 [XmlRoot(ElementName = "KoeretoejBetegnelseStruktur", Namespace = "http://skat.dk/dmr/2007/05/31/")]
-public record VehicleDesignation
+public record XmlVehicleDesignation
 {
     [XmlElement(ElementName = "KoeretoejMaerkeTypeNummer")]
     public string ManufacturerId { get; set; }
@@ -12,11 +12,11 @@ public record VehicleDesignation
     public string ManufacturerName { get; set; }
 
     [XmlElement(ElementName = "Model")]
-    public Model Model { get; set; }
+    public XmlModel XmlModel { get; set; }
 
     [XmlElement(ElementName = "Variant")]
-    public Variant Variant { get; set; }
+    public XmlVariant XmlVariant { get; set; }
 
     [XmlElement(ElementName = "Type")]
-    public Type Type { get; set; }
+    public XmlType XmlType { get; set; }
 }

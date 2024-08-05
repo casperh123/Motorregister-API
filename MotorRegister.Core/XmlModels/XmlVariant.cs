@@ -1,9 +1,9 @@
 using System.Xml.Serialization;
 
-namespace MotorRegister.Core.Models;
+namespace MotorRegister.Core.XmlModels;
 
 
-public record Variant
+public record XmlVariant
 {
     [XmlElement(ElementName = "KoeretoejVariantTypeNummer")]
     public string Id { get; set; }

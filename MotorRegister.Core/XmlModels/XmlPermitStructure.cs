@@ -1,9 +1,9 @@
 using System.Xml.Serialization;
 
-namespace MotorRegister.Core.Models
+namespace MotorRegister.Core.XmlModels
 {
     [XmlRoot(ElementName = "TilladelseStruktur", Namespace = "http://skat.dk/dmr/2007/05/31/")]
-    public record PermitStructure
+    public record XmlPermitStructure
     {
         [XmlElement(ElementName = "TilladelseGyldigFra")]
         public string ValidFrom { get; set; }
@@ -14,12 +14,12 @@ namespace MotorRegister.Core.Models
         [XmlIgnore]
         public string PermitTypeId
         {
-            get => PermitType?.Id;
+            get => XmlPermitType?.Id;
             set
             {
-                if (PermitType != null)
+                if (XmlPermitType != null)
                 {
-                    PermitType.Id = value;
+                    XmlPermitType.Id = value;
                 }
             }
         }
@@ -27,17 +27,17 @@ namespace MotorRegister.Core.Models
         [XmlIgnore]
         public string PermitTypeName
         {
-            get => PermitType?.Name;
+            get => XmlPermitType?.Name;
             set
             {
-                if (PermitType != null)
+                if (XmlPermitType != null)
                 {
-                    PermitType.Name = value;
+                    XmlPermitType.Name = value;
                 }
             }
         }
 
         [XmlElement(ElementName = "TilladelseTypeStruktur")]
-        public PermitType PermitType { get; set; }
+        public XmlPermitType XmlPermitType { get; set; }
     }
 }
