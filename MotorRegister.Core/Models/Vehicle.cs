@@ -36,5 +36,5 @@ public record Vehicle
     public string RegistrationStatusDate { get; set; }
 
     [XmlElement(ElementName = "TilladelseSamling")]
-    public List<Permit> Permissions { get; set; }
+    public PermitCollection Permissions { get; set; }
 }

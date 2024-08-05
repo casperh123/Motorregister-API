@@ -9,10 +9,10 @@ const int bufferSize = 81920;
 
 RegisterFileDownloader registerDownloader = new RegisterFileDownloader();
 
-(string zipFileName, string fileName) = await registerDownloader.DownloadAndSaveRegisterFileAsync(Directory.GetCurrentDirectory());
+//(string zipFileName, string fileName) = await registerDownloader.DownloadAndSaveRegisterFileAsync(Directory.GetCurrentDirectory());
 
-using ZipArchive zipArchive = ZipFile.OpenRead(zipFileName);
-ZipArchiveEntry? xmlFileEntry = zipArchive.GetEntry(fileName);
+using ZipArchive zipArchive = ZipFile.OpenRead("../../../../ESStatistikListeModtag-20240728-193626.zip");
+ZipArchiveEntry? xmlFileEntry = zipArchive.GetEntry("ESStatistikListeModtag.xml");
 
 await using Stream xmlFileStream = xmlFileEntry.Open();
 ProcessXmlFile(xmlFileStream);
@@ -39,6 +39,8 @@ void ProcessXmlFile(Stream xmlFileStream)
         {
             if (reader.NodeType == XmlNodeType.Element && reader.Name == "ns:Statistik")
             {
+                
+                Console.WriteLine(reader.ReadOuterXml());
                 Vehicle vehicle = xmlSerializer.Deserialize(reader) as Vehicle;
                 if (vehicle != null && vehicle.RegistrationStatus != "Afmeldt")
                 {

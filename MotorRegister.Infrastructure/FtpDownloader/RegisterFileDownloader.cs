@@ -21,12 +21,11 @@ namespace MotorRegisterReader.FtpDownloader
             string newFileName = Path.Combine(path, "MotorRegister.zip");
 
             Console.WriteLine($"Saving file to {path}");
-
             
             await using FileStream outputFileStream = new FileStream(newFileName, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize: 64 * 1024, useAsync: true);
             await CopyStreamWithProgressAsync(ftpStream, outputFileStream, contentLength);
             
-            return (zipFileName, newFileName);
+            return (zipFileName, "ESStatistikListeModtag.xml");
         }
         
         private static async Task CopyStreamWithProgressAsync(Stream source, Stream destination, long totalBytes)
