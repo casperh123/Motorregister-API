@@ -7,15 +7,8 @@ public class DatabaseInitializer
     public static SqliteConnection EnsureDatabaseCreated(string environment, string databaseFileName)
     {
         string rootPath;
-
-        if (environment == "Development")
-        {
-            rootPath = Path.Combine(Directory.GetCurrentDirectory(), "../../..");
-        }
-        else
-        {
-            rootPath = Path.Combine(Directory.GetCurrentDirectory(), "../");
-        }
+        
+        rootPath = Path.Combine(Directory.GetCurrentDirectory(), "..");
 
         string databaseFilePath = Path.Combine(rootPath, databaseFileName);
 

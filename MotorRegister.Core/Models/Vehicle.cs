@@ -27,7 +27,7 @@ public record Vehicle
     public VehicleInformation Information { get; set; }
 
     [XmlElement(ElementName = "SynResultatStruktur")]
-    public InspectionResult InspectionResult { get; set; }
+    public List<InspectionResult> InspectionResult { get; set; }
 
     [XmlElement(ElementName = "KoeretoejRegistreringStatus")]
     public string RegistrationStatus { get; set; }

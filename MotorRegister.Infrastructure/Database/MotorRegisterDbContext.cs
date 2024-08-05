@@ -1,11 +1,17 @@
+using System.Net.Http.Headers;
 using Microsoft.EntityFrameworkCore;
 using MotorRegister.Core.Models;
+using Type = MotorRegister.Core.Models.Type;
 
 namespace MotorRegister.Infrastrucutre.Database;
 
 public sealed class MotorRegisterDbContext : DbContext
 {
     public DbSet<Vehicle> Vehicles { get; set; }
+    public DbSet<InspectionResult> InspectionResults { get; set; }
+    public DbSet<Model> Models { get; set; }
+    public DbSet<Type> Types { get; set; }
+    public DbSet<Variant> Variants { get; set; }
 
     public MotorRegisterDbContext(DbContextOptions<MotorRegisterDbContext> contextOptions) : base(contextOptions)
     {
@@ -16,19 +22,28 @@ public sealed class MotorRegisterDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<VehicleDesignation>()
-            .HasKey(v => new { v.ManufacturerId, v.ModelId, v.VariantId });
+       
         // Configuring owned entities
-        modelBuilder.Entity<VehicleDesignation>()
-            .OwnsOne(v => v.Model);
-        modelBuilder.Entity<VehicleDesignation>()
-            .OwnsOne(v => v.Variant);
-        modelBuilder.Entity<VehicleDesignation>()
-            .OwnsOne(v => v.Type);
+
+        modelBuilder.Entity<Model>()
+            .HasKey(v => v.Id);
+
+        modelBuilder.Entity<Type>()
+            .HasKey(v => v.Id);
+
+        modelBuilder.Entity<Variant>()
+            .HasKey(v => v.Id);
+            
+
+        modelBuilder.Entity<VehicleInformation>()
+            .OwnsOne<VehicleDesignation>(v => v.Designation);
+        
+        
+        modelBuilder.Entity<VehicleInformation>()
+            .HasKey(v => v.ChassisNumber);
 
         modelBuilder.Entity<InspectionResult>()
             .HasKey(v => new { v.VehicleId, v.Date });
-        
         
         modelBuilder.Entity<PermitStructure>()
             .HasKey(p => new { p.ValidFrom, p.Comment, p.PermitTypeId });
@@ -39,8 +54,5 @@ public sealed class MotorRegisterDbContext : DbContext
                 b.Property(pt => pt.Id).HasColumnName("PermitTypeId");
                 b.Property(pt => pt.Name).HasColumnName("PermitTypeName");
             });
-
-        modelBuilder.Entity<VehicleInformation>()
-            .HasKey(v => v.ChassisNumber);
     }
 }

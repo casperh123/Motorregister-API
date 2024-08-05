@@ -26,8 +26,13 @@ public class VehicleRepository : IVehicleRepository
     }
 
     public async Task AddVehiclesAsync(List<Vehicle> vehicles)
-    {
-        await _database.AddAsync(vehicles);
-        await _database.SaveChangesAsync();
+    { 
+        //await _database.BulkInsertAsync(vehicles);
+
+        foreach (Vehicle vehicle in vehicles)
+        {
+            await _database.AddAsync(vehicle);
+            await _database.SaveChangesAsync();
+        }
     }
 }

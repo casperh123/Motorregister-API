@@ -18,16 +18,24 @@ namespace MotorRegister.Infrastrucutre.XmlDeserialization
             _logger = logger;
         }
 
-        public async Task<IAsyncEnumerable<Vehicle>> DeserializeMotorRegister(string zipFilePath, string fileName)
+        public IEnumerable<Vehicle> DeserializeMotorRegister(string zipFilePath, string fileName)
         {
             using ZipArchive zipArchive = ZipFile.OpenRead(zipFilePath);
             ZipArchiveEntry? xmlFileEntry = zipArchive.GetEntry(fileName);
 
-            await using Stream xmlFileStream = xmlFileEntry.Open();
-            return ProcessXmlFile(xmlFileStream);
+            if (xmlFileEntry == null)
+            {
+                throw new FileNotFoundException($"File {fileName} not found in the zip archive.");
+            }
+
+            using Stream xmlFileStream = xmlFileEntry.Open();
+            foreach (var vehicle in ProcessXmlFile(xmlFileStream))
+            {
+                yield return vehicle;
+            }
         }
 
-        private async IAsyncEnumerable<Vehicle> ProcessXmlFile(Stream xmlFileStream)
+        private IEnumerable<Vehicle> ProcessXmlFile(Stream xmlFileStream)
         {
             BufferedStream bufferedStream = new BufferedStream(xmlFileStream, _bufferSize);
             XmlReaderSettings settings = new XmlReaderSettings
@@ -43,7 +51,7 @@ namespace MotorRegister.Infrastrucutre.XmlDeserialization
             Stopwatch stopwatch = Stopwatch.StartNew();
             int extractedVehicles = 0;
 
-            while (await reader.ReadAsync())
+            while (reader.Read())
             {
                 if (reader.NodeType == XmlNodeType.Element && reader.Name == "ns:Statistik")
                 {
