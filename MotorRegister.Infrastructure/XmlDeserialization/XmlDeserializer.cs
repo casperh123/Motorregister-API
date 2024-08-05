@@ -2,69 +2,67 @@ using System.Diagnostics;
 using System.IO.Compression;
 using System.Xml;
 using System.Xml.Serialization;
+using Microsoft.Extensions.Logging;
 using MotorRegister.Core.Models;
-using MotorRegister.Infrastrucutre.FtpDownloader;
 
-namespace MotorRegister.Infrastrucutre.XmlDeserialization;
-
-public class XmlDeserializer
+namespace MotorRegister.Infrastrucutre.XmlDeserialization
 {
-    private int _bufferSize;
-    private RegisterFileDownloader _registerDownloader;
-
-    public XmlDeserializer(RegisterFileDownloader registerDownloader, int bufferSize)
+    public class XmlDeserializer
     {
-        _bufferSize = bufferSize;
-        _registerDownloader = registerDownloader;
-    }
+        private readonly int _bufferSize;
+        private readonly ILogger<XmlDeserializer> _logger;
 
-    public async Task DeserializeMotorRegister(string zipFilePath, string fileName)
-    {
-        //TODO Change zipArchive path to zipFilePath and xmlFileEntry to fileName when finished testing database indexing
-        using ZipArchive zipArchive = ZipFile.OpenRead("../../../../ESStatistikListeModtag-20240728-193626.zip");
-        ZipArchiveEntry? xmlFileEntry = zipArchive.GetEntry("ESStatistikListeModtag.xml");
-
-        await using Stream xmlFileStream = xmlFileEntry.Open();
-        ProcessXmlFile(xmlFileStream);
-
-    } 
-    
-    private void ProcessXmlFile(Stream xmlFileStream)
-    {
-        BufferedStream bufferedStream = new BufferedStream(xmlFileStream, _bufferSize);
-        XmlReaderSettings settings = new XmlReaderSettings
+        public XmlDeserializer(int bufferSize, ILogger<XmlDeserializer> logger)
         {
-            IgnoreWhitespace = true,
-            IgnoreComments = true,
-            IgnoreProcessingInstructions = true,
-        };
+            _bufferSize = bufferSize;
+            _logger = logger;
+        }
 
-        using XmlReader reader = XmlReader.Create(bufferedStream, settings);
-        XmlSerializer xmlSerializer = new XmlSerializer(typeof(Vehicle));
-
-        List<Vehicle> vehicles = new List<Vehicle>();
-
-        Stopwatch stopwatch = Stopwatch.StartNew();
-
-        while (reader.Read())
+        public async Task<IAsyncEnumerable<Vehicle>> DeserializeMotorRegister(string zipFilePath, string fileName)
         {
-            if (reader.NodeType == XmlNodeType.Element && reader.Name == "ns:Statistik")
+            using ZipArchive zipArchive = ZipFile.OpenRead(zipFilePath);
+            ZipArchiveEntry? xmlFileEntry = zipArchive.GetEntry(fileName);
+
+            await using Stream xmlFileStream = xmlFileEntry.Open();
+            return ProcessXmlFile(xmlFileStream);
+        }
+
+        private async IAsyncEnumerable<Vehicle> ProcessXmlFile(Stream xmlFileStream)
+        {
+            BufferedStream bufferedStream = new BufferedStream(xmlFileStream, _bufferSize);
+            XmlReaderSettings settings = new XmlReaderSettings
             {
-                
-                Console.WriteLine(reader.ReadOuterXml());
-                Vehicle vehicle = xmlSerializer.Deserialize(reader) as Vehicle;
-                if (vehicle != null && vehicle.RegistrationStatus != "Afmeldt")
+                IgnoreWhitespace = true,
+                IgnoreComments = true,
+                IgnoreProcessingInstructions = true,
+            };
+
+            using XmlReader reader = XmlReader.Create(bufferedStream, settings);
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(Vehicle));
+
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            int extractedVehicles = 0;
+
+            while (await reader.ReadAsync())
+            {
+                if (reader.NodeType == XmlNodeType.Element && reader.Name == "ns:Statistik")
                 {
-                    vehicles.Add(vehicle);
-                    if (vehicles.Count % 10000 == 0)
+                    
+                    Vehicle vehicle = xmlSerializer.Deserialize(reader) as Vehicle;
+                    if (vehicle != null && vehicle.RegistrationStatus != "Afmeldt")
                     {
-                        Console.WriteLine($"Read {vehicles.Count} Cars");
+                        yield return vehicle;
+                        extractedVehicles++;
+                        if (extractedVehicles % 10000 == 0)
+                        {
+                            _logger.LogInformation("Read {ExtractedVehicles} vehicles", extractedVehicles);
+                        }
                     }
                 }
             }
-        }
 
-        stopwatch.Stop();
-        Console.WriteLine($"Time taken: {stopwatch.ElapsedMilliseconds} ms");
+            stopwatch.Stop();
+            _logger.LogInformation("Time taken: {ElapsedMilliseconds} ms", stopwatch.ElapsedMilliseconds);
+        }
     }
 }

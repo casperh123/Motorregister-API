@@ -1,25 +1,47 @@
+using MotorRegister.Core.Repository;
 using MotorRegister.Indexer;
+using MotorRegister.Infrastrucutre;
 using MotorRegister.Infrastrucutre.FtpDownloader;
+using MotorRegister.Infrastrucutre.Repository;
+using MotorRegister.Infrastrucutre.XmlDeserialization;
 
 var builder = Host.CreateApplicationBuilder(args);
 
-// Configure your FTP client with correct settings
-builder.Services.AddSingleton<FtpClient>(provider => new FtpClient("ftp://5.44.137.84", "dmr-ftp-user", "dmrpassword"));
+builder.Services.AddDbContext<MotorRegisterDbContext>();
+builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
 
-// Ensure that RegisterFileDownloader is properly configured to use the FtpClient
-builder.Services.AddSingleton<RegisterFileDownloader>(provider => 
-    new RegisterFileDownloader(provider.GetRequiredService<FtpClient>(), provider.GetRequiredService<ILogger<RegisterFileDownloader>>())
+builder.Services.AddSingleton(
+    new FtpClient(
+        "ftp://5.44.137.84", 
+        "dmr-ftp-user", 
+        "dmrpassword"
+    )
 );
 
-// Configuring the WeeklyIndexingService with necessary dependencies
-builder.Services.AddHostedService<WeeklyIndexingService>(provider =>
-    new WeeklyIndexingService(
-        provider.GetRequiredService<ILogger<WeeklyIndexingService>>(),
-        provider.GetRequiredService<FtpClient>(),
-        provider.GetRequiredService<RegisterFileDownloader>(),
-        DateTimeOffset.Parse("2024-08-12T00:00:00Z"), // First run time
-        7 // Interval in days
-    ));
+builder.Services.AddSingleton(
+    provider => 
+        new XmlDeserializer(
+            1046, 
+            provider.GetRequiredService<ILogger<XmlDeserializer>>()
+        )
+);
+builder.Services.AddSingleton<RegisterFileDownloader>(
+    provider => 
+        new RegisterFileDownloader(
+            provider.GetRequiredService<FtpClient>(), 
+            provider.GetRequiredService<ILogger<RegisterFileDownloader>>()
+        )
+);
+
+builder.Services.AddHostedService<WeeklyIndexingService>(
+    provider =>
+        new WeeklyIndexingService(
+            provider,
+            provider.GetRequiredService<ILogger<WeeklyIndexingService>>(),
+            DateTimeOffset.Now, 
+            7
+        )
+);
 
 var host = builder.Build();
 host.Run();

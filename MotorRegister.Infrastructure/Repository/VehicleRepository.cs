@@ -23,4 +23,10 @@ public class VehicleRepository : IVehicleRepository
     {
         return await _database.Vehicles.FindAsync(licensePlate);
     }
+
+    public async Task AddVehiclesAsync(List<Vehicle> vehicles)
+    {
+        await _database.AddAsync(vehicles);
+        await _database.SaveChangesAsync();
+    }
 }
