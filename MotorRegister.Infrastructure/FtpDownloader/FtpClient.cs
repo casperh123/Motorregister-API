@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Net;
-using System.Threading.Tasks;
 
-namespace MotorRegisterReader.FtpDownloader
+namespace MotorRegister.Infrastrucutre.FtpDownloader
 {
     public class FtpClient
     {

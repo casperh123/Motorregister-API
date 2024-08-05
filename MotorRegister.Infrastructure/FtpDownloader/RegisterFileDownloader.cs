@@ -1,17 +1,14 @@
-using System;
 using System.Diagnostics;
-using System.IO;
-using System.Threading.Tasks;
 
-namespace MotorRegisterReader.FtpDownloader
+namespace MotorRegister.Infrastrucutre.FtpDownloader
 {
     public class RegisterFileDownloader
     {
         private readonly FtpClient _ftpClient;
 
-        public RegisterFileDownloader()
+        public RegisterFileDownloader(FtpClient ftpClient)
         {
-            _ftpClient = new FtpClient("ftp://5.44.137.84", "dmr-ftp-user", "dmrpassword");
+            _ftpClient = ftpClient;
         }
         
         public async Task<(string, string)> DownloadAndSaveRegisterFileAsync(string path)
