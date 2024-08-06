@@ -1,10 +1,8 @@
-using System.Diagnostics;
-using MotorRegister.Core.Entities;
+using MotorRegister.Core.Models;
 using MotorRegister.Core.Repository;
 using MotorRegister.Core.XmlModels;
 using MotorRegister.Infrastrucutre.FtpDownloader;
 using MotorRegister.Infrastrucutre.XmlDeserialization;
-using Z.EntityFramework.Extensions;
 
 namespace MotorRegister.Indexer
 {
@@ -73,20 +71,29 @@ namespace MotorRegister.Indexer
                 {
                     Vehicle vehicle = new Vehicle(xmlVehicle);
                     
-                    if (vehicleBatch.Count < 10000)
+                    if (vehicleBatch.Count < 1000)
                     {
                         vehicleBatch.Add(vehicle);
                         continue;
                     }
 
-                    await vehicleRepository.AddVehiclesAsync(vehicleBatch);
+                    foreach (Vehicle vehicleEntity in vehicleBatch)
+                    {
+                        await vehicleRepository.AddVehicleAsync(vehicleEntity);
+                    }
                     vehicleBatch.Clear();
                     vehicleBatch.Add(vehicle);
+                    
                 }
+                
+                
 
                 if (vehicleBatch.Count > 0)
                 {
-                    await vehicleRepository.AddVehiclesAsync(vehicleBatch);
+                    foreach (Vehicle vehicleEntity in vehicleBatch)
+                    {
+                        await vehicleRepository.AddVehicleAsync(vehicleEntity);
+                    }
                 }
 
                 _logger.LogInformation("Indexing completed at: {time}", DateTimeOffset.Now);

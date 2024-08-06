@@ -9,5 +9,7 @@ public interface IVehicleRepository
 
     public Task<Vehicle?> GetVehicleByLicensePlate(string licensePlate);
 
-    public Task AddVehiclesAsync(List<Vehicle> vehicles);
+    public Task AddVehicleAsync(Vehicle vehicle);
+
+
 }

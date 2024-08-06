@@ -8,6 +8,7 @@ public sealed class MotorRegisterDbContext : DbContext
     public DbSet<Vehicle> Vehicles { get; set; }
     public DbSet<VehicleInformation> VehicleInformations { get; set; }
     public DbSet<InspectionResult> InspectionResults { get; set; }
+    public DbSet<Make> Makes { get; set; }
 
     public MotorRegisterDbContext(DbContextOptions<MotorRegisterDbContext> contextOptions) : base(contextOptions)
     {
@@ -23,5 +24,8 @@ public sealed class MotorRegisterDbContext : DbContext
 
         modelBuilder.Entity<InspectionResult>()
             .HasKey(i => new { i.VehicleId, i.Date });
+
+        modelBuilder.Entity<Make>()
+            .HasKey(m => new { m.Id, m.Variant, m.Model });
     }
 }
