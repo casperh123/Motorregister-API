@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MotorRegister.Core.Entities;
@@ -26,9 +27,13 @@ public class VehicleRepository : IVehicleRepository
         await _database.SaveChangesAsync();
     }
 
-    public async Task<Vehicle?> GetVehicleByLicensePlate(string licensePlate)
+    public async Task<Vehicle?> GetVehicleByLicensePlate(string registrationNumber)
     {
-        return await _database.Vehicles.FindAsync(licensePlate);
+        return await _database.Vehicles
+            .AsNoTracking()
+            .Include(v => v.Information)
+            .Include(v => v.InspectionResults)
+            .FirstAsync(v => v.RegistrationNumber == registrationNumber);
     }
 
     public async Task AddVehiclesAsync(List<Vehicle> vehicles)

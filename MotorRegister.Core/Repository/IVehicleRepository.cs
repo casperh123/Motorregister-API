@@ -7,7 +7,7 @@ public interface IVehicleRepository
 {
     public Task SaveVehicle(Vehicle xmlVehicle);
 
-    public Task<Vehicle?> GetVehicleByLicensePlate(string licensePlate);
+    public Task<Vehicle?> GetVehicleByLicensePlate(string registrationNumber);
 
     public Task AddVehiclesAsync(List<Vehicle> vehicles);
 }

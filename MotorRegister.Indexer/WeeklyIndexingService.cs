@@ -62,12 +62,12 @@ namespace MotorRegister.Indexer
             {
                 _logger.LogInformation("Starting indexing process at: {time}", DateTimeOffset.Now);
 
-                //(string zipFilePath, string fileName) = await registerFileDownloader.DownloadAndSaveRegisterFileAsync(Directory.GetCurrentDirectory());
+                (string zipFilePath, string fileName) = await registerFileDownloader.DownloadAndSaveRegisterFileAsync(Directory.GetCurrentDirectory());
 
                 List<Vehicle> vehicleBatch = [];
 
-                string zipFilePath = "../ESStatistikListeModtag-20240804-201652.zip";
-                string fileName = "ESStatistikListeModtag.xml";
+                //string zipFilePath = "../ESStatistikListeModtag-20240804-201652.zip";
+                //string fileName = "ESStatistikListeModtag.xml";
                 
                 foreach (XmlVehicle xmlVehicle in xmlDeserializer.DeserializeMotorRegister(zipFilePath, fileName))
                 {

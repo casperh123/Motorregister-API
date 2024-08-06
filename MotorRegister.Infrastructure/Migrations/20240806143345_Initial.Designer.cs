@@ -11,7 +11,7 @@ using MotorRegister.Infrastrucutre.Database;
 namespace MotorRegister.Infrastrucutre.Migrations
 {
     [DbContext(typeof(MotorRegisterDbContext))]
-    [Migration("20240806141437_Initial")]
+    [Migration("20240806143345_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -116,10 +116,6 @@ namespace MotorRegister.Infrastrucutre.Migrations
 
                     b.Property<bool>("TowingCapability")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("Variant")
                         .IsRequired()
