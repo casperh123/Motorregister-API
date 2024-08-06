@@ -73,15 +73,13 @@ namespace MotorRegister.Indexer
                 {
                     Vehicle vehicle = new Vehicle(xmlVehicle);
                     
-                    if (vehicleBatch.Count < 50000)
+                    if (vehicleBatch.Count < 10000)
                     {
                         vehicleBatch.Add(vehicle);
                         continue;
                     }
 
-                    Stopwatch stopwatch = Stopwatch.StartNew();
                     await vehicleRepository.AddVehiclesAsync(vehicleBatch);
-                    _logger.LogInformation($"Saved vehicles, TIMING: {stopwatch.ElapsedMilliseconds} ms.");
                     vehicleBatch.Clear();
                     vehicleBatch.Add(vehicle);
                 }

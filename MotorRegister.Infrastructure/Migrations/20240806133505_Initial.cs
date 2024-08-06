@@ -17,7 +17,6 @@ namespace MotorRegister.Infrastrucutre.Migrations
                 {
                     ChassisNumber = table.Column<string>(type: "TEXT", nullable: false),
                     CreatedFrom = table.Column<string>(type: "TEXT", nullable: true),
-                    Status = table.Column<string>(type: "TEXT", nullable: true),
                     StatusDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     FirstRegistrationDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     TotalWeight = table.Column<int>(type: "INTEGER", nullable: false),
@@ -27,11 +26,9 @@ namespace MotorRegister.Infrastrucutre.Migrations
                     MaxAxleLoad = table.Column<int>(type: "INTEGER", nullable: false),
                     PassengerCount = table.Column<int>(type: "INTEGER", nullable: false),
                     TowingCapability = table.Column<bool>(type: "INTEGER", nullable: false),
-                    Comment = table.Column<string>(type: "TEXT", nullable: true),
                     ManufacturerName = table.Column<string>(type: "TEXT", nullable: false),
                     Model = table.Column<string>(type: "TEXT", nullable: false),
-                    Variant = table.Column<string>(type: "TEXT", nullable: false),
-                    Type = table.Column<string>(type: "TEXT", nullable: false)
+                    Variant = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -44,10 +41,8 @@ namespace MotorRegister.Infrastrucutre.Migrations
                 {
                     Id = table.Column<string>(type: "TEXT", nullable: false),
                     VehicleTypeName = table.Column<string>(type: "TEXT", nullable: false),
-                    Usage = table.Column<string>(type: "TEXT", nullable: false),
+                    Usage = table.Column<string>(type: "TEXT", nullable: true),
                     RegistrationNumber = table.Column<string>(type: "TEXT", nullable: true),
-                    RegistrationNumberExpirationDate = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    RegistrationStatus = table.Column<string>(type: "TEXT", nullable: true),
                     RegistrationStatusDate = table.Column<DateTime>(type: "TEXT", nullable: true),
                     InformationId = table.Column<string>(type: "TEXT", nullable: false)
                 },
@@ -66,54 +61,23 @@ namespace MotorRegister.Infrastrucutre.Migrations
                 name: "InspectionResults",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                    VehicleId = table.Column<string>(type: "TEXT", nullable: false),
+                    StatusDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Type = table.Column<string>(type: "TEXT", nullable: false),
                     Date = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Result = table.Column<string>(type: "TEXT", nullable: false),
-                    Status = table.Column<string>(type: "TEXT", nullable: false),
-                    StatusDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    VehicleId = table.Column<string>(type: "TEXT", nullable: true)
+                    Status = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_InspectionResults", x => x.Id);
+                    table.PrimaryKey("PK_InspectionResults", x => new { x.VehicleId, x.StatusDate });
                     table.ForeignKey(
                         name: "FK_InspectionResults_Vehicles_VehicleId",
                         column: x => x.VehicleId,
                         principalTable: "Vehicles",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateTable(
-                name: "Permits",
-                columns: table => new
-                {
-                    ValidFrom = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Comment = table.Column<string>(type: "TEXT", nullable: false),
-                    Type = table.Column<string>(type: "TEXT", nullable: false),
-                    Id = table.Column<int>(type: "INTEGER", nullable: false),
-                    VehicleId = table.Column<string>(type: "TEXT", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Permits", x => new { x.Type, x.Comment, x.ValidFrom });
-                    table.ForeignKey(
-                        name: "FK_Permits_Vehicles_VehicleId",
-                        column: x => x.VehicleId,
-                        principalTable: "Vehicles",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_InspectionResults_VehicleId",
-                table: "InspectionResults",
-                column: "VehicleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Permits_VehicleId",
-                table: "Permits",
-                column: "VehicleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Vehicles_InformationId",
@@ -126,9 +90,6 @@ namespace MotorRegister.Infrastrucutre.Migrations
         {
             migrationBuilder.DropTable(
                 name: "InspectionResults");
-
-            migrationBuilder.DropTable(
-                name: "Permits");
 
             migrationBuilder.DropTable(
                 name: "Vehicles");

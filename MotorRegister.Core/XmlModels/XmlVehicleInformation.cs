@@ -40,10 +40,7 @@ public record XmlVehicleInformation
 
     [XmlElement(ElementName = "KoeretoejOplysningTilkoblingMulighed")]
     public bool TowingCapability { get; set; }
-
-    [XmlElement(ElementName = "KoeretoejOplysningKommentar")]
-    public string Comment { get; set; }
-
+    
     [XmlElement(ElementName = "KoeretoejBetegnelseStruktur")]
     public XmlVehicleDesignation Designation { get; set; }
 }

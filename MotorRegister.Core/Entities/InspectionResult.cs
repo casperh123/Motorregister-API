@@ -5,8 +5,7 @@ namespace MotorRegister.Core.Entities;
 
 public record InspectionResult
 {
-    [Key]
-    public int Id { get; set; } // Auto-incrementing
+    public string VehicleId { get; set; }
     public string Type { get; set; }
     public DateTime Date { get; set; }
     public string Result { get; set; }
@@ -15,7 +14,7 @@ public record InspectionResult
 
     public InspectionResult() { }
     
-    public InspectionResult(XmlInspectionResult xml)
+    public InspectionResult(XmlInspectionResult xml, string vehicleId)
     {
         Type = xml.Type;
         Date = DateTime.Parse(xml.Date); 

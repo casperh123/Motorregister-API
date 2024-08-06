@@ -57,7 +57,7 @@ namespace MotorRegister.Infrastrucutre.XmlDeserialization
                 {
                     
                     XmlVehicle xmlVehicle = xmlSerializer.Deserialize(reader) as XmlVehicle;
-                    if (xmlVehicle != null && xmlVehicle.RegistrationStatus != "Afmeldt")
+                    if (xmlVehicle != null && xmlVehicle.RegistrationStatus == "Registreret")
                     {
                         yield return xmlVehicle;
                         extractedVehicles++;

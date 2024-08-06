@@ -14,18 +14,18 @@ namespace MotorRegister.Infrastrucutre.FtpDownloader
             _logger = logger;
         }
         
-        public async Task<(string, string)> DownloadAndSaveRegisterFileAsync(string path)
+        public async Task<(string, string)> DownloadAndSaveRegisterFileAsync(string savePath)
         {
-            (Stream ftpStream, string zipFileName, long contentLength) = await _ftpClient.GetRegisterFileFromPathAsync("ESStatistikListeModtag");
+            (Stream ftpStream, long contentLength) = await _ftpClient.GetRegisterFileFromPathAsync("ESStatistikListeModtag");
 
-            string newFileName = Path.Combine(path, "MotorRegister.zip");
+            string newFileName = Path.Combine(savePath, "MotorRegister.zip");
 
-            _logger.LogInformation($"Saving file to {path}");
+            _logger.LogInformation($"Saving file to {newFileName}");
 
             await using FileStream outputFileStream = new FileStream(newFileName, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize: 64 * 1024, useAsync: true);
             await CopyStreamWithProgressAsync(ftpStream, outputFileStream, contentLength);
             
-            return (zipFileName, "ESStatistikListeModtag.xml");
+            return (newFileName, "ESStatistikListeModtag.xml");
         }
         
         private async Task CopyStreamWithProgressAsync(Stream source, Stream destination, long totalBytes)

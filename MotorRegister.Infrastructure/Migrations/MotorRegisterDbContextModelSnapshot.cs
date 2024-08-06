@@ -19,9 +19,11 @@ namespace MotorRegister.Infrastrucutre.Migrations
 
             modelBuilder.Entity("MotorRegister.Core.Entities.InspectionResult", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("VehicleId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("StatusDate")
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("TEXT");
@@ -34,45 +36,13 @@ namespace MotorRegister.Infrastrucutre.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("StatusDate")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("VehicleId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("VehicleId");
+                    b.HasKey("VehicleId", "StatusDate");
 
                     b.ToTable("InspectionResults");
-                });
-
-            modelBuilder.Entity("MotorRegister.Core.Entities.Permit", b =>
-                {
-                    b.Property<string>("Type")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Comment")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("ValidFrom")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Id")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("VehicleId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Type", "Comment", "ValidFrom");
-
-                    b.HasIndex("VehicleId");
-
-                    b.ToTable("Permits");
                 });
 
             modelBuilder.Entity("MotorRegister.Core.Entities.Vehicle", b =>
@@ -87,17 +57,10 @@ namespace MotorRegister.Infrastrucutre.Migrations
                     b.Property<string>("RegistrationNumber")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime?>("RegistrationNumberExpirationDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("RegistrationStatus")
-                        .HasColumnType("TEXT");
-
                     b.Property<DateTime?>("RegistrationStatusDate")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Usage")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("VehicleTypeName")
@@ -111,16 +74,13 @@ namespace MotorRegister.Infrastrucutre.Migrations
                     b.ToTable("Vehicles");
                 });
 
-            modelBuilder.Entity("MotorRegister.Core.Models.VehicleInformation", b =>
+            modelBuilder.Entity("MotorRegister.Core.Entities.VehicleInformation", b =>
                 {
                     b.Property<string>("ChassisNumber")
                         .HasColumnType("TEXT");
 
                     b.Property<short>("AxleCount")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("Comment")
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("CreatedFrom")
                         .HasColumnType("TEXT");
@@ -145,9 +105,6 @@ namespace MotorRegister.Infrastrucutre.Migrations
                     b.Property<int>("PassengerCount")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Status")
-                        .HasColumnType("TEXT");
-
                     b.Property<DateTime>("StatusDate")
                         .HasColumnType("TEXT");
 
@@ -159,10 +116,6 @@ namespace MotorRegister.Infrastrucutre.Migrations
 
                     b.Property<bool>("TowingCapability")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("Variant")
                         .IsRequired()
@@ -177,19 +130,14 @@ namespace MotorRegister.Infrastrucutre.Migrations
                 {
                     b.HasOne("MotorRegister.Core.Entities.Vehicle", null)
                         .WithMany("InspectionResults")
-                        .HasForeignKey("VehicleId");
-                });
-
-            modelBuilder.Entity("MotorRegister.Core.Entities.Permit", b =>
-                {
-                    b.HasOne("MotorRegister.Core.Entities.Vehicle", null)
-                        .WithMany("Permits")
-                        .HasForeignKey("VehicleId");
+                        .HasForeignKey("VehicleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MotorRegister.Core.Entities.Vehicle", b =>
                 {
-                    b.HasOne("MotorRegister.Core.Models.VehicleInformation", "Information")
+                    b.HasOne("MotorRegister.Core.Entities.VehicleInformation", "Information")
                         .WithMany()
                         .HasForeignKey("InformationId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -201,8 +149,6 @@ namespace MotorRegister.Infrastrucutre.Migrations
             modelBuilder.Entity("MotorRegister.Core.Entities.Vehicle", b =>
                 {
                     b.Navigation("InspectionResults");
-
-                    b.Navigation("Permits");
                 });
 #pragma warning restore 612, 618
         }

@@ -13,7 +13,7 @@ namespace MotorRegister.Infrastrucutre.FtpDownloader
             _networkCredential = new NetworkCredential(username, password);
         }
 
-        public async Task<(Stream, string, long)> GetRegisterFileFromPathAsync(string path)
+        public async Task<(Stream, long)> GetRegisterFileFromPathAsync(string path)
         {
             string fullPath = Path.Combine(_baseAddress, path);
             
@@ -45,7 +45,7 @@ namespace MotorRegister.Infrastrucutre.FtpDownloader
         }
 
 
-        private async Task<(Stream, string, long)> DownloadFileAsync(string address, string fileName)
+        private async Task<(Stream, long)> DownloadFileAsync(string address, string fileName)
         {
             FtpWebRequest downloadRequest = CreateFtpWebRequest(Path.Combine(address, fileName), WebRequestMethods.Ftp.DownloadFile);
             downloadRequest.UseBinary = true;
@@ -55,7 +55,7 @@ namespace MotorRegister.Infrastrucutre.FtpDownloader
             Stream responseStream = downloadResponse.GetResponseStream();
             long contentLength = downloadResponse.ContentLength;
 
-            return (new BufferedStream(responseStream), fileName, contentLength);
+            return (new BufferedStream(responseStream), contentLength);
         }
 
         private FtpWebRequest CreateFtpWebRequest(string address, string method)
