@@ -11,7 +11,7 @@ using MotorRegister.Infrastrucutre.Database;
 namespace MotorRegister.Infrastrucutre.Migrations
 {
     [DbContext(typeof(MotorRegisterDbContext))]
-    [Migration("20240806133505_Initial")]
+    [Migration("20240806133901_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -23,9 +23,6 @@ namespace MotorRegister.Infrastrucutre.Migrations
             modelBuilder.Entity("MotorRegister.Core.Entities.InspectionResult", b =>
                 {
                     b.Property<string>("VehicleId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("StatusDate")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("Date")
@@ -43,7 +40,7 @@ namespace MotorRegister.Infrastrucutre.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("VehicleId", "StatusDate");
+                    b.HasKey("VehicleId", "Date");
 
                     b.ToTable("InspectionResults");
                 });

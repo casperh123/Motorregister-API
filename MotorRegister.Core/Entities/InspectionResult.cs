@@ -10,7 +10,6 @@ public record InspectionResult
     public DateTime Date { get; set; }
     public string Result { get; set; }
     public string Status { get; set; }
-    public DateTime StatusDate { get; set; }
 
     public InspectionResult() { }
     
@@ -20,6 +19,5 @@ public record InspectionResult
         Date = DateTime.Parse(xml.Date); 
         Result = xml.Result;
         Status = xml.Status;
-        StatusDate = DateTime.Parse(xml.StatusDate); 
     }
 }

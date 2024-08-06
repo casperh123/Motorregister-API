@@ -16,8 +16,5 @@ namespace MotorRegister.Core.XmlModels
 
         [XmlElement(ElementName = "SynResultatSynStatus")]
         public string Status { get; set; }
-
-        [XmlElement(ElementName = "SynResultatSynStatusDato")]
-        public string StatusDate { get; set; }
     }
 }

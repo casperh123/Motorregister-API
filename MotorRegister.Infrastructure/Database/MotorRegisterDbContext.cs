@@ -22,6 +22,6 @@ public sealed class MotorRegisterDbContext : DbContext
             .HasKey(vd => vd.ChassisNumber);
 
         modelBuilder.Entity<InspectionResult>()
-            .HasKey(i => new { i.VehicleId, i.StatusDate });
+            .HasKey(i => new { i.VehicleId, i.Date });
     }
 }

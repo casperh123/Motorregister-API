@@ -62,15 +62,14 @@ namespace MotorRegister.Infrastrucutre.Migrations
                 columns: table => new
                 {
                     VehicleId = table.Column<string>(type: "TEXT", nullable: false),
-                    StatusDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Type = table.Column<string>(type: "TEXT", nullable: false),
                     Date = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Type = table.Column<string>(type: "TEXT", nullable: false),
                     Result = table.Column<string>(type: "TEXT", nullable: false),
                     Status = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_InspectionResults", x => new { x.VehicleId, x.StatusDate });
+                    table.PrimaryKey("PK_InspectionResults", x => new { x.VehicleId, x.Date });
                     table.ForeignKey(
                         name: "FK_InspectionResults_Vehicles_VehicleId",
                         column: x => x.VehicleId,

@@ -22,9 +22,6 @@ namespace MotorRegister.Infrastrucutre.Migrations
                     b.Property<string>("VehicleId")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("StatusDate")
-                        .HasColumnType("TEXT");
-
                     b.Property<DateTime>("Date")
                         .HasColumnType("TEXT");
 
@@ -40,7 +37,7 @@ namespace MotorRegister.Infrastrucutre.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("VehicleId", "StatusDate");
+                    b.HasKey("VehicleId", "Date");
 
                     b.ToTable("InspectionResults");
                 });
