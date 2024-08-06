@@ -3,6 +3,7 @@ using MotorRegister.Core.Entities;
 using MotorRegister.Core.Repository;
 using MotorRegister.Core.XmlModels;
 using MotorRegister.Infrastrucutre.Database;
+using Z.EntityFramework.Extensions;
 
 namespace MotorRegister.Infrastrucutre.Repository;
 
@@ -28,18 +29,10 @@ public class VehicleRepository : IVehicleRepository
 
     public async Task AddVehiclesAsync(List<Vehicle> vehicles)
     {
-        IEnumerable<InspectionResult> inspectionResults = vehicles.SelectMany(v => v.InspectionResults).Distinct();
-        
-        await _database.BulkInsertAsync(vehicles, options =>
+        await _database.BulkInsertOptimizedAsync(vehicles, options =>
         {
             options.IncludeGraph = true;
             options.InsertIfNotExists = true;
         });
-        
-        /*
-        foreach (Vehicle vehicle in vehicles)
-        {
-            await AddInspectionResultsASync(vehicle);
-        }*/
     }
 }

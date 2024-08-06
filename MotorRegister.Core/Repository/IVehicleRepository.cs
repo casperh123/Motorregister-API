@@ -1,4 +1,5 @@
 using MotorRegister.Core.Entities;
+using Z.EntityFramework.Extensions;
 
 namespace MotorRegister.Core.Repository;
 

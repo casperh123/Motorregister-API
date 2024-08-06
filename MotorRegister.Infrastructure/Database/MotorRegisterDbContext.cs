@@ -21,7 +21,7 @@ public sealed class MotorRegisterDbContext : DbContext
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.Entity<Permit>()
-            .HasKey(p => new {p.PermitType, p.Comment, p.ValidFrom});
+            .HasKey(p => new { PermitType = p.Type, p.Comment, p.ValidFrom});
 
         modelBuilder.Entity<VehicleInformation>()
             .HasKey(vd => vd.ChassisNumber);

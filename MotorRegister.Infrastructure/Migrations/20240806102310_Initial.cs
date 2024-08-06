@@ -29,9 +29,9 @@ namespace MotorRegister.Infrastrucutre.Migrations
                     TowingCapability = table.Column<bool>(type: "INTEGER", nullable: false),
                     Comment = table.Column<string>(type: "TEXT", nullable: true),
                     ManufacturerName = table.Column<string>(type: "TEXT", nullable: false),
-                    ModelName = table.Column<string>(type: "TEXT", nullable: false),
-                    VariantName = table.Column<string>(type: "TEXT", nullable: false),
-                    VehicleType = table.Column<string>(type: "TEXT", nullable: false)
+                    Model = table.Column<string>(type: "TEXT", nullable: false),
+                    Variant = table.Column<string>(type: "TEXT", nullable: false),
+                    Type = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -43,12 +43,11 @@ namespace MotorRegister.Infrastrucutre.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "TEXT", nullable: false),
-                    VehicleTypeNumber = table.Column<int>(type: "INTEGER", nullable: false),
                     VehicleTypeName = table.Column<string>(type: "TEXT", nullable: false),
                     Usage = table.Column<string>(type: "TEXT", nullable: false),
                     RegistrationNumber = table.Column<string>(type: "TEXT", nullable: true),
                     RegistrationNumberExpirationDate = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    RegistrationStatus = table.Column<string>(type: "TEXT", nullable: false),
+                    RegistrationStatus = table.Column<string>(type: "TEXT", nullable: true),
                     RegistrationStatusDate = table.Column<DateTime>(type: "TEXT", nullable: true),
                     InformationId = table.Column<string>(type: "TEXT", nullable: false)
                 },
@@ -67,7 +66,7 @@ namespace MotorRegister.Infrastrucutre.Migrations
                 name: "InspectionResults",
                 columns: table => new
                 {
-                    InspectionResultId = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Type = table.Column<string>(type: "TEXT", nullable: false),
                     Date = table.Column<DateTime>(type: "TEXT", nullable: false),
@@ -78,7 +77,7 @@ namespace MotorRegister.Infrastrucutre.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_InspectionResults", x => x.InspectionResultId);
+                    table.PrimaryKey("PK_InspectionResults", x => x.Id);
                     table.ForeignKey(
                         name: "FK_InspectionResults_Vehicles_VehicleId",
                         column: x => x.VehicleId,
@@ -92,13 +91,13 @@ namespace MotorRegister.Infrastrucutre.Migrations
                 {
                     ValidFrom = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Comment = table.Column<string>(type: "TEXT", nullable: false),
-                    PermitType = table.Column<string>(type: "TEXT", nullable: false),
-                    PermitId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Type = table.Column<string>(type: "TEXT", nullable: false),
+                    Id = table.Column<int>(type: "INTEGER", nullable: false),
                     VehicleId = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Permits", x => new { x.PermitType, x.Comment, x.ValidFrom });
+                    table.PrimaryKey("PK_Permits", x => new { x.Type, x.Comment, x.ValidFrom });
                     table.ForeignKey(
                         name: "FK_Permits_Vehicles_VehicleId",
                         column: x => x.VehicleId,

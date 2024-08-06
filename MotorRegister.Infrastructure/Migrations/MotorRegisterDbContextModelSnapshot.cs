@@ -19,7 +19,7 @@ namespace MotorRegister.Infrastrucutre.Migrations
 
             modelBuilder.Entity("MotorRegister.Core.Entities.InspectionResult", b =>
                 {
-                    b.Property<int>("InspectionResultId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -44,7 +44,7 @@ namespace MotorRegister.Infrastrucutre.Migrations
                     b.Property<string>("VehicleId")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("InspectionResultId");
+                    b.HasKey("Id");
 
                     b.HasIndex("VehicleId");
 
@@ -53,7 +53,7 @@ namespace MotorRegister.Infrastrucutre.Migrations
 
             modelBuilder.Entity("MotorRegister.Core.Entities.Permit", b =>
                 {
-                    b.Property<string>("PermitType")
+                    b.Property<string>("Type")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Comment")
@@ -62,13 +62,13 @@ namespace MotorRegister.Infrastrucutre.Migrations
                     b.Property<DateTime>("ValidFrom")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("PermitId")
+                    b.Property<int>("Id")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("VehicleId")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("PermitType", "Comment", "ValidFrom");
+                    b.HasKey("Type", "Comment", "ValidFrom");
 
                     b.HasIndex("VehicleId");
 
@@ -91,7 +91,6 @@ namespace MotorRegister.Infrastrucutre.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("RegistrationStatus")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("RegistrationStatusDate")
@@ -104,9 +103,6 @@ namespace MotorRegister.Infrastrucutre.Migrations
                     b.Property<string>("VehicleTypeName")
                         .IsRequired()
                         .HasColumnType("TEXT");
-
-                    b.Property<int>("VehicleTypeNumber")
-                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -142,7 +138,7 @@ namespace MotorRegister.Infrastrucutre.Migrations
                     b.Property<int>("MaxAxleLoad")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("ModelName")
+                    b.Property<string>("Model")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -164,11 +160,11 @@ namespace MotorRegister.Infrastrucutre.Migrations
                     b.Property<bool>("TowingCapability")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("VariantName")
+                    b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("VehicleType")
+                    b.Property<string>("Variant")
                         .IsRequired()
                         .HasColumnType("TEXT");
 

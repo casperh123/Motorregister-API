@@ -6,12 +6,11 @@ namespace MotorRegister.Core.Entities;
 public record Vehicle
 {
     public string Id { get; set; }
-    public int VehicleTypeNumber { get; set; }
     public string VehicleTypeName { get; set; }
     public string Usage { get; set; }
     public string? RegistrationNumber { get; set; }
     public DateTime? RegistrationNumberExpirationDate { get; set; }
-    public string RegistrationStatus { get; set; }
+    public string? RegistrationStatus { get; set; }
     public DateTime? RegistrationStatusDate { get; set; }
     
     public string InformationId { get; set; }
@@ -25,7 +24,6 @@ public Vehicle() { }
     public Vehicle(XmlVehicle xmlVehicle)
     {
         Id = xmlVehicle.Id;
-        VehicleTypeNumber = xmlVehicle.VehicleTypeNumber;
         VehicleTypeName = xmlVehicle.VehicleTypeName;
         RegistrationNumber = xmlVehicle.RegistrationNumber;
         RegistrationNumberExpirationDate = DateTime.TryParse(xmlVehicle.RegistrationNumberExpirationDate, out var regExpDate) ? regExpDate : (DateTime?)null;
@@ -48,6 +46,14 @@ public Vehicle() { }
             foreach (XmlInspectionResult result in xmlVehicle.InspectionResult)
             {
                 InspectionResults.Add(new InspectionResult(result));
+            }
+        }
+
+        if (xmlVehicle.Permissions != null)
+        {
+            foreach(XmlPermitStructure permit in xmlVehicle.Permissions)
+            {
+                Permits.Add(new Permit(permit));
             }
         }
     }

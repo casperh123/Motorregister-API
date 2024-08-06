@@ -9,5 +9,5 @@ public record XmlVariant
     public string Id { get; set; }
 
     [XmlElement(ElementName = "KoeretoejVariantTypeNavn")]
-    public string Name { get; set; }
+    public string? Name { get; set; }
 }

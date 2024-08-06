@@ -4,6 +4,7 @@ using MotorRegister.Core.Repository;
 using MotorRegister.Core.XmlModels;
 using MotorRegister.Infrastrucutre.FtpDownloader;
 using MotorRegister.Infrastrucutre.XmlDeserialization;
+using Z.EntityFramework.Extensions;
 
 namespace MotorRegister.Indexer
 {

@@ -6,10 +6,10 @@ namespace MotorRegister.Core.Entities;
 public record Permit
 {
     [Key]
-    public int PermitId { get; set; } // Auto-incrementing
+    public int Id { get; set; } // Auto-incrementing
     public DateTime ValidFrom { get; set; }
     public string Comment { get; set; }
-    public string PermitType { get; set; }
+    public string Type { get; set; }
     
     public Permit() {}
     
@@ -17,7 +17,7 @@ public record Permit
     {
         ValidFrom = DateTime.Parse(xmlPermitStructure.ValidFrom); 
         Comment = xmlPermitStructure.Comment;
-        PermitType = xmlPermitStructure.XmlPermitType.Name;
+        Type = xmlPermitStructure.XmlPermitType.Name;
     }
 
 }

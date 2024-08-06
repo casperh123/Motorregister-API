@@ -22,9 +22,9 @@ public record VehicleInformation
     public bool TowingCapability { get; set; }
     public string? Comment { get; set; }
     public string ManufacturerName { get; set; }
-    public string ModelName { get; set; }
-    public string VariantName { get; set; }
-    public string VehicleType { get; set; }
+    public string Model { get; set; }
+    public string Variant { get; set; }
+    public string Type { get; set; }
     
     public VehicleInformation() { }
 
@@ -43,11 +43,21 @@ public record VehicleInformation
         PassengerCount = xmlVehicleInfo.PassengerCount;
         TowingCapability = xmlVehicleInfo.TowingCapability;
         Comment = xmlVehicleInfo.Comment;
-        
-        ManufacturerName = xmlVehicleInfo.Designation.ManufacturerName;
-        ModelName = xmlVehicleInfo.Designation.XmlModel.Name;
-        VariantName = xmlVehicleInfo.Designation.XmlVariant.Name;
-        VehicleType = xmlVehicleInfo.Designation.XmlVariant.Name;
 
+        if (xmlVehicleInfo.Designation != null)
+        {
+            ManufacturerName = xmlVehicleInfo.Designation.ManufacturerName;
+            Model = xmlVehicleInfo.Designation.XmlModel?.Name ?? "";
+            Variant = xmlVehicleInfo.Designation.XmlVariant?.Name ?? "";
+            Type = xmlVehicleInfo.Designation.XmlVariant?.Name ?? "";
+        }
+        else
+        {
+            ManufacturerName = "";
+            Model = "";
+            Variant = "";
+            Type = "";
+        }
+        
     }
 }

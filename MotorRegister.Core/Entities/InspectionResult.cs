@@ -6,7 +6,7 @@ namespace MotorRegister.Core.Entities;
 public record InspectionResult
 {
     [Key]
-    public int InspectionResultId { get; set; } // Auto-incrementing
+    public int Id { get; set; } // Auto-incrementing
     public string Type { get; set; }
     public DateTime Date { get; set; }
     public string Result { get; set; }
