@@ -56,12 +56,13 @@ builder.Services.AddHostedService<WeeklyIndexingService>(
         )
 );
 
-
-
+builder.Logging.SetMinimumLevel(LogLevel.Error);
 var host = builder.Build();
 
 using var scope = host.Services.CreateScope();
 var dbContext = scope.ServiceProvider.GetRequiredService<MotorRegisterDbContext>();
 dbContext.Database.Migrate();
+
+
 
 host.Run();

@@ -9,7 +9,7 @@ public record Vehicle
     public int VehicleTypeNumber { get; set; }
     public string VehicleTypeName { get; set; }
     public string Usage { get; set; }
-    public string RegistrationNumber { get; set; }
+    public string? RegistrationNumber { get; set; }
     public DateTime? RegistrationNumberExpirationDate { get; set; }
     public string RegistrationStatus { get; set; }
     public DateTime? RegistrationStatusDate { get; set; }

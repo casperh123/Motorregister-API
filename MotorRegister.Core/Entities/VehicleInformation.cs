@@ -20,7 +20,7 @@ public record VehicleInformation
     public int MaxAxleLoad { get; set; }
     public int PassengerCount { get; set; }
     public bool TowingCapability { get; set; }
-    public string Comment { get; set; }
+    public string? Comment { get; set; }
     public string ManufacturerName { get; set; }
     public string ModelName { get; set; }
     public string VariantName { get; set; }

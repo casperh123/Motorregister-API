@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using MotorRegister.Core.Entities;
 using MotorRegister.Core.Repository;
 using MotorRegister.Core.XmlModels;
@@ -71,15 +72,17 @@ namespace MotorRegister.Indexer
                 {
                     Vehicle vehicle = new Vehicle(xmlVehicle);
                     
-                    if (vehicleBatch.Count < 10000)
+                    if (vehicleBatch.Count < 50000)
                     {
                         vehicleBatch.Add(vehicle);
                         continue;
                     }
+
+                    Stopwatch stopwatch = Stopwatch.StartNew();
                     await vehicleRepository.AddVehiclesAsync(vehicleBatch);
+                    _logger.LogInformation($"Saved vehicles, TIMING: {stopwatch.ElapsedMilliseconds} ms.");
                     vehicleBatch.Clear();
                     vehicleBatch.Add(vehicle);
-                    
                 }
 
                 if (vehicleBatch.Count > 0)

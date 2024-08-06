@@ -12,22 +12,6 @@ namespace MotorRegister.Infrastrucutre.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "VehicleDesignations",
-                columns: table => new
-                {
-                    VehicleDesignationId = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    ManufacturerName = table.Column<string>(type: "TEXT", nullable: false),
-                    ModelName = table.Column<string>(type: "TEXT", nullable: false),
-                    VariantName = table.Column<string>(type: "TEXT", nullable: false),
-                    VehicleType = table.Column<string>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_VehicleDesignations", x => x.VehicleDesignationId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "VehicleInformations",
                 columns: table => new
                 {
@@ -43,18 +27,15 @@ namespace MotorRegister.Infrastrucutre.Migrations
                     MaxAxleLoad = table.Column<int>(type: "INTEGER", nullable: false),
                     PassengerCount = table.Column<int>(type: "INTEGER", nullable: false),
                     TowingCapability = table.Column<bool>(type: "INTEGER", nullable: false),
-                    Comment = table.Column<string>(type: "TEXT", nullable: false),
-                    VehicleDesignationId = table.Column<int>(type: "INTEGER", nullable: false)
+                    Comment = table.Column<string>(type: "TEXT", nullable: true),
+                    ManufacturerName = table.Column<string>(type: "TEXT", nullable: false),
+                    ModelName = table.Column<string>(type: "TEXT", nullable: false),
+                    VariantName = table.Column<string>(type: "TEXT", nullable: false),
+                    VehicleType = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_VehicleInformations", x => x.ChassisNumber);
-                    table.ForeignKey(
-                        name: "FK_VehicleInformations_VehicleDesignations_VehicleDesignationId",
-                        column: x => x.VehicleDesignationId,
-                        principalTable: "VehicleDesignations",
-                        principalColumn: "VehicleDesignationId",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -65,7 +46,7 @@ namespace MotorRegister.Infrastrucutre.Migrations
                     VehicleTypeNumber = table.Column<int>(type: "INTEGER", nullable: false),
                     VehicleTypeName = table.Column<string>(type: "TEXT", nullable: false),
                     Usage = table.Column<string>(type: "TEXT", nullable: false),
-                    RegistrationNumber = table.Column<string>(type: "TEXT", nullable: false),
+                    RegistrationNumber = table.Column<string>(type: "TEXT", nullable: true),
                     RegistrationNumberExpirationDate = table.Column<DateTime>(type: "TEXT", nullable: true),
                     RegistrationStatus = table.Column<string>(type: "TEXT", nullable: false),
                     RegistrationStatusDate = table.Column<DateTime>(type: "TEXT", nullable: true),
@@ -136,11 +117,6 @@ namespace MotorRegister.Infrastrucutre.Migrations
                 column: "VehicleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_VehicleInformations_VehicleDesignationId",
-                table: "VehicleInformations",
-                column: "VehicleDesignationId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Vehicles_InformationId",
                 table: "Vehicles",
                 column: "InformationId");
@@ -160,9 +136,6 @@ namespace MotorRegister.Infrastrucutre.Migrations
 
             migrationBuilder.DropTable(
                 name: "VehicleInformations");
-
-            migrationBuilder.DropTable(
-                name: "VehicleDesignations");
         }
     }
 }

@@ -8,7 +8,6 @@ public sealed class MotorRegisterDbContext : DbContext
 {
     public DbSet<Vehicle> Vehicles { get; set; }
     public DbSet<VehicleInformation> VehicleInformations { get; set; }
-    public DbSet<VehicleDesignation> VehicleDesignations { get; set; }
     public DbSet<InspectionResult> InspectionResults { get; set; }
     public DbSet<Permit> Permits { get; set; }
 
