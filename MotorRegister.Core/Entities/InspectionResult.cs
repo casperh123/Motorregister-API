@@ -1,10 +1,12 @@
+using System.ComponentModel.DataAnnotations;
 using MotorRegister.Core.XmlModels;
 
-namespace MotorRegister.Core.Models;
+namespace MotorRegister.Core.Entities;
 
 public record InspectionResult
 {
-    public string VehicleId { get; set; }
+    [Key]
+    public int InspectionResultId { get; set; } // Auto-incrementing
     public string Type { get; set; }
     public DateTime Date { get; set; }
     public string Result { get; set; }
@@ -13,9 +15,8 @@ public record InspectionResult
 
     public InspectionResult() { }
     
-    public InspectionResult(XmlInspectionResult xml, string vehicleId)
+    public InspectionResult(XmlInspectionResult xml)
     {
-        VehicleId = vehicleId;
         Type = xml.Type;
         Date = DateTime.Parse(xml.Date); 
         Result = xml.Result;

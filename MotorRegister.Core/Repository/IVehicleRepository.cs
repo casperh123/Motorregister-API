@@ -1,4 +1,4 @@
-using MotorRegister.Core.Models;
+using MotorRegister.Core.Entities;
 
 namespace MotorRegister.Core.Repository;
 

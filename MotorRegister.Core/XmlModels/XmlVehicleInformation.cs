@@ -6,16 +6,16 @@ namespace MotorRegister.Core.XmlModels;
 public record XmlVehicleInformation
 {
     [XmlElement(ElementName = "KoeretoejOplysningOprettetUdFra")]
-    public string CreatedFrom { get; set; }
+    public string? CreatedFrom { get; set; }
 
     [XmlElement(ElementName = "KoeretoejOplysningStatus")]
-    public string Status { get; set; }
+    public string? Status { get; set; }
 
     [XmlElement(ElementName = "KoeretoejOplysningStatusDato")]
-    public string StatusDate { get; set; }
+    public DateTime? StatusDate { get; set; }
 
     [XmlElement(ElementName = "KoeretoejOplysningFoersteRegistreringDato")]
-    public string FirstRegistrationDate { get; set; }
+    public DateTime? FirstRegistrationDate { get; set; }
 
     [XmlElement(ElementName = "KoeretoejOplysningStelNummer")]
     public string ChassisNumber { get; set; }

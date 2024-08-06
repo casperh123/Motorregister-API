@@ -1,4 +1,4 @@
-using MotorRegister.Core.Models;
+using MotorRegister.Core.Entities;
 using MotorRegister.Core.Repository;
 using MotorRegister.Core.XmlModels;
 using MotorRegister.Infrastrucutre.FtpDownloader;
@@ -71,7 +71,7 @@ namespace MotorRegister.Indexer
                 {
                     Vehicle vehicle = new Vehicle(xmlVehicle);
                     
-                    if (vehicleBatch.Count < 1000)
+                    if (vehicleBatch.Count < 10000)
                     {
                         vehicleBatch.Add(vehicle);
                         continue;
