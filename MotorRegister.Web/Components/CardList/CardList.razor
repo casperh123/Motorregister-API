@@ -1,0 +1,14 @@
+@using MotorRegister.Core.Entities
+@using MotorRegister.Web.Components.Cards
+
+<div class="card-wrapper">
+    @foreach (Vehicle item in Items)
+    {
+        <VehicleCard Vehicle="item"></VehicleCard>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public List<Vehicle> Items { get; set; }
+}

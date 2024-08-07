@@ -1,0 +1,42 @@
+@using MotorRegister.Core.Entities
+@typeparam TItem
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Type</th>
+        <th>Usage</th>
+        <th>Registration Number</th>
+        <th>Manufacturer</th>
+        <th>Model</th>
+        <th>Variant</th>
+    </tr>
+    </thead>
+    <tbody>
+    @if (Vehicles != null && Vehicles.Any())
+    {
+        foreach (var vehicle in Vehicles)
+        {
+            <tr>
+                <td>@vehicle.VehicleTypeName</td>
+                <td>@vehicle.Usage</td>
+                <td>@vehicle.RegistrationNumber</td>
+                <td>@vehicle.Information.ManufacturerName</td>
+                <td>@vehicle.Information.Model</td>
+                <td>@vehicle.Information.Variant</td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr>
+            <td colspan="6">No vehicles found</td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+@code {
+    [Parameter] 
+    public List<Vehicle> Vehicles { get; set; }
+}

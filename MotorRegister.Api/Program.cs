@@ -1,16 +1,12 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using MotorRegister.Core.Entities;
 using MotorRegister.Core.Repository;
 using MotorRegister.Infrastrucutre.Database;
-using MotorRegister.Infrastrucutre.FtpDownloader;
 using MotorRegister.Infrastrucutre.Repository;
-using MotorRegister.Infrastrucutre.XmlDeserialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -34,6 +30,16 @@ builder.Services.AddDbContext<MotorRegisterDbContext>(options =>
 
 builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigins",
+        corsBuilder =>
+        {
+            corsBuilder.WithOrigins("http://localhost:5040")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
 
 var app = builder.Build();
 
@@ -46,12 +52,16 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
 app.UseResponseCompression();
+app.UseCors("AllowSpecificOrigins");
+app.UseAuthorization();
+
 app.MapControllers();
 
-using var scope = app.Services.CreateScope();
-var dbContext = scope.ServiceProvider.GetRequiredService<MotorRegisterDbContext>();
-dbContext.Database.Migrate();
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<MotorRegisterDbContext>();
+    dbContext.Database.Migrate();
+}
 
 app.Run();

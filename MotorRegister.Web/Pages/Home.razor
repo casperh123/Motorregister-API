@@ -1,0 +1,35 @@
+﻿@page "/"
+@using MotorRegister.Core.Api
+@using MotorRegister.Core.Entities
+@using MotorRegister.Web.Components.Tables
+@using MotorRegister.Web.Components.Pagination
+@using MotorRegister.Web.Components.CardList
+@using MotorRegister.Web.Components.Cards
+@inject HttpClient HttpClient
+
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, world!</h1>
+
+<div>
+    <CardList Items="@Vehicles.Items" />
+    <Paginator PageIndex="Vehicles.PageIndex" TotalPages="Vehicles.TotalPages" PageChanged="LoadVehicles" TItem="Vehicle"/>
+</div>
+
+@code {
+    private PaginatedResponse<Vehicle> Vehicles = new PaginatedResponse<Vehicle>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadVehicles(1);
+    }
+
+    private async Task LoadVehicles(int pageNumber)
+    {
+        PaginatedResponse<Vehicle> newVehicles = await HttpClient.GetFromJsonAsync<PaginatedResponse<Vehicle>>($"Vehicle/GetVehicles?pageSize=20&pageNumber={pageNumber}");
+        Vehicles.Items = newVehicles.Items;
+        Vehicles.PageIndex = newVehicles.PageIndex;
+        Vehicles.PageSize = newVehicles.PageSize;
+        Vehicles.TotalCount = newVehicles.TotalCount;
+    }
+}

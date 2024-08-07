@@ -1,0 +1,32 @@
+@typeparam TItem
+
+<div class="pagination">
+    <button @onclick="PreviousPage" disabled="@(!HasPreviousPage)">Previous</button>
+    <span class="pagination-info">Page @PageIndex of @TotalPages</span>
+    <button @onclick="NextPage" disabled="@(!HasNextPage)">Next</button>
+</div>
+
+@code {
+    [Parameter] public int PageIndex { get; set; }
+    [Parameter] public int TotalPages { get; set; }
+    [Parameter] public EventCallback<int> PageChanged { get; set; }
+    
+    private bool HasPreviousPage => PageIndex > 1;
+    private bool HasNextPage => PageIndex < TotalPages;
+
+    private async Task PreviousPage()
+    {
+        if (HasPreviousPage)
+        {
+            await PageChanged.InvokeAsync(PageIndex - 1);
+        }
+    }
+
+    private async Task NextPage()
+    {
+        if (HasNextPage)
+        {
+            await PageChanged.InvokeAsync(PageIndex + 1);
+        }
+    }
+}

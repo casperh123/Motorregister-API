@@ -36,6 +36,19 @@ public class VehicleRepository : IVehicleRepository
             .FirstAsync(v => v.RegistrationNumber == registrationNumber);
     }
 
+    public async Task<List<Vehicle>> GetVehicles(int pageSize, int page)
+    {
+        return await _database.Vehicles
+            .AsNoTracking()
+            .Include(v => v.Information)
+            .Include(v => v.InspectionResults)
+            .Skip(pageSize * page)
+            .Take(pageSize)
+            // Ensure the pageSize is used to limit the number of returned vehicles
+            .ToListAsync(); // This ensures that the query is executed asynchronously and a list is returned
+    }
+
+
     public async Task AddVehiclesAsync(List<Vehicle> vehicles)
     {
         Stopwatch stopwatch = Stopwatch.StartNew();
@@ -45,5 +58,10 @@ public class VehicleRepository : IVehicleRepository
             options.InsertIfNotExists = true;
         });
         _logger.LogInformation($"Entities saves. Time taken: {stopwatch.ElapsedMilliseconds} ms.");
+    }
+
+    public async Task<long> GetVehicleCountAsync()
+    {
+        return await _database.Vehicles.CountAsync();
     }
 }

@@ -10,4 +10,8 @@ public interface IVehicleRepository
     public Task<Vehicle?> GetVehicleByLicensePlate(string registrationNumber);
 
     public Task AddVehiclesAsync(List<Vehicle> vehicles);
+
+    public Task<List<Vehicle>> GetVehicles(int pageNumber, int page);
+
+    public Task<long> GetVehicleCountAsync();
 }
