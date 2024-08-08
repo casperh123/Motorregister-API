@@ -1,9 +1,9 @@
 using System.Xml.Serialization;
 
-namespace MotorRegister.Core.XmlModels;
+namespace MotorRegister.Core.Models;
 
 [XmlRoot(ElementName = "Statistik", Namespace = "http://skat.dk/dmr/2007/05/31/")]
-public record XmlVehicle
+public class XmlVehicle
 {
     [XmlElement(ElementName = "KoeretoejIdent")]
     public string Id { get; set; }
@@ -27,12 +27,14 @@ public record XmlVehicle
     public XmlVehicleInformation Information { get; set; }
 
     [XmlElement(ElementName = "SynResultatStruktur")]
-    public List<XmlInspectionResult> InspectionResult { get; set; }
+    public List<XmlInspectionResult> InspectionResults { get; set; }
 
     [XmlElement(ElementName = "KoeretoejRegistreringStatus")]
     public string RegistrationStatus { get; set; }
 
     [XmlElement(ElementName = "KoeretoejRegistreringStatusDato")]
     public string RegistrationStatusDate { get; set; }
-    
+
+    [XmlElement(ElementName = "TilladelseSamling")]
+    public List<Permission> Permissions { get; set; }
 }

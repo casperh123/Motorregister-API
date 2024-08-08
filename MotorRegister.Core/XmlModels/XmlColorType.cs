@@ -2,11 +2,11 @@ using System.Xml.Serialization;
 
 namespace MotorRegister.Core.Models;
 
-public class XmlModel
+public class XmlColorType
 {
-    [XmlElement(ElementName = "KoeretoejModelTypeNummer")]
+    [XmlElement(ElementName = "FarveTypeNummer")]
     public int Id { get; set; }
 
-    [XmlElement(ElementName = "KoeretoejModelTypeNavn")]
+    [XmlElement(ElementName = "FarveTypeNavn")]
     public string Name { get; set; }
 }
