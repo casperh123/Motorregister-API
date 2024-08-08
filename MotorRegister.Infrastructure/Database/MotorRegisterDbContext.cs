@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using MotorRegister.Core.Entities;
 using MotorRegister.Core.XmlModels;
 
 namespace MotorRegister.Infrastrucutre.Database;
@@ -17,5 +18,8 @@ public sealed class MotorRegisterDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<InspectionResult>()
+            .HasKey(i => new { i.VehicleId, i.Date });
     }
 }

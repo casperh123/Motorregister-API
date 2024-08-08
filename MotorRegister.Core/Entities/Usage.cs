@@ -3,17 +3,17 @@ using MotorRegister.Core.XmlModels;
 
 namespace MotorRegister.Core.Entities;
 
-public record Model
+public record Usage
 {
     [Key]
-    public int Id { get; set; }
+    public long Id { get; set; }
     public string Name { get; set; }
     
-    public Model() {}
+    public Usage() {}
 
-    public Model(XmlModel model)
+    public Usage(XmlVehicleUsage type)
     {
-        Id = model.Id;
-        Name = model.Name;
+        Id = type.Id;
+        Name = type.Name;
     }
 }

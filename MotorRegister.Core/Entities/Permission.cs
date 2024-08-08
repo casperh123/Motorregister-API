@@ -1,9 +1,11 @@
+using System.ComponentModel.DataAnnotations;
 using MotorRegister.Core.XmlModels;
 
 namespace MotorRegister.Core.Entities;
 
 public record Permission
 {
+    [Key]
     public int VehicleId { get; set; }
     public string ValidFrom { get; set; }
     public string Comment { get; set; }

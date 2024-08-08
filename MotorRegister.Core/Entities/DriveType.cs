@@ -1,17 +1,21 @@
+using System.ComponentModel.DataAnnotations;
 using MotorRegister.Core.XmlModels;
 
 namespace MotorRegister.Core.Entities;
 
 public record DriveType
 {
-    public PowerType PowerType { get; set; }
+    [Key]
+    public long Id { get; set; }
+    public string Name { get; set; }
     public bool PrimaryDrive { get; set; }
     
     public DriveType() {}
 
     public DriveType(XmlDriveType driveType)
     {
-        PowerType = new PowerType(driveType.Type);
+        Id = driveType.Type.Id;
+        Name = driveType.Type.Name;
         PrimaryDrive = driveType.PrimaryDrive;
     }
 }

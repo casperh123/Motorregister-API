@@ -1,9 +1,12 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using MotorRegister.Core.XmlModels;
 
 namespace MotorRegister.Core.Entities;
 
 public record Information
 {
+    [Key]
     public int VehicleId { get; set; }
     public string CreatedFrom { get; set; }
     public string Status { get; set; }
@@ -20,11 +23,17 @@ public record Information
     public string TypeApprovalNumber { get; set; }
     public string Comment { get; set; }
     public Designation Designation { get; set; }
+    
+    [ForeignKey("Color")]
+    public long ColorId { get; set; }
     public Color Color { get; set; }
+    
+    [ForeignKey("Norm")]
+    public int NormId { get; set; }
     public NormType Norm { get; set; }
     public bool ParticleFilter { get; set; }
-    public Motor Motor { get; set; }
-    
+    public List<DriveType> DriveTypes { get; set; }
+
     public Information() {}
 
     public Information(XmlVehicleInformation information, int vehicleId)
@@ -45,9 +54,16 @@ public record Information
         TypeApprovalNumber = information.TypeApprovalNumber;
         Comment = information.Comment;
         Designation = new Designation(information.Designation, vehicleId);
+        ColorId = Color.Id;
         Color = new Color(information.Color);
+        NormId = information.Norm.Type.Id;
         Norm = new NormType(information.Norm.Type);
         ParticleFilter = information.EnvironmentalInformation.ParticleFilter;
-        Motor = new Motor(information.Motor);
+        DriveTypes = [];
+        
+        foreach (XmlDrive driveType in information.Motor.XmlDriveAssembly.Drives)
+        {
+            DriveTypes.Add(new DriveType(driveType.Type));
+        }
     }
 }
