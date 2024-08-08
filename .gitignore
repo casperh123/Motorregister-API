@@ -56,6 +56,8 @@ artifacts/
 # StyleCop
 StyleCopReport.xml
 
+*.xml
+
 ESStatistikListeModtag-20240721-194743.zip
 
 # Files built by Visual Studio

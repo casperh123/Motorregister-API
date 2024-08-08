@@ -1,6 +1,6 @@
 using System.Xml.Serialization;
 
-namespace MotorRegister.Core.Models;
+namespace MotorRegister.Core.XmlModels;
 
 public class XmlVehicleDesignation
 {
@@ -14,8 +14,8 @@ public class XmlVehicleDesignation
     public XmlModel XmlModel { get; set; }
 
     [XmlElement(ElementName = "Variant")] 
-    public Variant Variant { get; set; }
+    public XmlVariant XmlVariant { get; set; }
 
     [XmlElement(ElementName = "Type")] 
-    public Type Type { get; set; }
+    public XmlType XmlType { get; set; }
 }

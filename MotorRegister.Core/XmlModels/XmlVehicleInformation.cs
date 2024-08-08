@@ -1,6 +1,6 @@
 using System.Xml.Serialization;
 
-namespace MotorRegister.Core.Models;
+namespace MotorRegister.Core.XmlModels;
 
 public class XmlVehicleInformation
 {
@@ -47,16 +47,16 @@ public class XmlVehicleInformation
     public string Comment { get; set; }
 
     [XmlElement(ElementName = "KoeretoejBetegnelseStruktur")]
-    public VehicleDesignation Designation { get; set; }
+    public XmlVehicleDesignation Designation { get; set; }
 
     [XmlElement(ElementName = "KoeretoejFarveStruktur")]
-    public VehicleColor Color { get; set; }
+    public XmlVehicleColor Color { get; set; }
 
     [XmlElement(ElementName = "KoeretoejNormStruktur")]
     public XmlVehicleNorm Norm { get; set; }
 
     [XmlElement(ElementName = "KoeretoejMiljoeOplysningStruktur")]
-    public VehicleEnvironmentalInformation EnvironmentalInformation { get; set; }
+    public XmlVehicleEnvironmentalInformation EnvironmentalInformation { get; set; }
 
     [XmlElement(ElementName = "KoeretoejMotorStruktur")]
     public XmlVehicleMotor Motor { get; set; }

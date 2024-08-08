@@ -1,6 +1,6 @@
 using System.Xml.Serialization;
 
-namespace MotorRegister.Core.Models;
+namespace MotorRegister.Core.XmlModels;
 
 [XmlRoot(ElementName = "Statistik", Namespace = "http://skat.dk/dmr/2007/05/31/")]
 public class XmlVehicle
@@ -36,5 +36,5 @@ public class XmlVehicle
     public string RegistrationStatusDate { get; set; }
 
     [XmlElement(ElementName = "TilladelseSamling")]
-    public List<Permission> Permissions { get; set; }
+    public List<XmlPermission> Permissions { get; set; }
 }

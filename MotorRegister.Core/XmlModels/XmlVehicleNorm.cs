@@ -1,9 +1,9 @@
 using System.Xml.Serialization;
 
-namespace MotorRegister.Core.Models;
+namespace MotorRegister.Core.XmlModels;
 
 public class XmlVehicleNorm
 {
     [XmlElement(ElementName = "NormTypeStruktur")]
-    public NormType Type { get; set; }
+    public XmlNormType Type { get; set; }
 }

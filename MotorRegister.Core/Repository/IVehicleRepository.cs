@@ -1,17 +1,16 @@
-using MotorRegister.Core.Entities;
-using Z.EntityFramework.Extensions;
+using MotorRegister.Core.XmlModels;
 
 namespace MotorRegister.Core.Repository;
 
 public interface IVehicleRepository
 {
-    public Task SaveVehicle(Vehicle xmlVehicle);
+    public Task SaveVehicle(XmlVehicle xmlXmlVehicle);
 
-    public Task<Vehicle?> GetVehicleByLicensePlate(string registrationNumber);
+    public Task<XmlVehicle?> GetVehicleByLicensePlate(string registrationNumber);
 
-    public Task AddVehiclesAsync(List<Vehicle> vehicles);
+    public Task AddVehiclesAsync(List<XmlVehicle> vehicles);
 
-    public Task<List<Vehicle>> GetVehicles(int pageNumber, int page);
+    public Task<List<XmlVehicle>> GetVehicles(int pageNumber, int page);
 
     public Task<long> GetVehicleCountAsync();
 }

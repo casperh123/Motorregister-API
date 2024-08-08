@@ -1,9 +1,9 @@
 using System.Xml.Serialization;
 
-namespace MotorRegister.Core.Models;
+namespace MotorRegister.Core.XmlModels;
 
 public class XmlDrive
 {
     [XmlElement(ElementName = "DrivmiddelStruktur")]
-    public DriveType Type { get; set; }
+    public XmlDriveType Type { get; set; }
 }

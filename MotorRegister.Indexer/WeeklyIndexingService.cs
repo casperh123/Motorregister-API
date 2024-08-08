@@ -1,10 +1,7 @@
-using System.Diagnostics;
-using MotorRegister.Core.Entities;
 using MotorRegister.Core.Repository;
 using MotorRegister.Core.XmlModels;
 using MotorRegister.Infrastrucutre.FtpDownloader;
 using MotorRegister.Infrastrucutre.XmlDeserialization;
-using Z.EntityFramework.Extensions;
 
 namespace MotorRegister.Indexer
 {
@@ -54,7 +51,7 @@ namespace MotorRegister.Indexer
         private async Task IndexXmlToDatabaseAsync()
         {
             using IServiceScope scope = _services.CreateScope();
-            IVehicleRepository vehicleRepository = scope.ServiceProvider.GetRequiredService<IVehicleRepository>();
+            //IVehicleRepository vehicleRepository = scope.ServiceProvider.GetRequiredService<IVehicleRepository>();
             RegisterFileDownloader registerFileDownloader = scope.ServiceProvider.GetRequiredService<RegisterFileDownloader>();
             XmlDeserializer xmlDeserializer = scope.ServiceProvider.GetRequiredService<XmlDeserializer>();
 
@@ -62,31 +59,29 @@ namespace MotorRegister.Indexer
             {
                 _logger.LogInformation("Starting indexing process at: {time}", DateTimeOffset.Now);
 
-                (string zipFilePath, string fileName) = await registerFileDownloader.DownloadAndSaveRegisterFileAsync(Directory.GetCurrentDirectory());
+                //(string zipFilePath, string fileName) = await registerFileDownloader.DownloadAndSaveRegisterFileAsync(Directory.GetCurrentDirectory());
 
-                List<Vehicle> vehicleBatch = [];
+                List<XmlVehicle> vehicleBatch = [];
 
-                //string zipFilePath = "../ESStatistikListeModtag-20240804-201652.zip";
-                //string fileName = "ESStatistikListeModtag.xml";
+                string zipFilePath = "../ESStatistikListeModtag-20240804-201652.zip";
+                string fileName = "ESStatistikListeModtag.xml";
                 
-                foreach (XmlVehicle xmlVehicle in xmlDeserializer.DeserializeMotorRegister(zipFilePath, fileName))
+                foreach (XmlVehicle vehicle in xmlDeserializer.DeserializeMotorRegister(zipFilePath, fileName))
                 {
-                    Vehicle vehicle = new Vehicle(xmlVehicle);
-                    
                     if (vehicleBatch.Count < 10000)
                     {
                         vehicleBatch.Add(vehicle);
                         continue;
                     }
 
-                    await vehicleRepository.AddVehiclesAsync(vehicleBatch);
+                    //await vehicleRepository.AddVehiclesAsync(vehicleBatch);
                     vehicleBatch.Clear();
                     vehicleBatch.Add(vehicle);
                 }
 
                 if (vehicleBatch.Count > 0)
                 {
-                    await vehicleRepository.AddVehiclesAsync(vehicleBatch);
+                    //await vehicleRepository.AddVehiclesAsync(vehicleBatch);
                 }
 
                 _logger.LogInformation("Indexing completed at: {time}", DateTimeOffset.Now);

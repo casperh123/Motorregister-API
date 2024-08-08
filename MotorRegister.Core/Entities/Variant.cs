@@ -2,16 +2,16 @@ using MotorRegister.Core.XmlModels;
 
 namespace MotorRegister.Core.Entities;
 
-public record PowerType
+public record Variant
 {
     public long Id { get; set; }
     public string Name { get; set; }
     
-    public PowerType() {}
+    public Variant() {}
 
-    public PowerType(xmlDrivePowerType powerType)
+    public Variant(XmlVariant variant)
     {
-        Id = powerType.Id;
-        Name = powerType.Name;
+        Id = variant.Id;
+        Name = variant.Name;
     }
 }

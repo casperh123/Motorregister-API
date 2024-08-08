@@ -1,12 +1,9 @@
 using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using MotorRegister.Core.Entities;
 using MotorRegister.Core.Repository;
 using MotorRegister.Core.XmlModels;
 using MotorRegister.Infrastrucutre.Database;
-using Z.EntityFramework.Extensions;
 
 namespace MotorRegister.Infrastrucutre.Repository;
 
@@ -21,13 +18,13 @@ public class VehicleRepository : IVehicleRepository
         _logger = logger;
     }
 
-    public async Task SaveVehicle(Vehicle xmlVehicle)
+    public async Task SaveVehicle(XmlVehicle xmlXmlVehicle)
     {
-        await _database.AddAsync(xmlVehicle);
+        await _database.AddAsync(xmlXmlVehicle);
         await _database.SaveChangesAsync();
     }
 
-    public async Task<Vehicle?> GetVehicleByLicensePlate(string registrationNumber)
+    public async Task<XmlVehicle?> GetVehicleByLicensePlate(string registrationNumber)
     {
         return await _database.Vehicles
             .AsNoTracking()
@@ -36,7 +33,7 @@ public class VehicleRepository : IVehicleRepository
             .FirstAsync(v => v.RegistrationNumber == registrationNumber);
     }
 
-    public async Task<List<Vehicle>> GetVehicles(int pageSize, int page)
+    public async Task<List<XmlVehicle>> GetVehicles(int pageSize, int page)
     {
         return await _database.Vehicles
             .AsNoTracking()
@@ -49,7 +46,7 @@ public class VehicleRepository : IVehicleRepository
     }
 
 
-    public async Task AddVehiclesAsync(List<Vehicle> vehicles)
+    public async Task AddVehiclesAsync(List<XmlVehicle> vehicles)
     {
         Stopwatch stopwatch = Stopwatch.StartNew();
         await _database.BulkInsertOptimizedAsync(vehicles, options =>

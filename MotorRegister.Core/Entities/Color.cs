@@ -1,16 +1,15 @@
-using System.Drawing;
 using MotorRegister.Core.XmlModels;
 
 namespace MotorRegister.Core.Entities;
 
-public record ColorType
+public record Color
 {
-    public int Id { get; set; }
+    public long Id { get; set; }
     public string Name { get; set; }
     
-    public ColorType() {}
+    public Color() {}
 
-    public ColorType(XmlVehicleColor color)
+    public Color(XmlVehicleColor color)
     {
         Id = color.Type.Id;
         Name = color.Type.Name;
