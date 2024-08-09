@@ -14,14 +14,14 @@ string environment = builder.Environment.EnvironmentName;
 string databaseFileName = "MotorRegister.db";
 
 // Ensure the database is created and get the connection
-//SqliteConnection sqliteConnection = DatabaseInitializer.EnsureDatabaseCreated(environment, databaseFileName);
-//builder.Services.AddSingleton(sqliteConnection);
+SqliteConnection sqliteConnection = DatabaseInitializer.EnsureDatabaseCreated(environment, databaseFileName);
+builder.Services.AddSingleton(sqliteConnection);
 
 // Configure DbContext
-//builder.Services.AddDbContext<MotorRegisterDbContext>(options =>
- //   options.UseSqlite($"Data Source={sqliteConnection.DataSource}"));
+builder.Services.AddDbContext<MotorRegisterDbContext>(options =>
+    options.UseSqlite($"Data Source={sqliteConnection.DataSource}"));
 
-//builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
+builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
 
 builder.Services.AddSingleton(
     new FtpClient(
@@ -60,8 +60,8 @@ builder.Logging.SetMinimumLevel(LogLevel.Error);
 var host = builder.Build();
 
 using var scope = host.Services.CreateScope();
-//var dbContext = scope.ServiceProvider.GetRequiredService<MotorRegisterDbContext>();
-//dbContext.Database.Migrate();
+var dbContext = scope.ServiceProvider.GetRequiredService<MotorRegisterDbContext>();
+dbContext.Database.Migrate();
 
 
 

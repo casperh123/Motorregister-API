@@ -1,8 +1,8 @@
 using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using MotorRegister.Core.Entities;
 using MotorRegister.Core.Repository;
-using MotorRegister.Core.XmlModels;
 using MotorRegister.Infrastrucutre.Database;
 
 namespace MotorRegister.Infrastrucutre.Repository;
@@ -18,27 +18,27 @@ public class VehicleRepository : IVehicleRepository
         _logger = logger;
     }
 
-    public async Task SaveVehicle(XmlVehicle xmlXmlVehicle)
+    public async Task SaveVehicle(Vehicle xmlXmlVehicle)
     {
         await _database.AddAsync(xmlXmlVehicle);
         await _database.SaveChangesAsync();
     }
 
-    public async Task<XmlVehicle?> GetVehicleByLicensePlate(string registrationNumber)
+    public async Task<Vehicle?> GetVehicleByLicensePlate(string registrationNumber)
     {
         return await _database.Vehicles
             .AsNoTracking()
             .Include(v => v.Information)
-            .Include(v => v.InspectionResults)
+           // .Include(v => v.InspectionResults)
             .FirstAsync(v => v.RegistrationNumber == registrationNumber);
     }
 
-    public async Task<List<XmlVehicle>> GetVehicles(int pageSize, int page)
+    public async Task<List<Vehicle>> GetVehicles(int pageSize, int page)
     {
         return await _database.Vehicles
             .AsNoTracking()
             .Include(v => v.Information)
-            .Include(v => v.InspectionResults)
+            //.Include(v => v.InspectionResults)
             .Skip(pageSize * page)
             .Take(pageSize)
             // Ensure the pageSize is used to limit the number of returned vehicles
@@ -46,10 +46,12 @@ public class VehicleRepository : IVehicleRepository
     }
 
 
-    public async Task AddVehiclesAsync(List<XmlVehicle> vehicles)
+    public async Task AddVehiclesAsync(List<Vehicle> vehicles)
     {
         Stopwatch stopwatch = Stopwatch.StartNew();
-        await _database.BulkInsertOptimizedAsync(vehicles, options =>
+        
+        
+        await _database.BulkInsertOptimizedAsync(vehicles.Distinct(), options =>
         {
             options.IncludeGraph = true;
             options.InsertIfNotExists = true;

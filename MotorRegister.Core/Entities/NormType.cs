@@ -5,11 +5,16 @@ namespace MotorRegister.Core.Entities;
 
 public record NormType
 {
-    [Key]
     public int Id { get; set; }
     public string Name { get; set; }
     
     public NormType() {}
+
+    public NormType(int id, string name)
+    {
+        Id = id;
+        Name = name;
+    }
 
     public NormType(XmlNormType normType)
     {

@@ -1,3 +1,4 @@
+using MotorRegister.Core.Entities;
 using MotorRegister.Core.Repository;
 using MotorRegister.Core.XmlModels;
 using MotorRegister.Infrastrucutre.FtpDownloader;
@@ -51,7 +52,7 @@ namespace MotorRegister.Indexer
         private async Task IndexXmlToDatabaseAsync()
         {
             using IServiceScope scope = _services.CreateScope();
-            //IVehicleRepository vehicleRepository = scope.ServiceProvider.GetRequiredService<IVehicleRepository>();
+            IVehicleRepository vehicleRepository = scope.ServiceProvider.GetRequiredService<IVehicleRepository>();
             RegisterFileDownloader registerFileDownloader = scope.ServiceProvider.GetRequiredService<RegisterFileDownloader>();
             XmlDeserializer xmlDeserializer = scope.ServiceProvider.GetRequiredService<XmlDeserializer>();
 
@@ -61,27 +62,28 @@ namespace MotorRegister.Indexer
 
                 //(string zipFilePath, string fileName) = await registerFileDownloader.DownloadAndSaveRegisterFileAsync(Directory.GetCurrentDirectory());
 
-                List<XmlVehicle> vehicleBatch = [];
+                List<Vehicle> vehicleBatch = [];
 
                 string zipFilePath = "../ESStatistikListeModtag-20240804-201652.zip";
                 string fileName = "ESStatistikListeModtag.xml";
                 
-                foreach (XmlVehicle vehicle in xmlDeserializer.DeserializeMotorRegister(zipFilePath, fileName))
+                foreach (XmlVehicle xlmVehicle in xmlDeserializer.DeserializeMotorRegister(zipFilePath, fileName))
                 {
+                    Vehicle vehicle = new Vehicle(xlmVehicle);
                     if (vehicleBatch.Count < 10000)
                     {
                         vehicleBatch.Add(vehicle);
                         continue;
                     }
 
-                    //await vehicleRepository.AddVehiclesAsync(vehicleBatch);
+                    await vehicleRepository.AddVehiclesAsync(vehicleBatch);
                     vehicleBatch.Clear();
                     vehicleBatch.Add(vehicle);
                 }
 
                 if (vehicleBatch.Count > 0)
                 {
-                    //await vehicleRepository.AddVehiclesAsync(vehicleBatch);
+                    await vehicleRepository.AddVehiclesAsync(vehicleBatch);
                 }
 
                 _logger.LogInformation("Indexing completed at: {time}", DateTimeOffset.Now);

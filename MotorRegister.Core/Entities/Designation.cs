@@ -7,35 +7,20 @@ namespace MotorRegister.Core.Entities;
 
 public record Designation
 {
-    [Key]
-    public int VehicleId { get; set; }
     public int ManufacturerId { get; set; }
     public string ManufacturerName { get; set; }
-    
-    [ForeignKey("Model")]
-    public int ModelId { get; set; }
-    public Model Model { get; set; }
-    
-    [ForeignKey("Variant")]
-    public long VariantId { get; set; }
-    public Variant Variant { get; set; }
-    
-    [ForeignKey("Type")]
-    public long TypeId { get; set; }
-    public Type Type { get; set; }
+    public string Model { get; set; }
+    public string Variant { get; set; }
+    public string Type { get; set; }
     
     public Designation() {}
 
-    public Designation(XmlVehicleDesignation designation, int vehicleId)
+    public Designation(XmlVehicleDesignation designation)
     {
-        VehicleId = vehicleId;
         ManufacturerId = designation.ManufacturerId;
         ManufacturerName = designation.ManufacturerName;
-        ModelId = designation.XmlModel.Id;
-        Model = new Model(designation.XmlModel);
-        VariantId = designation.XmlVariant.Id;
-        Variant = new Variant(designation.XmlVariant);
-        TypeId = designation.XmlType.Id;
-        Type = new Type(designation.XmlType);
+        Model = designation.XmlModel.Name;
+        Variant = designation.XmlVariant.Name;
+        Type = designation.XmlType.Name;
     }
 }

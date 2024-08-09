@@ -6,7 +6,7 @@ namespace MotorRegister.Core.XmlModels;
 public class XmlVehicle
 {
     [XmlElement(ElementName = "KoeretoejIdent")]
-    public string Id { get; set; }
+    public long Id { get; set; }
 
     [XmlElement(ElementName = "KoeretoejArtNummer")]
     public int VehicleTypeNumber { get; set; }

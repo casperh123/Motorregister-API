@@ -5,7 +5,6 @@ namespace MotorRegister.Core.Entities;
 
 public record Model
 {
-    [Key]
     public int Id { get; set; }
     public string Name { get; set; }
     
