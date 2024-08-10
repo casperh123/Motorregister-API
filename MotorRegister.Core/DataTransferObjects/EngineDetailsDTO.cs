@@ -17,6 +17,6 @@ public record EngineDetailsDTO
     public EngineDetailsDTO(DriveType driveType)
     {
         KilometerPerLitre = driveType.KilometersPerLitre;
-        FuelName = driveType.Fuel.Name;
+        FuelName = driveType.Fuel?.Name ?? "";
     }
 }

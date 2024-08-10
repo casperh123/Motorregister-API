@@ -1,4 +1,5 @@
 ﻿@page "/"
+@using MotorRegister.Api
 @using MotorRegister.Core.Api
 @using MotorRegister.Core.Entities
 @using MotorRegister.Web.Components.Tables
@@ -13,11 +14,11 @@
 
 <div>
     <CardList Items="@Vehicles.Items" />
-    <Paginator PageIndex="Vehicles.PageIndex" TotalPages="Vehicles.TotalPages" PageChanged="LoadVehicles" TItem="Vehicle"/>
+    <Paginator PageIndex="Vehicles.PageIndex" TotalPages="Vehicles.TotalPages" PageChanged="LoadVehicles" TItem="VehicleDTO"/>
 </div>
 
 @code {
-    private PaginatedResponse<Vehicle> Vehicles = new PaginatedResponse<Vehicle>();
+    private PaginatedResponse<VehicleDTO> Vehicles = new PaginatedResponse<VehicleDTO>();
 
     protected override async Task OnInitializedAsync()
     {
@@ -26,7 +27,7 @@
 
     private async Task LoadVehicles(int pageNumber)
     {
-        PaginatedResponse<Vehicle> newVehicles = await HttpClient.GetFromJsonAsync<PaginatedResponse<Vehicle>>($"Vehicle/GetVehicles?pageSize=20&pageNumber={pageNumber}");
+        PaginatedResponse<VehicleDTO> newVehicles = await HttpClient.GetFromJsonAsync<PaginatedResponse<VehicleDTO>>($"Vehicle/GetVehicles?pageSize=20&pageNumber={pageNumber}") ?? new PaginatedResponse<VehicleDTO>();
         Vehicles.Items = newVehicles.Items;
         Vehicles.PageIndex = newVehicles.PageIndex;
         Vehicles.PageSize = newVehicles.PageSize;

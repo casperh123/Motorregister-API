@@ -1,3 +1,4 @@
+@using MotorRegister.Api
 @using MotorRegister.Core.Entities
 @typeparam TItem
 
@@ -21,9 +22,9 @@
                 <td>@vehicle.VehicleTypeName</td>
                 <td>@vehicle.Usage</td>
                 <td>@vehicle.RegistrationNumber</td>
-                <td>@vehicle.Information.ManufacturerName</td>
-                <td>@vehicle.Information.Model</td>
-                <td>@vehicle.Information.Variant</td>
+                <td>@vehicle.Designation.ManufacturerName</td>
+                <td>@vehicle.Designation.Model</td>
+                <td>@vehicle.Designation.Variant</td>
             </tr>
         }
     }
@@ -38,5 +39,5 @@
 
 @code {
     [Parameter] 
-    public List<Vehicle> Vehicles { get; set; }
+    public List<VehicleDTO> Vehicles { get; set; }
 }

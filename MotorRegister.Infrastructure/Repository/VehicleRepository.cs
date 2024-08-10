@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using MotorRegister.Api;
 using MotorRegister.Core.Entities;
 using MotorRegister.Core.Repository;
 using MotorRegister.Infrastrucutre.Database;
@@ -24,23 +25,28 @@ public class VehicleRepository : IVehicleRepository
         await _database.SaveChangesAsync();
     }
 
-    public async Task<Vehicle?> GetVehicleByLicensePlate(string registrationNumber)
+    public async Task<VehicleDTO?> GetVehicleByLicensePlate(string registrationNumber)
     {
-        return await _database.Vehicles
+        return new VehicleDTO(await _database.Vehicles
             .AsNoTracking()
             .Include(v => v.Information)
            // .Include(v => v.InspectionResults)
-            .FirstAsync(v => v.RegistrationNumber == registrationNumber);
+            .FirstAsync(v => v.RegistrationNumber == registrationNumber));
     }
 
-    public async Task<List<Vehicle>> GetVehicles(int pageSize, int page)
+    public async Task<List<VehicleDTO>> GetVehicles(int pageSize, int page)
     {
         return await _database.Vehicles
             .AsNoTracking()
             .Include(v => v.Information)
-            //.Include(v => v.InspectionResults)
+            .Include(v => v.InspectionResult)
+            .Include(v => v.DriveType)
+            .Include(v => v.Permissions)
+            .Include(v => v.Usage)
+            .OrderBy(v => v.Information.FirstRegistrationDate)
             .Skip(pageSize * page)
             .Take(pageSize)
+            .Select(v => new VehicleDTO(v))
             // Ensure the pageSize is used to limit the number of returned vehicles
             .ToListAsync(); // This ensures that the query is executed asynchronously and a list is returned
     }

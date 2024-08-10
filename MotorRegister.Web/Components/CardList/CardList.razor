@@ -1,8 +1,9 @@
+@using MotorRegister.Api
 @using MotorRegister.Core.Entities
 @using MotorRegister.Web.Components.Cards
 
 <div class="card-wrapper">
-    @foreach (Vehicle item in Items)
+    @foreach (VehicleDTO item in Items)
     {
         <VehicleCard Vehicle="item"></VehicleCard>
     }
@@ -10,5 +11,5 @@
 
 @code {
     [Parameter]
-    public List<Vehicle> Items { get; set; }
+    public List<VehicleDTO> Items { get; set; }
 }

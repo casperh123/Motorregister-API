@@ -20,6 +20,23 @@ public record VehicleDTO
     public PermissionDTO Permission { get; set; }
     public EngineDetailsDTO EngineDetails { get; set; }
     public bool ParticleFilter { get; set; }
+    
+    public VehicleDTO()
+    {
+        VehicleTypeName = string.Empty;
+        Usage = string.Empty;
+        RegistrationNumber = string.Empty;
+        RegistrationNumberExpirationDate = string.Empty;
+        Information = new InformationDTO();
+        Designation = new DesignationDTO();
+        RegistrationStatus = string.Empty;
+        RegistrationStatusDate = string.Empty;
+        InspectionResult = new InspectionResultDTO();
+        Permission = new PermissionDTO();
+        EngineDetails = new EngineDetailsDTO();
+        ParticleFilter = false;
+    }
+
 
     public VehicleDTO(Vehicle vehicle)
     {
@@ -32,8 +49,10 @@ public record VehicleDTO
         RegistrationStatus = vehicle.RegistrationStatus ?? "";
         RegistrationStatusDate = vehicle.RegistrationStatusDate ?? "";
         InspectionResult = vehicle.InspectionResult != null ? new InspectionResultDTO(vehicle.InspectionResult) : new InspectionResultDTO();
-        Permission = new PermissionDTO(vehicle.Permissions.FirstOrDefault(new Permission()));
-        EngineDetails = new EngineDetailsDTO(vehicle.DriveType);
+        
+        //Actually reference vehicle Permission when we fix the Permision list
+        Permission = new PermissionDTO();
+        EngineDetails = vehicle.DriveType != null ? new EngineDetailsDTO(vehicle.DriveType) : new EngineDetailsDTO();
         ParticleFilter = Information.ParticleFilter;
     }
 }

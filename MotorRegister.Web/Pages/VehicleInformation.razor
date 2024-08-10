@@ -1,20 +1,45 @@
 @page "/koeretoej-information"
-@using MotorRegister.Core.Entities
+@using MotorRegister.Api
+@inject HttpClient HttpClient
 
 <h1>Find information omkring køretøjer</h1>
 
 <div class="card">
-    <label />
-    <input />
+    <label for="licenseInput">Indtast nummerplade:</label>
+    <input id="licenseInput" @bind="licensePlate" placeholder="AB12345" />
+    <button @onclick="GetVehicleInformation">Søg</button>
 </div>
 
-@if (_vehicle != null)
+@if (vehicle != null)
 {
-    <p>Information omkring @_vehicle.VehicleTypeName med nummerplade: @_vehicle.RegistrationNumber</p> 
+    <div class="vehicle-info">
+        <p>Information omkring @vehicle.VehicleTypeName med nummerplade: @vehicle.RegistrationNumber</p>
+        <p>Fabrikat: @vehicle.Designation.ManufacturerName</p>
+        <p>Brændstoftype: @vehicle.EngineDetails.FuelName</p>
+    </div>
+}
+else if (notFound)
+{
+    <div class="error">
+        <p>Ingen data fundet for den indtastede nummerplade.</p>
+    </div>
 }
 
 @code {
-    private Vehicle _vehicle;
+    private string licensePlate;
+    private VehicleDTO vehicle;
+    private bool notFound;
     
-    
+    private async Task GetVehicleInformation()
+    {
+        notFound = false;
+        try
+        {
+            vehicle = await HttpClient.GetFromJsonAsync<VehicleDTO>($"Vehicle/GetVehicleFromLicensePlate/{licensePlate}") ?? new VehicleDTO();
+        }
+        catch (Exception ex)
+        {
+            notFound = true;        
+        }
+    }
 }
