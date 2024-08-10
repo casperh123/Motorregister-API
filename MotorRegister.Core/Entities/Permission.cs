@@ -5,7 +5,7 @@ namespace MotorRegister.Core.Entities;
 
 public record Permission
 {
-    public Guid Id { get; set; }
+    public string Id { get; set; }
     public string ValidFrom { get; set; }
     public string Comment { get; set; }
     public string PermissionType { get; set; }
@@ -13,7 +13,7 @@ public record Permission
     
     public Permission() {}
 
-    public Permission(XmlPermission permission, Guid vehicleId)
+    public Permission(TilladelseSamling permission, string vehicleId)
     {
         Id = vehicleId;
 

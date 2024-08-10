@@ -69,7 +69,7 @@ namespace MotorRegister.Indexer
                 string zipFilePath = "../ESStatistikListeModtag-20240804-201652.zip";
                 string fileName = "ESStatistikListeModtag.xml";
                 
-                foreach (XmlVehicle xlmVehicle in xmlDeserializer.DeserializeMotorRegister(zipFilePath, fileName))
+                foreach (Statistik xlmVehicle in xmlDeserializer.DeserializeMotorRegister(zipFilePath, fileName))
                 {
                     Vehicle vehicle = new Vehicle(xlmVehicle);
                     if (vehicleBatch.Count < 10000)
@@ -86,7 +86,7 @@ namespace MotorRegister.Indexer
 
                 if (vehicleBatch.Count > 0)
                 {
-                    dataBaseOperationTime += await vehicleRepository.AddVehiclesAsyncWithBenchmark(vehicleBatch);
+                   dataBaseOperationTime += await vehicleRepository.AddVehiclesAsyncWithBenchmark(vehicleBatch);
                 }
 
                 _logger.LogInformation($"Indexing completed at: {DateTimeOffset.Now}");

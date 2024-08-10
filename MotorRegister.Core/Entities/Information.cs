@@ -21,13 +21,16 @@ public record Information
     public string? TypeApprovalNumber { get; set; }
     public string? Comment { get; set; }
     public Designation Designation { get; set; }
-    public string Color { get; set; }
-    public string Norm { get; set; }
+    public string? ColorId { get; set; }
+    public Color? Color { get; set; }
+    
+    public string? NormId { get; set; }
+    public NormType? Norm { get; set; }
     public bool ParticleFilter { get; set; }
 
     public Information() {}
 
-    public Information(XmlVehicleInformation information)
+    public Information(KoeretoejOplysningGrundStruktur information)
     {
         CreatedFrom = information.CreatedFrom;
         Status = information.Status;
@@ -44,32 +47,12 @@ public record Information
         TypeApprovalNumber = information.TypeApprovalNumber;
         Comment = information.Comment;
         Designation = new Designation(information.Designation);
-
-        if (information.Color != null)
-        {
-            Color = information.Color.Type.Name;
-        }
-        else
-        {
-            Color = "";
-        }
-
-        if (information.Norm != null)
-        {
-            Norm = information.Norm.Type.Name;
-        }
-        else
-        {
-            Norm = "";
-        }
-
-        if (information.EnvironmentalInformation != null)
-        {
-            ParticleFilter = information.EnvironmentalInformation.ParticleFilter;
-        }
-        else
-        {
-            ParticleFilter = false;
-        }
+        Color = information.Color?.Type?.Name != null ? new Color(information.Color) : null;
+        ColorId = Color?.Id;
+        Norm = information.Norm?.Type?.Name != null ? new NormType(information.Norm) : null;
+        NormId = null;
+        ParticleFilter = information.EnvironmentalInformation != null
+            ? information.EnvironmentalInformation.ParticleFilter
+            : false;
     }
 }

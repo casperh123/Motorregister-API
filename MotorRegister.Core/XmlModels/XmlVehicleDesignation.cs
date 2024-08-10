@@ -11,11 +11,11 @@ public class XmlVehicleDesignation
     public string ManufacturerName { get; set; }
 
     [XmlElement(ElementName = "Model")] 
-    public XmlModel XmlModel { get; set; }
+    public XmlModel? XmlModel { get; set; }
 
     [XmlElement(ElementName = "Variant")] 
-    public XmlVariant XmlVariant { get; set; }
+    public XmlVariant? XmlVariant { get; set; }
 
     [XmlElement(ElementName = "Type")] 
-    public XmlType XmlType { get; set; }
+    public XmlType? XmlType { get; set; }
 }

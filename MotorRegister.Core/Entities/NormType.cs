@@ -1,24 +1,19 @@
-using System.ComponentModel.DataAnnotations;
+using System;
 using MotorRegister.Core.XmlModels;
+using MotorRegister.Infrastrucutre.Database;
 
 namespace MotorRegister.Core.Entities;
 
 public record NormType
 {
-    public int Id { get; set; }
+    public string Id { get; set; }
     public string Name { get; set; }
     
     public NormType() {}
 
-    public NormType(int id, string name)
+    public NormType(XmlVehicleNorm normType)
     {
-        Id = id;
-        Name = name;
-    }
-
-    public NormType(XmlNormType normType)
-    {
-        Id = normType.Id;
-        Name = normType.Name;
+        Id = normType.Type.Id.ToString();
+        Name = normType.Type.Name;
     }
 }
