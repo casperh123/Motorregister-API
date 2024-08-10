@@ -1,0 +1,20 @@
+@page "/koeretoej-information"
+@using MotorRegister.Core.Entities
+
+<h1>Find information omkring køretøjer</h1>
+
+<div class="card">
+    <label />
+    <input />
+</div>
+
+@if (_vehicle != null)
+{
+    <p>Information omkring @_vehicle.VehicleTypeName med nummerplade: @_vehicle.RegistrationNumber</p> 
+}
+
+@code {
+    private Vehicle _vehicle;
+    
+    
+}

@@ -2,11 +2,11 @@ using System.Xml.Serialization;
 
 namespace MotorRegister.Core.XmlModels;
 
-public class XmlVehicleUsage
+public class XmlPermissionType
 {
-    [XmlElement(ElementName = "KoeretoejAnvendelseNummer")]
+    [XmlElement(ElementName = "TilladelseTypeNummer")]
     public int Id { get; set; }
 
-    [XmlElement(ElementName = "KoeretoejAnvendelseNavn")]
+    [XmlElement(ElementName = "TilladelseTypeNavn")]
     public string Name { get; set; }
 }

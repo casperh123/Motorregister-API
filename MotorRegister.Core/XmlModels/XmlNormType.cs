@@ -2,11 +2,11 @@ using System.Xml.Serialization;
 
 namespace MotorRegister.Core.XmlModels;
 
-public class XmlVehicleUsage
+public class XmlNormType
 {
-    [XmlElement(ElementName = "KoeretoejAnvendelseNummer")]
+    [XmlElement(ElementName = "NormTypeNummer")]
     public int Id { get; set; }
 
-    [XmlElement(ElementName = "KoeretoejAnvendelseNavn")]
+    [XmlElement(ElementName = "NormTypeNavn")]
     public string Name { get; set; }
 }

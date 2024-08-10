@@ -1,45 +1,60 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using MotorRegister.Core.XmlModels;
+using MotorRegister.Infrastrucutre.Database;
 
 namespace MotorRegister.Core.Entities;
 
 public record Vehicle
 {
-    public string Id { get; set; }
+    public Guid Id { get; set; }
     public string VehicleTypeName { get; set; }
-    public string? Usage { get; set; }
+    public Guid? UsageId { get; set; }
+    public Usage? Usage { get; set; }
     public string? RegistrationNumber { get; set; }
-    public DateTime? RegistrationStatusDate { get; set; }
-    public string InformationId { get; set; }
-    public VehicleInformation Information { get; set; }
-    public List<InspectionResult> InspectionResults { get; set; } = [];
+    public string? RegistrationNumberExpirationDate { get; set; }
+    public Information Information { get; set; }
+    public string RegistrationStatus { get; set; }
+    public string RegistrationStatusDate { get; set; }
+    public List<InspectionResult> InspectionResults { get; set; }
+    public List<Permission> Permissions { get; set; }
+    public List<DriveType> DriveTypes { get; set; }
 
+    
+    public Vehicle() {}
 
-public Vehicle() { }
-
-    public Vehicle(XmlVehicle xmlVehicle)
+    public Vehicle(XmlVehicle vehicle)
     {
-        Id = xmlVehicle.Id;
-        VehicleTypeName = xmlVehicle.VehicleTypeName;
-        RegistrationNumber = xmlVehicle.RegistrationNumber;
-        RegistrationStatusDate = DateTime.TryParse(xmlVehicle.RegistrationStatusDate, out var regStatusDate) ? regStatusDate : (DateTime?)null;
+        Id = GuidParser.ConvertLongToGuid(vehicle.Id);
+        VehicleTypeName = vehicle.VehicleTypeName;
+        Usage = new Usage(vehicle.Usage);
+        UsageId = Usage.Id;
+        RegistrationNumber = vehicle.RegistrationNumber;
+        RegistrationNumberExpirationDate = vehicle.RegistrationNumberExpirationDate;
+        Information = new Information(vehicle.Information);
+        RegistrationStatus = vehicle.RegistrationStatus;
+        RegistrationStatusDate = vehicle.RegistrationStatusDate;
 
-        if (xmlVehicle.Information != null)
-        {
-            Information = new VehicleInformation(xmlVehicle.Information);
-            InformationId = Information.ChassisNumber;
-        }
+        InspectionResults = [];
+        Permissions = [];
+        DriveTypes = [];
+
         
-        if (xmlVehicle.Usage != null)
+        InspectionResults.AddRange(vehicle.InspectionResults.Select(inspectionResult => new InspectionResult(inspectionResult, Id)));
+
+        Permissions.AddRange(
+            vehicle.Permissions
+                .Where(permission => permission?.Details != null)
+                .Select(permission => new Permission(permission, Id))
+        );
+
+        
+        if (vehicle.Information?.Motor?.XmlDriveAssembly?.Drives != null)
         {
-            Usage = xmlVehicle.Usage.Name;
+            DriveTypes.AddRange(vehicle.Information.Motor.XmlDriveAssembly.Drives
+                .Where(driveType => driveType.Type != null)
+                .Select(driveType => new DriveType(driveType.Type)));
         }
 
-        if (xmlVehicle.InspectionResult != null)
-        {
-            foreach (XmlInspectionResult result in xmlVehicle.InspectionResult)
-            {
-                InspectionResults.Add(new InspectionResult(result, Id));
-            }
-        }
     }
 }

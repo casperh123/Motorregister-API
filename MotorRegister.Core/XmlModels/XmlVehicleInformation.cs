@@ -2,14 +2,13 @@ using System.Xml.Serialization;
 
 namespace MotorRegister.Core.XmlModels;
 
-[XmlRoot(ElementName = "KoeretoejOplysningGrundStruktur", Namespace = "http://skat.dk/dmr/2007/05/31/")]
-public record XmlVehicleInformation
+public class XmlVehicleInformation
 {
     [XmlElement(ElementName = "KoeretoejOplysningOprettetUdFra")]
-    public string? CreatedFrom { get; set; }
+    public string CreatedFrom { get; set; }
 
     [XmlElement(ElementName = "KoeretoejOplysningStatus")]
-    public string? Status { get; set; }
+    public string Status { get; set; }
 
     [XmlElement(ElementName = "KoeretoejOplysningStatusDato")]
     public DateTime? StatusDate { get; set; }
@@ -32,15 +31,33 @@ public record XmlVehicleInformation
     [XmlElement(ElementName = "KoeretoejOplysningAkselAntal")]
     public short AxleCount { get; set; }
 
-    [XmlElement(ElementName = "KoeretoejOplysningStoersteAkselTryk")]
-    public int MaxAxleLoad { get; set; }
-
-    [XmlElement(ElementName = "KoeretoejOplysningPassagerAntal")]
-    public int PassengerCount { get; set; }
-
     [XmlElement(ElementName = "KoeretoejOplysningTilkoblingMulighed")]
     public bool TowingCapability { get; set; }
-    
+
+    [XmlElement(ElementName = "KoeretoejOplysningTilkoblingsvaegtUdenBremser")]
+    public int TowingWeightWithoutBrakes { get; set; }
+
+    [XmlElement(ElementName = "KoeretoejOplysningTilkoblingsvaegtMedBremser")]
+    public int TowingWeightWithBrakes { get; set; }
+
+    [XmlElement(ElementName = "KoeretoejOplysningTypeAnmeldelseNummer")]
+    public string TypeApprovalNumber { get; set; }
+
+    [XmlElement(ElementName = "KoeretoejOplysningKommentar")]
+    public string Comment { get; set; }
+
     [XmlElement(ElementName = "KoeretoejBetegnelseStruktur")]
     public XmlVehicleDesignation Designation { get; set; }
+
+    [XmlElement(ElementName = "KoeretoejFarveStruktur")]
+    public XmlVehicleColor Color { get; set; }
+
+    [XmlElement(ElementName = "KoeretoejNormStruktur")]
+    public XmlVehicleNorm Norm { get; set; }
+
+    [XmlElement(ElementName = "KoeretoejMiljoeOplysningStruktur")]
+    public XmlVehicleEnvironmentalInformation EnvironmentalInformation { get; set; }
+
+    [XmlElement(ElementName = "KoeretoejMotorStruktur")]
+    public XmlVehicleMotor Motor { get; set; }
 }

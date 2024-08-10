@@ -5,19 +5,22 @@ namespace MotorRegister.Core.Entities;
 
 public record InspectionResult
 {
-    public string VehicleId { get; set; }
+    public Guid Id { get; set; }
     public string Type { get; set; }
-    public DateTime Date { get; set; }
+    public string Date { get; set; }
     public string Result { get; set; }
     public string Status { get; set; }
-
-    public InspectionResult() { }
+    public string StatusDate { get; set; }
     
-    public InspectionResult(XmlInspectionResult xml, string vehicleId)
+    public InspectionResult() {}
+
+    public InspectionResult(XmlInspectionResult inspectionResult, Guid id)
     {
-        Type = xml.Type;
-        Date = DateTime.Parse(xml.Date); 
-        Result = xml.Result;
-        Status = xml.Status;
+        Id = id;
+        Type = inspectionResult.Type;
+        Date = inspectionResult.Date;
+        Result = inspectionResult.Result;
+        Status = inspectionResult.Status;
+        StatusDate = inspectionResult.StatusDate;
     }
 }

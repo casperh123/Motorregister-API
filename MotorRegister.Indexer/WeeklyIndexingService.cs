@@ -1,10 +1,9 @@
-using System.Diagnostics;
+using System.Runtime.InteropServices.JavaScript;
 using MotorRegister.Core.Entities;
 using MotorRegister.Core.Repository;
 using MotorRegister.Core.XmlModels;
 using MotorRegister.Infrastrucutre.FtpDownloader;
 using MotorRegister.Infrastrucutre.XmlDeserialization;
-using Z.EntityFramework.Extensions;
 
 namespace MotorRegister.Indexer
 {
@@ -57,39 +56,40 @@ namespace MotorRegister.Indexer
             IVehicleRepository vehicleRepository = scope.ServiceProvider.GetRequiredService<IVehicleRepository>();
             RegisterFileDownloader registerFileDownloader = scope.ServiceProvider.GetRequiredService<RegisterFileDownloader>();
             XmlDeserializer xmlDeserializer = scope.ServiceProvider.GetRequiredService<XmlDeserializer>();
-
+            long dataBaseOperationTime = 0;
+            
             try
             {
                 _logger.LogInformation("Starting indexing process at: {time}", DateTimeOffset.Now);
 
-                (string zipFilePath, string fileName) = await registerFileDownloader.DownloadAndSaveRegisterFileAsync(Directory.GetCurrentDirectory());
+                //(string zipFilePath, string fileName) = await registerFileDownloader.DownloadAndSaveRegisterFileAsync(Directory.GetCurrentDirectory());
 
                 List<Vehicle> vehicleBatch = [];
 
-                //string zipFilePath = "../ESStatistikListeModtag-20240804-201652.zip";
-                //string fileName = "ESStatistikListeModtag.xml";
+                string zipFilePath = "../ESStatistikListeModtag-20240804-201652.zip";
+                string fileName = "ESStatistikListeModtag.xml";
                 
-                foreach (XmlVehicle xmlVehicle in xmlDeserializer.DeserializeMotorRegister(zipFilePath, fileName))
+                foreach (XmlVehicle xlmVehicle in xmlDeserializer.DeserializeMotorRegister(zipFilePath, fileName))
                 {
-                    Vehicle vehicle = new Vehicle(xmlVehicle);
-                    
+                    Vehicle vehicle = new Vehicle(xlmVehicle);
                     if (vehicleBatch.Count < 10000)
                     {
                         vehicleBatch.Add(vehicle);
                         continue;
                     }
 
-                    await vehicleRepository.AddVehiclesAsync(vehicleBatch);
+                    dataBaseOperationTime += await vehicleRepository.AddVehiclesAsyncWithBenchmark(vehicleBatch);
+                    _logger.LogInformation($"Total time spent on DB operations: {dataBaseOperationTime}");
                     vehicleBatch.Clear();
                     vehicleBatch.Add(vehicle);
                 }
 
                 if (vehicleBatch.Count > 0)
                 {
-                    await vehicleRepository.AddVehiclesAsync(vehicleBatch);
+                    dataBaseOperationTime += await vehicleRepository.AddVehiclesAsyncWithBenchmark(vehicleBatch);
                 }
 
-                _logger.LogInformation("Indexing completed at: {time}", DateTimeOffset.Now);
+                _logger.LogInformation($"Indexing completed at: {DateTimeOffset.Now}");
             }
             catch (Exception ex)
             {
