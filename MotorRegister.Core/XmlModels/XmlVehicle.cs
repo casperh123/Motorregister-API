@@ -27,7 +27,7 @@ public class XmlVehicle
     public XmlVehicleInformation Information { get; set; }
 
     [XmlElement(ElementName = "SynResultatStruktur")]
-    public List<XmlInspectionResult> InspectionResults { get; set; }
+    public XmlInspectionResult InspectionResult { get; set; }
 
     [XmlElement(ElementName = "KoeretoejRegistreringStatus")]
     public string RegistrationStatus { get; set; }

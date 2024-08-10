@@ -5,5 +5,5 @@ namespace MotorRegister.Core.XmlModels;
 public class XmlDriveAssembly
 {
     [XmlElement(ElementName = "KoeretoejDrivmiddelSamling")]
-    public List<XmlDrive> Drives { get; set; }
+    public XmlDrive? Drive { get; set; }
 }

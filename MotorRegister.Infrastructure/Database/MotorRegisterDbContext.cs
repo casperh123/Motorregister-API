@@ -18,16 +18,13 @@ public sealed class MotorRegisterDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        //modelBuilder.Entity<Vehicle>()
-         //   .OwnsMany(v => v.DriveTypes);
-
-        // Configuring the owned entity Information within Vehicle
         modelBuilder.Entity<Vehicle>()
             .OwnsOne(v => v.Information, info =>
             {
-                info.OwnsOne(i => i.Designation); // Information owns one Designation
-                // If needed, configure additional relationships or properties here
-            });
+                info.OwnsOne(i => i.Designation);
+            })
+            .HasOne(v => v.DriveType);
+        
         modelBuilder.Entity<InspectionResult>()
             .HasKey(i => new { i.Id, i.Date });
         
@@ -37,8 +34,9 @@ public sealed class MotorRegisterDbContext : DbContext
         modelBuilder.Entity<Usage>()
             .Property(u => u.Id)
             .ValueGeneratedNever();
-
+        
         modelBuilder.Entity<DriveType>()
-            .HasKey(dt => dt.Id);
+            .HasKey(dt => new { dt.VehicleId });
+
     }
 }

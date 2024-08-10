@@ -1,21 +1,23 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using MotorRegister.Core.XmlModels;
 
 namespace MotorRegister.Core.Entities;
 
 public record DriveType
 {
-    public Guid Id;
-    public string Name { get; set; }
+    public Guid VehicleId { get; set; }
+    public float KilometersPerLitre { get; set; }
+    public string FuelId { get; set; }
+    public Fuel Fuel { get; set; }
     public bool PrimaryDrive { get; set; }
-    
+
     public DriveType() {}
 
-    public DriveType(XmlDriveType driveType)
+    public DriveType(XmlDrive driveType, Guid vehicleId)
     {
-        Id = Guid.NewGuid();
-        Name = driveType.Type.Name;
-        PrimaryDrive = driveType.PrimaryDrive;
+        VehicleId = vehicleId;
+        Fuel = new Fuel(driveType.Type.Type);
+        FuelId = Fuel.Id;
+        KilometersPerLitre = driveType.Type.Fuel?.KilometerPerLitre ?? 0;
+        PrimaryDrive = driveType.Type.PrimaryDrive;
     }
 }
