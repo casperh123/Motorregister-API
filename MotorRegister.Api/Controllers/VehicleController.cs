@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using MotorRegister.Core.Entities;
 using MotorRegister.Core.Repository;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using MotorRegister.Core.Api;
 
 namespace MotorRegister.Api.Controllers
@@ -35,7 +36,7 @@ namespace MotorRegister.Api.Controllers
         {
             long totalRecords = await _vehicleRepository.GetVehicleCountAsync();
             List<Vehicle> vehicles = await _vehicleRepository.GetVehicles(pageSize, pageNumber);
-    
+            
             PaginatedResponse<Vehicle> paginatedResponse = new PaginatedResponse<Vehicle>(vehicles, totalRecords, pageNumber, pageSize);
 
             return Ok(paginatedResponse);

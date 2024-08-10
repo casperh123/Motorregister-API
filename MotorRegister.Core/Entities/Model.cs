@@ -5,14 +5,14 @@ namespace MotorRegister.Core.Entities;
 
 public record Model
 {
-    public int Id { get; set; }
+    public string Id { get; set; }
     public string Name { get; set; }
     
     public Model() {}
 
     public Model(XmlModel model)
     {
-        Id = model.Id;
+        Id = model.Id.ToString();
         Name = model.Name;
     }
 }

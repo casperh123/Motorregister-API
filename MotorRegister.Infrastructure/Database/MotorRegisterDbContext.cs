@@ -26,7 +26,7 @@ public sealed class MotorRegisterDbContext : DbContext
             .HasOne(v => v.DriveType);
         
         modelBuilder.Entity<InspectionResult>()
-            .HasKey(i => new { i.Id, i.Date });
+            .HasKey(i => new { i.Id });
         
         modelBuilder.Entity<Usage>()
             .HasKey(u => u.Id);

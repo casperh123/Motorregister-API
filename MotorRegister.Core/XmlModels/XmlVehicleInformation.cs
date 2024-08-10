@@ -50,7 +50,7 @@ public class XmlVehicleInformation
     public XmlVehicleDesignation Designation { get; set; }
 
     [XmlElement(ElementName = "KoeretoejFarveStruktur")]
-    public XmlVehicleColor Color { get; set; }
+    public XmlVehicleColor? Color { get; set; }
 
     [XmlElement(ElementName = "KoeretoejNormStruktur")]
     public XmlVehicleNorm Norm { get; set; }

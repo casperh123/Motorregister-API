@@ -5,14 +5,14 @@ namespace MotorRegister.Core.Entities;
 
 public record Variant
 {
-    public long Id { get; set; }
-    public string Name { get; set; }
+    public string? Id { get; set; }
+    public string? Name { get; set; }
     
     public Variant() {}
 
     public Variant(XmlVariant variant)
     {
-        Id = variant.Id;
+        Id = variant.Id.ToString();
         Name = variant.Name;
     }
 }

@@ -5,5 +5,5 @@ namespace MotorRegister.Core.XmlModels;
 public class XmlVehicleColor
 {
     [XmlElement(ElementName = "FarveTypeStruktur")]
-    public XmlColorType Type { get; set; }
+    public XmlColorType? Type { get; set; }
 }

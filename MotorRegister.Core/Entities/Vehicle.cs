@@ -14,9 +14,9 @@ public record Vehicle
     public string? RegistrationNumber { get; set; }
     public string? RegistrationNumberExpirationDate { get; set; }
     public Information Information { get; set; }
-    public string RegistrationStatus { get; set; }
-    public string RegistrationStatusDate { get; set; }
-    public InspectionResult InspectionResult { get; set; }
+    public string? RegistrationStatus { get; set; }
+    public string? RegistrationStatusDate { get; set; }
+    public InspectionResult? InspectionResult { get; set; }
     public List<Permission> Permissions { get; set; }
     public DriveType DriveType { get; set; }
 
@@ -28,14 +28,14 @@ public record Vehicle
         Id = GuidParser.ConvertLongToGuid(vehicle.Id);
         VehicleTypeName = vehicle.VehicleTypeName;
         Usage = vehicle.Usage != null ? new Usage(vehicle.Usage) : null;
-        UsageId = Usage.Id;
+        UsageId = Usage?.Id;
         RegistrationNumber = vehicle.RegistrationNumber;
         RegistrationNumberExpirationDate = vehicle.RegistrationNumberExpirationDate;
         Information = new Information(vehicle.Information);
         RegistrationStatus = vehicle.RegistrationStatus;
         RegistrationStatusDate = vehicle.RegistrationStatusDate;
         DriveType = vehicle.Information?.Motor?.XmlDriveAssembly?.Drive != null ? new DriveType(vehicle.Information?.Motor?.XmlDriveAssembly?.Drive, Id) : null;
-        InspectionResult = new InspectionResult(vehicle.InspectionResult, Id);
+        InspectionResult = vehicle.InspectionResult != null ? new InspectionResult(vehicle.InspectionResult, Id) : null;
         
         Permissions = [];
 

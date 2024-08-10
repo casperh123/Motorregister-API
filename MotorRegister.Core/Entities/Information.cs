@@ -21,8 +21,11 @@ public record Information
     public string? TypeApprovalNumber { get; set; }
     public string? Comment { get; set; }
     public Designation Designation { get; set; }
-    public string Color { get; set; }
-    public string Norm { get; set; }
+    
+    public string? ColorId { get; set; }
+    public Color? Color { get; set; }
+    public string? NormId { get; set; }
+    public Norm? Norm { get; set; }
     public bool ParticleFilter { get; set; }
 
     public Information() {}
@@ -44,24 +47,10 @@ public record Information
         TypeApprovalNumber = information.TypeApprovalNumber;
         Comment = information.Comment;
         Designation = new Designation(information.Designation);
-
-        if (information.Color != null)
-        {
-            Color = information.Color.Type.Name;
-        }
-        else
-        {
-            Color = "";
-        }
-
-        if (information.Norm != null)
-        {
-            Norm = information.Norm.Type.Name;
-        }
-        else
-        {
-            Norm = "";
-        }
+        Color = information.Color?.Type?.Name != null ? new Color(information.Color) : null;
+        ColorId = Color?.Id;
+        Norm = information?.Norm?.Type?.Name != null ? new Norm(information.Norm.Type) : null;
+        NormId = Norm?.Id;
 
         if (information.EnvironmentalInformation != null)
         {

@@ -1,12 +1,11 @@
 @using MotorRegister.Core.Entities
 
 <div class="card">
-    <h3>@Vehicle.Information.Model</h3>
+    <h3>@Vehicle.Information.Designation.Model.Name</h3>
     <p>Id: @Vehicle.Id</p>
     <p>Usage: @Vehicle.Usage</p>
     <p>Registration Number: @Vehicle.RegistrationNumber</p>
-    <p>Variant: @Vehicle.Information.Variant</p>
-    <p>Information Id: @Vehicle.InformationId</p>
+    <p>Variant: @Vehicle.Information.Designation.Variant?.Name</p>
 </div>
 
 @code {

@@ -72,7 +72,7 @@ namespace MotorRegister.Indexer
                 foreach (XmlVehicle xlmVehicle in xmlDeserializer.DeserializeMotorRegister(zipFilePath, fileName))
                 {
                     Vehicle vehicle = new Vehicle(xlmVehicle);
-                    if (vehicleBatch.Count < 10000)
+                    if (vehicleBatch.Count < 5000)
                     {
                         vehicleBatch.Add(vehicle);
                         continue;
