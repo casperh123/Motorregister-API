@@ -1,5 +1,6 @@
 @page "/koeretoej-information"
 @using MotorRegister.Api
+@using MotorRegister.Core.Entities
 @inject HttpClient HttpClient
 
 <h1>Find information omkring køretøjer</h1>
@@ -14,6 +15,12 @@
 {
     <div class="vehicle-info">
         <p>Information omkring @vehicle.VehicleTypeName med nummerplade: @vehicle.RegistrationNumber</p>
+        <p>Brug: @vehicle.Usage</p>
+        <p>Registreringsnummer: @vehicle.RegistrationNumber</p>
+        <p>Registreringsnummer Udløber:@vehicle.RegistrationNumberExpirationDate</p>
+        <p>Registreringsstatus: @vehicle.RegistrationStatus</p>
+        <p>Registreringsstatus Dato: @vehicle.RegistrationStatusDate</p>
+        <p>Particelfilter: @vehicle.ParticleFilter</p>
         <p>Fabrikat: @vehicle.Designation.ManufacturerName</p>
         <p>Brændstoftype: @vehicle.EngineDetails.FuelName</p>
     </div>
