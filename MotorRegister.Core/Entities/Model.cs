@@ -1,19 +1,18 @@
 using System.ComponentModel.DataAnnotations;
 using MotorRegister.Core.XmlModels;
-using MotorRegister.Infrastrucutre.Database;
 
 namespace MotorRegister.Core.Entities;
 
 public record Model
 {
-    public string Id { get; set; }
+    public int Id { get; set; }
     public string Name { get; set; }
     
     public Model() {}
 
     public Model(XmlModel model)
     {
-        Id = model.Id.ToString();
+        Id = model.Id;
         Name = model.Name;
     }
 }

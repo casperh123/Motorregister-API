@@ -7,9 +7,9 @@ namespace MotorRegister.Core.Entities;
 
 public record Vehicle
 {
-    public string Id { get; set; }
+    public Guid Id { get; set; }
     public string VehicleTypeName { get; set; }
-    public string? UsageId { get; set; }
+    public Guid? UsageId { get; set; }
     public Usage? Usage { get; set; }
     public string? RegistrationNumber { get; set; }
     public string? RegistrationNumberExpirationDate { get; set; }
@@ -23,35 +23,35 @@ public record Vehicle
     
     public Vehicle() {}
 
-    public Vehicle(Statistik vehicle)
+    public Vehicle(XmlVehicle vehicle)
     {
-        Id = vehicle.KoeretoejIdent.ToString();
-        VehicleTypeName = vehicle.KoeretoejArtNavn;
-        Usage = new Usage(vehicle.KoeretoejAnvendelseStruktur);
-        UsageId = Usage.Id.ToString();
-        RegistrationNumber = vehicle.RegistreringNummerNummer;
-        RegistrationNumberExpirationDate = vehicle.RegistreringNummerUdloebDato;
-        Information = new Information(vehicle.KoeretoejOplysningGrundStruktur);
-        RegistrationStatus = vehicle.KoeretoejRegistreringStatus;
-        RegistrationStatusDate = vehicle.KoeretoejRegistreringStatusDato;
+        Id = GuidParser.ConvertLongToGuid(vehicle.Id);
+        VehicleTypeName = vehicle.VehicleTypeName;
+        Usage = new Usage(vehicle.Usage);
+        UsageId = Usage.Id;
+        RegistrationNumber = vehicle.RegistrationNumber;
+        RegistrationNumberExpirationDate = vehicle.RegistrationNumberExpirationDate;
+        Information = new Information(vehicle.Information);
+        RegistrationStatus = vehicle.RegistrationStatus;
+        RegistrationStatusDate = vehicle.RegistrationStatusDate;
 
         InspectionResults = [];
         Permissions = [];
         DriveTypes = [];
 
         
-        InspectionResults.AddRange(vehicle.SynResultatStruktur.Select(inspectionResult => new InspectionResult(inspectionResult, Id)));
+        InspectionResults.AddRange(vehicle.InspectionResults.Select(inspectionResult => new InspectionResult(inspectionResult, Id)));
 
         Permissions.AddRange(
-            vehicle.TilladelseSamling
+            vehicle.Permissions
                 .Where(permission => permission?.Details != null)
                 .Select(permission => new Permission(permission, Id))
         );
 
         
-        if (vehicle.KoeretoejOplysningGrundStruktur?.Motor?.XmlDriveAssembly?.Drives != null)
+        if (vehicle.Information?.Motor?.XmlDriveAssembly?.Drives != null)
         {
-            DriveTypes.AddRange(vehicle.KoeretoejOplysningGrundStruktur.Motor.XmlDriveAssembly.Drives
+            DriveTypes.AddRange(vehicle.Information.Motor.XmlDriveAssembly.Drives
                 .Where(driveType => driveType.Type != null)
                 .Select(driveType => new DriveType(driveType.Type)));
         }

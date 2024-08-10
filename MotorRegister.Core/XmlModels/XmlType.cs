@@ -8,5 +8,5 @@ public class XmlType
     public long Id { get; set; }
 
     [XmlElement(ElementName = "KoeretoejTypeTypeNavn")]
-    public string? Name { get; set; }
+    public string Name { get; set; }
 }

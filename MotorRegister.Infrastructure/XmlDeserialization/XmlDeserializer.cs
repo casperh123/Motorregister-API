@@ -18,7 +18,7 @@ namespace MotorRegister.Infrastrucutre.XmlDeserialization
             _logger = logger;
         }
 
-        public IEnumerable<Statistik> DeserializeMotorRegister(string zipFilePath, string fileName)
+        public IEnumerable<XmlVehicle> DeserializeMotorRegister(string zipFilePath, string fileName)
         {
             using ZipArchive zipArchive = ZipFile.OpenRead(zipFilePath);
             ZipArchiveEntry? xmlFileEntry = zipArchive.GetEntry(fileName);
@@ -35,7 +35,7 @@ namespace MotorRegister.Infrastrucutre.XmlDeserialization
             }
         }
 
-        private IEnumerable<Statistik> ProcessXmlFile(Stream xmlFileStream)
+        private IEnumerable<XmlVehicle> ProcessXmlFile(Stream xmlFileStream)
         {
             BufferedStream bufferedStream = new BufferedStream(xmlFileStream, _bufferSize);
             XmlReaderSettings settings = new XmlReaderSettings
@@ -46,7 +46,7 @@ namespace MotorRegister.Infrastrucutre.XmlDeserialization
             };
 
             using XmlReader reader = XmlReader.Create(bufferedStream, settings);
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(Statistik));
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(XmlVehicle));
 
             Stopwatch stopwatch = Stopwatch.StartNew();
             int extractedVehicles = 0;
@@ -56,10 +56,10 @@ namespace MotorRegister.Infrastrucutre.XmlDeserialization
                 if (reader.NodeType == XmlNodeType.Element && reader.Name == "ns:Statistik")
                 {
                     
-                    Statistik statistik = xmlSerializer.Deserialize(reader) as Statistik;
-                    if (statistik != null)
+                    XmlVehicle xmlVehicle = xmlSerializer.Deserialize(reader) as XmlVehicle;
+                    if (xmlVehicle != null)
                     {
-                        yield return statistik;
+                        yield return xmlVehicle;
                         extractedVehicles++;
                         if (extractedVehicles % 10000 == 0)
                         {

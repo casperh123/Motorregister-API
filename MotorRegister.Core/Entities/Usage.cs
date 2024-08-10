@@ -7,14 +7,22 @@ namespace MotorRegister.Core.Entities;
 
 public record Usage
 {
-    public string Id { get; set; }
-    public string Name { get; set; }
+    public Guid? Id { get; set; }
+    public string? Name { get; set; }
     
     public Usage() {}
 
-    public Usage(KoeretoejAnvendelseStruktur type)
+    public Usage(XmlVehicleUsage type)
     {
-        Id = type.Id.ToString();
-        Name = type.Name;
+        if (type != null)
+        {
+            Id = GuidParser.ConvertIntToGuid(type.Id);
+            Name = type.Name;
+        }
+        else
+        {
+            Id = null;
+            Name = null;
+        }
     }
 }

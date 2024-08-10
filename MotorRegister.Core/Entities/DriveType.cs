@@ -6,7 +6,7 @@ namespace MotorRegister.Core.Entities;
 
 public record DriveType
 {
-    public int Id;
+    public Guid Id;
     public string Name { get; set; }
     public bool PrimaryDrive { get; set; }
     
@@ -14,6 +14,7 @@ public record DriveType
 
     public DriveType(XmlDriveType driveType)
     {
+        Id = Guid.NewGuid();
         Name = driveType.Type.Name;
         PrimaryDrive = driveType.PrimaryDrive;
     }
