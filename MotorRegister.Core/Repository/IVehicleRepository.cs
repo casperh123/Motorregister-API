@@ -11,7 +11,11 @@ public interface IVehicleRepository
 
     public Task AddVehiclesAsync(List<Vehicle> vehicles);
 
+    public Task<long> AddVehiclesAsyncWithBenchmark(List<Vehicle> vehicles);
+
+
     public Task<List<Vehicle>> GetVehicles(int pageNumber, int page);
+    
 
     public Task<long> GetVehicleCountAsync();
 }

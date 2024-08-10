@@ -15,7 +15,7 @@ public class XmlVehicle
     public string VehicleTypeName { get; set; }
 
     [XmlElement(ElementName = "KoeretoejAnvendelseStruktur")]
-    public XmlVehicleUsage Usage { get; set; }
+    public XmlVehicleUsage? Usage { get; set; }
 
     [XmlElement(ElementName = "RegistreringNummerNummer")]
     public string RegistrationNumber { get; set; }
@@ -35,6 +35,6 @@ public class XmlVehicle
     [XmlElement(ElementName = "KoeretoejRegistreringStatusDato")]
     public string RegistrationStatusDate { get; set; }
 
-    [XmlElement(ElementName = "TilladelseSamling")]
+    [XmlElement(ElementName = "TilladelseSamling", Namespace = "")]
     public List<XmlPermission> Permissions { get; set; }
 }

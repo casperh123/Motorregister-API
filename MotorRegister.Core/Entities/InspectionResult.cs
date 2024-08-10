@@ -5,7 +5,7 @@ namespace MotorRegister.Core.Entities;
 
 public record InspectionResult
 {
-    public long Id { get; set; }
+    public Guid Id { get; set; }
     public string Type { get; set; }
     public string Date { get; set; }
     public string Result { get; set; }
@@ -14,7 +14,7 @@ public record InspectionResult
     
     public InspectionResult() {}
 
-    public InspectionResult(XmlInspectionResult inspectionResult, long id)
+    public InspectionResult(XmlInspectionResult inspectionResult, Guid id)
     {
         Id = id;
         Type = inspectionResult.Type;

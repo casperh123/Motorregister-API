@@ -1,18 +1,28 @@
-using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 using MotorRegister.Core.XmlModels;
+using MotorRegister.Infrastrucutre.Database;
+
 
 namespace MotorRegister.Core.Entities;
 
 public record Usage
 {
-    public long Id { get; set; }
-    public string Name { get; set; }
+    public Guid? Id { get; set; }
+    public string? Name { get; set; }
     
     public Usage() {}
 
     public Usage(XmlVehicleUsage type)
     {
-        Id = type.Id;
-        Name = type.Name;
+        if (type != null)
+        {
+            Id = GuidParser.ConvertIntToGuid(type.Id);
+            Name = type.Name;
+        }
+        else
+        {
+            Id = null;
+            Name = null;
+        }
     }
 }

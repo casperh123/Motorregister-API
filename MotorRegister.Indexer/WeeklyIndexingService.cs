@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices.JavaScript;
 using MotorRegister.Core.Entities;
 using MotorRegister.Core.Repository;
 using MotorRegister.Core.XmlModels;
@@ -55,7 +56,8 @@ namespace MotorRegister.Indexer
             IVehicleRepository vehicleRepository = scope.ServiceProvider.GetRequiredService<IVehicleRepository>();
             RegisterFileDownloader registerFileDownloader = scope.ServiceProvider.GetRequiredService<RegisterFileDownloader>();
             XmlDeserializer xmlDeserializer = scope.ServiceProvider.GetRequiredService<XmlDeserializer>();
-
+            long dataBaseOperationTime = 0;
+            
             try
             {
                 _logger.LogInformation("Starting indexing process at: {time}", DateTimeOffset.Now);
@@ -76,17 +78,18 @@ namespace MotorRegister.Indexer
                         continue;
                     }
 
-                    await vehicleRepository.AddVehiclesAsync(vehicleBatch);
+                    dataBaseOperationTime += await vehicleRepository.AddVehiclesAsyncWithBenchmark(vehicleBatch);
+                    _logger.LogInformation($"Total time spent on DB operations: {dataBaseOperationTime}");
                     vehicleBatch.Clear();
                     vehicleBatch.Add(vehicle);
                 }
 
                 if (vehicleBatch.Count > 0)
                 {
-                    await vehicleRepository.AddVehiclesAsync(vehicleBatch);
+                    dataBaseOperationTime += await vehicleRepository.AddVehiclesAsyncWithBenchmark(vehicleBatch);
                 }
 
-                _logger.LogInformation("Indexing completed at: {time}", DateTimeOffset.Now);
+                _logger.LogInformation($"Indexing completed at: {DateTimeOffset.Now}");
             }
             catch (Exception ex)
             {

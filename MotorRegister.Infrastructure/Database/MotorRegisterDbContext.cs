@@ -28,8 +28,17 @@ public sealed class MotorRegisterDbContext : DbContext
                 info.OwnsOne(i => i.Designation); // Information owns one Designation
                 // If needed, configure additional relationships or properties here
             });
-        
         modelBuilder.Entity<InspectionResult>()
             .HasKey(i => new { i.Id, i.Date });
+        
+        modelBuilder.Entity<Usage>()
+            .HasKey(u => u.Id);
+
+        modelBuilder.Entity<Usage>()
+            .Property(u => u.Id)
+            .ValueGeneratedNever();
+
+        modelBuilder.Entity<DriveType>()
+            .HasKey(dt => dt.Id);
     }
 }
