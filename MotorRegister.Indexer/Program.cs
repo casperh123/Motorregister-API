@@ -2,13 +2,12 @@ using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using MotorRegister.Core.Repository;
 using MotorRegister.Indexer;
-using MotorRegister.Infrastrucutre;
 using MotorRegister.Infrastrucutre.Database;
 using MotorRegister.Infrastrucutre.FtpDownloader;
 using MotorRegister.Infrastrucutre.Repository;
 using MotorRegister.Infrastrucutre.XmlDeserialization;
 
-var builder = Host.CreateApplicationBuilder(args);
+HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
 
 string environment = builder.Environment.EnvironmentName;
 string databaseFileName = "MotorRegister.db";
@@ -23,6 +22,7 @@ builder.Services.AddDbContext<MotorRegisterDbContext>(options =>
 
 builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
 
+//This information is public information from MotorStyrelsen, and thus not kept as a secret.
 builder.Services.AddSingleton(
     new FtpClient(
         "ftp://5.44.137.84", 
@@ -57,12 +57,10 @@ builder.Services.AddHostedService<WeeklyIndexingService>(
 );
 
 builder.Logging.SetMinimumLevel(LogLevel.Error);
-var host = builder.Build();
+IHost host = builder.Build();
 
-using var scope = host.Services.CreateScope();
-var dbContext = scope.ServiceProvider.GetRequiredService<MotorRegisterDbContext>();
+using IServiceScope scope = host.Services.CreateScope();
+MotorRegisterDbContext dbContext = scope.ServiceProvider.GetRequiredService<MotorRegisterDbContext>();
 dbContext.Database.Migrate();
-
-
 
 host.Run();

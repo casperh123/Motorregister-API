@@ -12,7 +12,7 @@ public record InformationDTO
     public int TotalWeight { get; set; }
     public int CurbWeight { get; set; }
     public long TechnicalTotalWeight { get; set; }
-    public short AxleCount { get; set; }
+    public int AxleCount { get; set; }
     public bool TowingCapability { get; set; }
     public int TowingWeightWithoutBrakes { get; set; }
     public int TowingWeightWithBrakes { get; set; }

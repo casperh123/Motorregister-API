@@ -55,9 +55,6 @@ public class VehicleRepository : IVehicleRepository
     public async Task AddVehiclesAsync(List<Vehicle> vehicles)
     {
         Stopwatch stopwatch = Stopwatch.StartNew();
-
-        IEnumerable<Usage> usages = vehicles
-            .Select(v => v.Usage).Distinct(); 
             
         await _database.BulkInsertOptimizedAsync(vehicles.Distinct(), options =>
         {
@@ -70,16 +67,13 @@ public class VehicleRepository : IVehicleRepository
     {
         Stopwatch stopwatch = Stopwatch.StartNew();
 
-        IEnumerable<Usage> usages = vehicles
-            .Select(v => v.Usage).Distinct(); 
-            
         await _database.BulkInsertOptimizedAsync(vehicles.Distinct(), options =>
         {
             options.IncludeGraph = true;
             options.InsertIfNotExists = true;
         });
         
-        _logger.LogInformation($"Entities saves. Time taken: {stopwatch.ElapsedMilliseconds} ms.");
+        _logger.LogDebug($"Entities saves. Time taken: {stopwatch.ElapsedMilliseconds} ms.");
 
         return stopwatch.ElapsedMilliseconds;
     }
