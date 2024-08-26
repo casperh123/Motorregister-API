@@ -29,7 +29,7 @@ public class XmlVehicleInformation
     public long TechnicalTotalWeight { get; set; }
 
     [XmlElement(ElementName = "KoeretoejOplysningAkselAntal")]
-    public short AxleCount { get; set; }
+    public int AxleCount { get; set; }
 
     [XmlElement(ElementName = "KoeretoejOplysningTilkoblingMulighed")]
     public bool TowingCapability { get; set; }

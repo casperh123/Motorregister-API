@@ -73,7 +73,7 @@ public class VehicleRepository : IVehicleRepository
             options.InsertIfNotExists = true;
         });
         
-        _logger.LogDebug($"Entities saves. Time taken: {stopwatch.ElapsedMilliseconds} ms.");
+        _logger.LogInformation($"Entities saves. Time taken: {stopwatch.ElapsedMilliseconds} ms.");
 
         return stopwatch.ElapsedMilliseconds;
     }

@@ -18,7 +18,7 @@ namespace MotorRegister.Infrastrucutre.XmlDeserialization
             _logger = logger;
         }
 
-        public IEnumerable<XmlVehicle> DeserializeMotorRegister(string zipFilePath, string fileName)
+        public async IAsyncEnumerable<XmlVehicle> DeserializeMotorRegisterAsync(string zipFilePath, string fileName)
         {
             using ZipArchive zipArchive = ZipFile.OpenRead(zipFilePath);
             ZipArchiveEntry? xmlFileEntry = zipArchive.GetEntry(fileName);
@@ -28,14 +28,14 @@ namespace MotorRegister.Infrastrucutre.XmlDeserialization
                 throw new FileNotFoundException($"File {fileName} not found in the zip archive.");
             }
 
-            using Stream xmlFileStream = xmlFileEntry.Open();
-            foreach (var vehicle in ProcessXmlFile(xmlFileStream))
+            await using Stream xmlFileStream = xmlFileEntry.Open();
+            await foreach (var vehicle in ProcessXmlFileAsync(xmlFileStream))
             {
                 yield return vehicle;
             }
         }
 
-        private IEnumerable<XmlVehicle> ProcessXmlFile(Stream xmlFileStream)
+        private async IAsyncEnumerable<XmlVehicle> ProcessXmlFileAsync(Stream xmlFileStream)
         {
             BufferedStream bufferedStream = new BufferedStream(xmlFileStream, _bufferSize);
             XmlReaderSettings settings = new XmlReaderSettings
@@ -43,6 +43,7 @@ namespace MotorRegister.Infrastrucutre.XmlDeserialization
                 IgnoreWhitespace = true,
                 IgnoreComments = true,
                 IgnoreProcessingInstructions = true,
+                Async = true
             };
 
             using XmlReader reader = XmlReader.Create(bufferedStream, settings);
@@ -51,21 +52,21 @@ namespace MotorRegister.Infrastrucutre.XmlDeserialization
             Stopwatch stopwatch = Stopwatch.StartNew();
             int extractedVehicles = 0;
 
-            while (reader.Read())
+            while (await reader.ReadAsync())
             {
-                if (reader.NodeType == XmlNodeType.Element && reader.Name == "ns:Statistik")
+                if (reader is not { NodeType: XmlNodeType.Element, Name: "ns:Statistik" })
                 {
+                    continue;
+                }
+                
+                XmlVehicle xmlVehicle = xmlSerializer.Deserialize(reader) as XmlVehicle;
                     
-                    XmlVehicle xmlVehicle = xmlSerializer.Deserialize(reader) as XmlVehicle;
-                    if (xmlVehicle != null)
-                    {
-                        yield return xmlVehicle;
-                        extractedVehicles++;
-                        if (extractedVehicles % 10000 == 0)
-                        {
-                            _logger.LogInformation("Read {ExtractedVehicles} vehicles", extractedVehicles);
-                        }
-                    }
+                yield return xmlVehicle;
+                extractedVehicles++;
+                
+                if (extractedVehicles % 10000 == 0)
+                {
+                    _logger.LogInformation("Read {ExtractedVehicles} vehicles", extractedVehicles);
                 }
             }
 
