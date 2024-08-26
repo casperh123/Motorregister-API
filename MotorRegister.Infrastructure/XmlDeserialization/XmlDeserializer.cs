@@ -12,9 +12,9 @@ namespace MotorRegister.Infrastrucutre.XmlDeserialization
         private readonly int _bufferSize;
         private readonly ILogger<XmlDeserializer> _logger;
 
-        public XmlDeserializer(int bufferSize, ILogger<XmlDeserializer> logger)
+        public XmlDeserializer(ILogger<XmlDeserializer> logger)
         {
-            _bufferSize = bufferSize;
+            _bufferSize = 1046;
             _logger = logger;
         }
 
@@ -29,7 +29,7 @@ namespace MotorRegister.Infrastrucutre.XmlDeserialization
             }
 
             await using Stream xmlFileStream = xmlFileEntry.Open();
-            await foreach (var vehicle in ProcessXmlFileAsync(xmlFileStream))
+            await foreach (XmlVehicle vehicle in ProcessXmlFileAsync(xmlFileStream))
             {
                 yield return vehicle;
             }
@@ -48,9 +48,7 @@ namespace MotorRegister.Infrastrucutre.XmlDeserialization
 
             using XmlReader reader = XmlReader.Create(bufferedStream, settings);
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(XmlVehicle));
-
             Stopwatch stopwatch = Stopwatch.StartNew();
-            int extractedVehicles = 0;
 
             while (await reader.ReadAsync())
             {
@@ -62,12 +60,6 @@ namespace MotorRegister.Infrastrucutre.XmlDeserialization
                 XmlVehicle xmlVehicle = xmlSerializer.Deserialize(reader) as XmlVehicle;
                     
                 yield return xmlVehicle;
-                extractedVehicles++;
-                
-                if (extractedVehicles % 10000 == 0)
-                {
-                    _logger.LogInformation("Read {ExtractedVehicles} vehicles", extractedVehicles);
-                }
             }
 
             stopwatch.Stop();

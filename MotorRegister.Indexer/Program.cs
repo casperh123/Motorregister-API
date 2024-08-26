@@ -1,7 +1,9 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using MotorRegister.Core.Entities;
 using MotorRegister.Core.Repository;
 using MotorRegister.Indexer;
+using MotorRegister.Indexer.Indexing;
 using MotorRegister.Infrastrucutre.Database;
 using MotorRegister.Infrastrucutre.FtpDownloader;
 using MotorRegister.Infrastrucutre.Repository;
@@ -20,7 +22,6 @@ builder.Services.AddSingleton(sqliteConnection);
 builder.Services.AddDbContext<MotorRegisterDbContext>(options =>
     options.UseSqlite($"Data Source={sqliteConnection.DataSource}"));
 
-builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
 
 //This information is public information from MotorStyrelsen, and thus not kept as a secret.
 builder.Services.AddSingleton(
@@ -31,30 +32,14 @@ builder.Services.AddSingleton(
     )
 );
 
-builder.Services.AddSingleton(
-    provider => 
-        new XmlDeserializer(
-            1046, 
-            provider.GetRequiredService<ILogger<XmlDeserializer>>()
-        )
-);
-builder.Services.AddSingleton<RegisterFileDownloader>(
-    provider => 
-        new RegisterFileDownloader(
-            provider.GetRequiredService<FtpClient>(), 
-            provider.GetRequiredService<ILogger<RegisterFileDownloader>>()
-        )
-);
+builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
+builder.Services.AddScoped<RegisterFileDownloader>();
+builder.Services.AddScoped<XmlDeserializer>();
+builder.Services.AddScoped<VehicleIndexer>();
+builder.Services.AddLogging();
 
-builder.Services.AddHostedService<WeeklyIndexingService>(
-    provider =>
-        new WeeklyIndexingService(
-            provider,
-            provider.GetRequiredService<ILogger<WeeklyIndexingService>>(),
-            DateTimeOffset.Now, 
-            7
-        )
-);
+builder.Services.AddHostedService<WeeklyIndexingService>();
+
 
 builder.Logging.SetMinimumLevel(LogLevel.Error);
 IHost host = builder.Build();
