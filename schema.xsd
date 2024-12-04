@@ -1,0 +1,611 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://skat.dk/dmr/2007/05/31/" xmlns:ns="http://skat.dk/dmr/2007/05/31/">
+  <xs:element name="ESStatistikListeModtag_I">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns:StatistikSamling"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="StatistikSamling">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="ns:Statistik"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Statistik">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns:KoeretoejIdent"/>
+        <xs:element ref="ns:KoeretoejArtNummer"/>
+        <xs:element ref="ns:KoeretoejArtNavn"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejAnvendelseStruktur"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejAnvendelseSamlingStruktur"/>
+        <xs:element minOccurs="0" ref="ns:LeasingGyldigFra"/>
+        <xs:element minOccurs="0" ref="ns:LeasingGyldigTil"/>
+        <xs:element minOccurs="0" ref="ns:RegistreringNummerNummer"/>
+        <xs:sequence minOccurs="0">
+          <xs:element ref="ns:RegistreringNummerRettighedGyldigFra"/>
+          <xs:element ref="ns:RegistreringNummerRettighedGyldigTil"/>
+        </xs:sequence>
+        <xs:element minOccurs="0" ref="ns:RegistreringNummerUdloebDato"/>
+        <xs:element ref="ns:KoeretoejOplysningGrundStruktur"/>
+        <xs:element minOccurs="0" ref="ns:SynResultatStruktur"/>
+        <xs:sequence minOccurs="0">
+          <xs:element ref="ns:KoeretoejRegistreringStatus"/>
+          <xs:element ref="ns:KoeretoejRegistreringStatusDato"/>
+        </xs:sequence>
+        <xs:element minOccurs="0" ref="ns:TilladelseSamling"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KoeretoejArtNummer" type="xs:integer"/>
+  <xs:element name="KoeretoejArtNavn" type="xs:string"/>
+  <xs:element name="KoeretoejAnvendelseSamlingStruktur">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns:KoeretoejAnvendelseSamling"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KoeretoejAnvendelseSamling">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="ns:KoeretoejAnvendelseStruktur"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LeasingGyldigFra" type="xs:date"/>
+  <xs:element name="LeasingGyldigTil" type="xs:date"/>
+  <xs:element name="RegistreringNummerRettighedGyldigFra" type="xs:date"/>
+  <xs:element name="RegistreringNummerRettighedGyldigTil" type="xs:date"/>
+  <xs:element name="RegistreringNummerUdloebDato" type="xs:date"/>
+  <xs:element name="KoeretoejOplysningGrundStruktur">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns:KoeretoejOplysningOprettetUdFra"/>
+        <xs:element ref="ns:KoeretoejOplysningStatus"/>
+        <xs:element ref="ns:KoeretoejOplysningStatusDato"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningFoersteRegistreringDato"/>
+        <xs:element ref="ns:KoeretoejOplysningStelNummer"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningStelNummerAnbringelse"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningModelAar"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningTotalVaegt"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningEgenVaegt"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningKoereklarVaegtMinimum"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningKoereklarVaegtMaksimum"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningTekniskTotalVaegt"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningVogntogVaegt"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningAkselAntal"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningStoersteAkselTryk"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningSkatteAkselAntal"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningSkatteAkselTryk"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningPassagerAntal"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningSiddepladserMinimum"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningSiddepladserMaksimum"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningStaapladserMinimum"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningStaapladserMaksimum"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningTilkoblingMulighed"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningTilkoblingsvaegtUdenBremser"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningTilkoblingsvaegtMedBremser"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningPaahaengVognTotalVaegt"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningSkammelBelastning"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningSaettevognTilladtAkselTryk"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningMaksimumHastighed"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningFaelgDaek"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningNCAPTest"/>
+        <xs:choice minOccurs="0">
+          <xs:element ref="ns:KoeretoejOplysningTilkobletSidevognStelnr"/>
+          <xs:element ref="ns:KoeretoejOplysningVVaerdiLuft"/>
+        </xs:choice>
+        <xs:choice minOccurs="0">
+          <xs:element ref="ns:KoeretoejOplysningOevrigtUdstyr"/>
+          <xs:element ref="ns:KoeretoejOplysningVVaerdiMekanisk"/>
+        </xs:choice>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningKoeretoejstand"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysning30PctVarevogn"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningTraekkendeAksler"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningEgnetTilTaxi"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningAkselAfstand"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningSporviddenForrest"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningSporviddenBagest"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningTypeAnmeldelseNummer"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningTypeGodkendelseNummer"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningEUVariant"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningEUVersion"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningKommentar"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningTypegodkendtKategori"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningAntalGear"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningAntalDoere"/>
+        <xs:choice minOccurs="0">
+          <xs:element ref="ns:KoeretoejOplysningFabrikant"/>
+          <xs:element ref="ns:KoeretoejOplysningIbrugtagningDato"/>
+        </xs:choice>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningTrafikskade"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningVeteranKoeretoejOriginal"/>
+        <xs:element ref="ns:KoeretoejBetegnelseStruktur"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejFarveStruktur"/>
+        <xs:element minOccurs="0" ref="ns:KarrosseriTypeStruktur"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejSupplerendeKarrosseriSamlingStruktur"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejNormStruktur"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejMiljoeOplysningStruktur"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejMotorStruktur"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejUdstyrSamlingStruktur"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejBlokeringAarsagListeStruktur"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KoeretoejOplysningOprettetUdFra" type="xs:NCName"/>
+  <xs:element name="KoeretoejOplysningStatus" type="xs:NCName"/>
+  <xs:element name="KoeretoejOplysningStatusDato" type="xs:dateTime"/>
+  <xs:element name="KoeretoejOplysningFoersteRegistreringDato" type="xs:date"/>
+  <xs:element name="KoeretoejOplysningStelNummerAnbringelse" type="xs:string"/>
+  <xs:element name="KoeretoejOplysningModelAar" type="xs:integer"/>
+  <xs:element name="KoeretoejOplysningTotalVaegt" type="xs:integer"/>
+  <xs:element name="KoeretoejOplysningEgenVaegt" type="xs:integer"/>
+  <xs:element name="KoeretoejOplysningKoereklarVaegtMinimum" type="xs:integer"/>
+  <xs:element name="KoeretoejOplysningKoereklarVaegtMaksimum" type="xs:integer"/>
+  <xs:element name="KoeretoejOplysningTekniskTotalVaegt" type="xs:integer"/>
+  <xs:element name="KoeretoejOplysningVogntogVaegt" type="xs:integer"/>
+  <xs:element name="KoeretoejOplysningAkselAntal" type="xs:integer"/>
+  <xs:element name="KoeretoejOplysningStoersteAkselTryk" type="xs:integer"/>
+  <xs:element name="KoeretoejOplysningSkatteAkselAntal" type="xs:integer"/>
+  <xs:element name="KoeretoejOplysningSkatteAkselTryk" type="xs:integer"/>
+  <xs:element name="KoeretoejOplysningPassagerAntal" type="xs:integer"/>
+  <xs:element name="KoeretoejOplysningSiddepladserMinimum" type="xs:integer"/>
+  <xs:element name="KoeretoejOplysningSiddepladserMaksimum" type="xs:integer"/>
+  <xs:element name="KoeretoejOplysningStaapladserMinimum" type="xs:integer"/>
+  <xs:element name="KoeretoejOplysningStaapladserMaksimum" type="xs:integer"/>
+  <xs:element name="KoeretoejOplysningTilkoblingMulighed" type="xs:boolean"/>
+  <xs:element name="KoeretoejOplysningTilkoblingsvaegtUdenBremser" type="xs:integer"/>
+  <xs:element name="KoeretoejOplysningTilkoblingsvaegtMedBremser" type="xs:integer"/>
+  <xs:element name="KoeretoejOplysningPaahaengVognTotalVaegt" type="xs:integer"/>
+  <xs:element name="KoeretoejOplysningSkammelBelastning" type="xs:integer"/>
+  <xs:element name="KoeretoejOplysningSaettevognTilladtAkselTryk" type="xs:integer"/>
+  <xs:element name="KoeretoejOplysningMaksimumHastighed" type="xs:integer"/>
+  <xs:element name="KoeretoejOplysningFaelgDaek" type="xs:string"/>
+  <xs:element name="KoeretoejOplysningNCAPTest" type="xs:boolean"/>
+  <xs:element name="KoeretoejOplysningTilkobletSidevognStelnr" type="xs:string"/>
+  <xs:element name="KoeretoejOplysningVVaerdiLuft" type="xs:decimal"/>
+  <xs:element name="KoeretoejOplysningOevrigtUdstyr" type="xs:string"/>
+  <xs:element name="KoeretoejOplysningVVaerdiMekanisk" type="xs:decimal"/>
+  <xs:element name="KoeretoejOplysningKoeretoejstand" type="xs:NCName"/>
+  <xs:element name="KoeretoejOplysning30PctVarevogn" type="xs:boolean"/>
+  <xs:element name="KoeretoejOplysningTraekkendeAksler" type="xs:string"/>
+  <xs:element name="KoeretoejOplysningEgnetTilTaxi" type="xs:boolean"/>
+  <xs:element name="KoeretoejOplysningAkselAfstand" type="xs:integer"/>
+  <xs:element name="KoeretoejOplysningSporviddenForrest" type="xs:integer"/>
+  <xs:element name="KoeretoejOplysningSporviddenBagest" type="xs:integer"/>
+  <xs:element name="KoeretoejOplysningTypeAnmeldelseNummer" type="xs:string"/>
+  <xs:element name="KoeretoejOplysningTypeGodkendelseNummer" type="xs:string"/>
+  <xs:element name="KoeretoejOplysningEUVariant" type="xs:string"/>
+  <xs:element name="KoeretoejOplysningEUVersion" type="xs:string"/>
+  <xs:element name="KoeretoejOplysningKommentar" type="xs:string"/>
+  <xs:element name="KoeretoejOplysningTypegodkendtKategori" type="xs:string"/>
+  <xs:element name="KoeretoejOplysningAntalGear" type="xs:integer"/>
+  <xs:element name="KoeretoejOplysningAntalDoere" type="xs:integer"/>
+  <xs:element name="KoeretoejOplysningFabrikant" type="xs:string"/>
+  <xs:element name="KoeretoejOplysningIbrugtagningDato" type="xs:date"/>
+  <xs:element name="KoeretoejOplysningTrafikskade" type="xs:boolean"/>
+  <xs:element name="KoeretoejOplysningVeteranKoeretoejOriginal" type="xs:boolean"/>
+  <xs:element name="KoeretoejBetegnelseStruktur">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns:KoeretoejMaerkeTypeNummer"/>
+        <xs:element ref="ns:KoeretoejMaerkeTypeNavn"/>
+        <xs:element ref="ns:Model"/>
+        <xs:element minOccurs="0" ref="ns:Variant"/>
+        <xs:element minOccurs="0" ref="ns:Type"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KoeretoejMaerkeTypeNummer" type="xs:integer"/>
+  <xs:element name="KoeretoejMaerkeTypeNavn" type="xs:string"/>
+  <xs:element name="Model">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns:KoeretoejModelTypeNummer"/>
+        <xs:element ref="ns:KoeretoejModelTypeNavn"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KoeretoejModelTypeNummer" type="xs:integer"/>
+  <xs:element name="KoeretoejModelTypeNavn" type="xs:string"/>
+  <xs:element name="Variant">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns:KoeretoejVariantTypeNummer"/>
+        <xs:element ref="ns:KoeretoejVariantTypeNavn"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KoeretoejVariantTypeNummer" type="xs:integer"/>
+  <xs:element name="KoeretoejVariantTypeNavn" type="xs:string"/>
+  <xs:element name="Type">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns:KoeretoejTypeTypeNummer"/>
+        <xs:element ref="ns:KoeretoejTypeTypeNavn"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KoeretoejTypeTypeNummer" type="xs:integer"/>
+  <xs:element name="KoeretoejTypeTypeNavn" type="xs:string"/>
+  <xs:element name="KoeretoejFarveStruktur">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns:FarveTypeStruktur"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FarveTypeStruktur">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns:FarveTypeNummer"/>
+        <xs:element ref="ns:FarveTypeNavn"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FarveTypeNummer" type="xs:integer"/>
+  <xs:element name="FarveTypeNavn" type="xs:string"/>
+  <xs:element name="KarrosseriTypeStruktur">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns:KarrosseriTypeNavn"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KarrosseriTypeNavn" type="xs:string"/>
+  <xs:element name="KoeretoejSupplerendeKarrosseriSamlingStruktur">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns:KoeretoejSupplerendeKarrosseriSamling"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KoeretoejSupplerendeKarrosseriSamling">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="ns:KoeretoejSupplerendeKarrosseriTypeStruktur"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KoeretoejSupplerendeKarrosseriTypeStruktur">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns:SupplerendeKarrosseriTypeNummer"/>
+        <xs:element ref="ns:SupplerendeKarrosseriTypeNavn"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SupplerendeKarrosseriTypeNummer" type="xs:integer"/>
+  <xs:element name="SupplerendeKarrosseriTypeNavn" type="xs:string"/>
+  <xs:element name="KoeretoejNormStruktur">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns:NormTypeStruktur"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NormTypeStruktur">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns:NormTypeNummer"/>
+        <xs:element ref="ns:NormTypeNavn"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NormTypeNummer" type="xs:integer"/>
+  <xs:element name="NormTypeNavn" type="xs:string"/>
+  <xs:element name="KoeretoejMiljoeOplysningStruktur">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="ns:KoeretoejMiljoeOplysningEmissionCO"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejMiljoeOplysningEmissionHCPlusNOX"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejMiljoeOplysningEmissionNOX"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejMiljoeOplysningPartikler"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejMiljoeOplysningRoegtaethed"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejMiljoeOplysningPartikelFilter"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejMiljoeOplysningRoegtaethedOmdrejningstal"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejMiljoeOplysningSpecifikCO2Emission"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejMiljoeOplysningNyttelastvaerdi"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejMiljoeOplysningTungtNulEmissionKoeretoej"/>
+        <xs:element minOccurs="0" ref="ns:CO2EmissionKlasseStruktur"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejMiljoeOplysningCO2EmissionKlasseOmklassificeringDato"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KoeretoejMiljoeOplysningEmissionCO" type="xs:double"/>
+  <xs:element name="KoeretoejMiljoeOplysningEmissionHCPlusNOX" type="xs:decimal"/>
+  <xs:element name="KoeretoejMiljoeOplysningEmissionNOX" type="xs:double"/>
+  <xs:element name="KoeretoejMiljoeOplysningPartikler" type="xs:double"/>
+  <xs:element name="KoeretoejMiljoeOplysningRoegtaethed" type="xs:decimal"/>
+  <xs:element name="KoeretoejMiljoeOplysningPartikelFilter" type="xs:boolean"/>
+  <xs:element name="KoeretoejMiljoeOplysningRoegtaethedOmdrejningstal" type="xs:integer"/>
+  <xs:element name="KoeretoejMiljoeOplysningSpecifikCO2Emission" type="xs:decimal"/>
+  <xs:element name="KoeretoejMiljoeOplysningNyttelastvaerdi" type="xs:decimal"/>
+  <xs:element name="KoeretoejMiljoeOplysningTungtNulEmissionKoeretoej" type="xs:boolean"/>
+  <xs:element name="CO2EmissionKlasseStruktur">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns:CO2EmissionKlasseNummer"/>
+        <xs:element ref="ns:CO2EmissionKlasseNavn"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CO2EmissionKlasseNummer" type="xs:integer"/>
+  <xs:element name="CO2EmissionKlasseNavn" type="xs:integer"/>
+  <xs:element name="KoeretoejMiljoeOplysningCO2EmissionKlasseOmklassificeringDato" type="xs:date"/>
+  <xs:element name="KoeretoejMotorStruktur">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="ns:KoeretoejMotorCylinderAntal"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejMotorSlagVolumen"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejMotorSlagVolumenIkkeTilgaengelig"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejMotorStoersteEffekt"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejMotorStoersteEffektIkkeTilgaengelig"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejMotorKilometerstand"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejMotorKilometerstandDokumentation"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejMotorKilometerstandIkkeTilgaengelig"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejMotorMaerkning"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejMotorStandStoej"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejMotorKoerselStoej"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejMotorStandStoejOmdrejningstal"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejMotorInnovativTeknik"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejMotorInnovativTeknikAntal"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejDrivmiddelSamlingStruktur"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KoeretoejMotorCylinderAntal" type="xs:integer"/>
+  <xs:element name="KoeretoejMotorSlagVolumen" type="xs:double"/>
+  <xs:element name="KoeretoejMotorSlagVolumenIkkeTilgaengelig" type="xs:boolean"/>
+  <xs:element name="KoeretoejMotorStoersteEffekt" type="xs:decimal"/>
+  <xs:element name="KoeretoejMotorStoersteEffektIkkeTilgaengelig" type="xs:boolean"/>
+  <xs:element name="KoeretoejMotorKilometerstandDokumentation" type="xs:boolean"/>
+  <xs:element name="KoeretoejMotorKilometerstandIkkeTilgaengelig" type="xs:boolean"/>
+  <xs:element name="KoeretoejMotorMaerkning" type="xs:string"/>
+  <xs:element name="KoeretoejMotorStandStoej" type="xs:decimal"/>
+  <xs:element name="KoeretoejMotorKoerselStoej" type="xs:decimal"/>
+  <xs:element name="KoeretoejMotorStandStoejOmdrejningstal" type="xs:integer"/>
+  <xs:element name="KoeretoejMotorInnovativTeknik" type="xs:boolean"/>
+  <xs:element name="KoeretoejMotorInnovativTeknikAntal" type="xs:double"/>
+  <xs:element name="KoeretoejDrivmiddelSamlingStruktur">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns:KoeretoejDrivmiddelSamling"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KoeretoejDrivmiddelSamling">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="ns:DrivmiddelStruktur"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DrivmiddelStruktur">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="ns:MaaleNormStruktur"/>
+        <xs:element ref="ns:DrivkraftTypeStruktur"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejBraendstofStruktur"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejElforbrugStruktur"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejMotorBraendselscelle"/>
+        <xs:element ref="ns:KoeretoejMotorDrivmiddelPrimaer"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MaaleNormStruktur">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns:KoeretoejMotorMaaleNormTypeNummer"/>
+        <xs:element ref="ns:KoeretoejMotorMaaleNormTypeNavn"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KoeretoejMotorMaaleNormTypeNummer" type="xs:integer"/>
+  <xs:element name="KoeretoejMotorMaaleNormTypeNavn" type="xs:string"/>
+  <xs:element name="DrivkraftTypeStruktur">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns:DrivkraftTypeNummer"/>
+        <xs:element ref="ns:DrivkraftTypeNavn"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DrivkraftTypeNummer" type="xs:integer"/>
+  <xs:element name="DrivkraftTypeNavn" type="xs:NCName"/>
+  <xs:element name="KoeretoejBraendstofStruktur">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="ns:KoeretoejMotorKmPerLiter"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejMiljoeOplysningCO2Udslip"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KoeretoejMotorKmPerLiter" type="xs:decimal"/>
+  <xs:element name="KoeretoejMiljoeOplysningCO2Udslip" type="xs:decimal"/>
+  <xs:element name="KoeretoejElforbrugStruktur">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns:KoeretoejMotorElektriskForbrug"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KoeretoejMotorElektriskForbrug" type="xs:decimal"/>
+  <xs:element name="KoeretoejMotorBraendselscelle" type="xs:boolean"/>
+  <xs:element name="KoeretoejMotorDrivmiddelPrimaer" type="xs:boolean"/>
+  <xs:element name="KoeretoejUdstyrSamlingStruktur">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns:KoeretoejUdstyrSamling"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KoeretoejUdstyrSamling">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="ns:KoeretoejUdstyrStruktur"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KoeretoejUdstyrStruktur">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns:KoeretoejUdstyrAntal"/>
+        <xs:element ref="ns:KoeretoejUdstyrTypeStruktur"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KoeretoejUdstyrAntal" type="xs:integer"/>
+  <xs:element name="KoeretoejUdstyrTypeStruktur">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns:KoeretoejUdstyrTypeNummer"/>
+        <xs:element ref="ns:KoeretoejUdstyrTypeNavn"/>
+        <xs:element ref="ns:KoeretoejUdstyrTypeVisesVedSyn"/>
+        <xs:element ref="ns:KoeretoejUdstyrTypeVisesVedForespoergsel"/>
+        <xs:element ref="ns:KoeretoejUdstyrTypeVisesVedStandardOprettelse"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KoeretoejUdstyrTypeNummer" type="xs:integer"/>
+  <xs:element name="KoeretoejUdstyrTypeNavn" type="xs:string"/>
+  <xs:element name="KoeretoejUdstyrTypeVisesVedSyn" type="xs:boolean"/>
+  <xs:element name="KoeretoejUdstyrTypeVisesVedForespoergsel" type="xs:boolean"/>
+  <xs:element name="KoeretoejUdstyrTypeVisesVedStandardOprettelse" type="xs:boolean"/>
+  <xs:element name="KoeretoejBlokeringAarsagListeStruktur">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns:KoeretoejBlokeringAarsagListe"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KoeretoejBlokeringAarsagListe">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="ns:KoeretoejBlokeringAarsag"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KoeretoejBlokeringAarsag">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns:KoeretoejBlokeringAarsagTypeNummer"/>
+        <xs:element ref="ns:KoeretoejBlokeringAarsagTypeNavn"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KoeretoejBlokeringAarsagTypeNummer" type="xs:integer"/>
+  <xs:element name="KoeretoejBlokeringAarsagTypeNavn" type="xs:string"/>
+  <xs:element name="SynResultatStruktur">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns:SynResultatSynsType"/>
+        <xs:element ref="ns:SynResultatSynsDato"/>
+        <xs:element ref="ns:SynResultatSynsResultat"/>
+        <xs:element ref="ns:SynResultatSynStatus"/>
+        <xs:element ref="ns:SynResultatSynStatusDato"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejMotorKilometerstand"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SynResultatSynsType" type="xs:NCName"/>
+  <xs:element name="SynResultatSynsDato" type="xs:date"/>
+  <xs:element name="SynResultatSynsResultat" type="xs:NCName"/>
+  <xs:element name="SynResultatSynStatus" type="xs:NCName"/>
+  <xs:element name="SynResultatSynStatusDato" type="xs:date"/>
+  <xs:element name="KoeretoejRegistreringStatus" type="xs:NCName"/>
+  <xs:element name="KoeretoejRegistreringStatusDato" type="xs:dateTime"/>
+  <xs:element name="TilladelseSamling">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="ns:Tilladelse"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Tilladelse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns:TilladelseStruktur"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TilladelseStruktur">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns:TilladelseGyldigFra"/>
+        <xs:element minOccurs="0" ref="ns:TilladelseKommentar"/>
+        <xs:element ref="ns:TilladelseTypeStruktur"/>
+        <xs:element minOccurs="0" ref="ns:TilladelseTypeDetaljeValg"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TilladelseGyldigFra" type="xs:dateTime"/>
+  <xs:element name="TilladelseKommentar" type="xs:string"/>
+  <xs:element name="TilladelseTypeStruktur">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns:TilladelseTypeNummer"/>
+        <xs:element ref="ns:TilladelseTypeNavn"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TilladelseTypeNummer" type="xs:integer"/>
+  <xs:element name="TilladelseTypeNavn" type="xs:string"/>
+  <xs:element name="TilladelseTypeDetaljeValg">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="ns:FastTilkobling"/>
+        <xs:element ref="ns:VariabelKombination"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FastTilkobling">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="ns:KoeretoejIdent"/>
+        <xs:element ref="ns:KoeretoejOplysningStelNummer"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="VariabelKombination">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns:KoeretoejGenerelIdentifikatorStruktur"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KoeretoejGenerelIdentifikatorStruktur">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns:KoeretoejGenerelIdentifikatorValg"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KoeretoejGenerelIdentifikatorValg">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="ns:KoeretoejOplysningStelNummer"/>
+        <xs:element minOccurs="0" ref="ns:RegistreringNummerNummer"/>
+        <xs:element minOccurs="0" ref="ns:KoeretoejIdent"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KoeretoejIdent" type="xs:integer"/>
+  <xs:element name="KoeretoejAnvendelseStruktur">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns:KoeretoejAnvendelseNummer"/>
+        <xs:element ref="ns:KoeretoejAnvendelseNavn"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KoeretoejAnvendelseNummer" type="xs:integer"/>
+  <xs:element name="KoeretoejAnvendelseNavn" type="xs:string"/>
+  <xs:element name="RegistreringNummerNummer" type="xs:NMTOKEN"/>
+  <xs:element name="KoeretoejOplysningStelNummer" type="xs:NMTOKEN"/>
+  <xs:element name="KoeretoejMotorKilometerstand" type="xs:integer"/>
+</xs:schema>

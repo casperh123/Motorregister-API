@@ -62,23 +62,22 @@ namespace MotorRegister.Indexer
 
                 //(string zipFilePath, string fileName) = await registerFileDownloader.DownloadAndSaveRegisterFileAsync(Directory.GetCurrentDirectory());
 
-                List<Vehicle> vehicleBatch = [];
+                List<Statistik> vehicleBatch = [];
 
                 string zipFilePath = "../ESStatistikListeModtag-20240804-201652.zip";
                 string fileName = "ESStatistikListeModtag.xml";
                 
-                foreach (XmlVehicle xlmVehicle in xmlDeserializer.DeserializeMotorRegister(zipFilePath, fileName))
+                foreach (Statistik xlmVehicle in xmlDeserializer.DeserializeMotorRegister(zipFilePath, fileName))
                 {
-                    Vehicle vehicle = new Vehicle(xlmVehicle);
                     if (vehicleBatch.Count < 10000)
                     {
-                        vehicleBatch.Add(vehicle);
+                        vehicleBatch.Add(xlmVehicle);
                         continue;
                     }
 
                     await vehicleRepository.AddVehiclesAsync(vehicleBatch);
                     vehicleBatch.Clear();
-                    vehicleBatch.Add(vehicle);
+                    vehicleBatch.Add(xlmVehicle);
                 }
 
                 if (vehicleBatch.Count > 0)

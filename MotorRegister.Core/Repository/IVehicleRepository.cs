@@ -5,13 +5,13 @@ namespace MotorRegister.Core.Repository;
 
 public interface IVehicleRepository
 {
-    public Task SaveVehicle(Vehicle xmlXmlVehicle);
+    public Task SaveVehicle(Statistik xmlXmlVehicle);
 
-    public Task<Vehicle?> GetVehicleByLicensePlate(string registrationNumber);
+    public Task<Statistik?> GetVehicleByLicensePlate(string registrationNumber);
 
-    public Task AddVehiclesAsync(List<Vehicle> vehicles);
+    public Task AddVehiclesAsync(List<Statistik> vehicles);
 
-    public Task<List<Vehicle>> GetVehicles(int pageNumber, int page);
+    public Task<List<Statistik>> GetVehicles(int pageNumber, int page);
 
     public Task<long> GetVehicleCountAsync();
 }

@@ -3,6 +3,7 @@ using System.IO.Compression;
 using System.Xml;
 using System.Xml.Serialization;
 using Microsoft.Extensions.Logging;
+using MotorRegister.Core.Entities;
 using MotorRegister.Core.XmlModels;
 
 namespace MotorRegister.Infrastrucutre.XmlDeserialization
@@ -18,7 +19,7 @@ namespace MotorRegister.Infrastrucutre.XmlDeserialization
             _logger = logger;
         }
 
-        public IEnumerable<XmlVehicle> DeserializeMotorRegister(string zipFilePath, string fileName)
+        public IEnumerable<Statistik> DeserializeMotorRegister(string zipFilePath, string fileName)
         {
             using ZipArchive zipArchive = ZipFile.OpenRead(zipFilePath);
             ZipArchiveEntry? xmlFileEntry = zipArchive.GetEntry(fileName);
@@ -29,13 +30,13 @@ namespace MotorRegister.Infrastrucutre.XmlDeserialization
             }
 
             using Stream xmlFileStream = xmlFileEntry.Open();
-            foreach (var vehicle in ProcessXmlFile(xmlFileStream))
+            foreach (Statistik vehicle in ProcessXmlFile(xmlFileStream))
             {
                 yield return vehicle;
             }
         }
 
-        private IEnumerable<XmlVehicle> ProcessXmlFile(Stream xmlFileStream)
+        private IEnumerable<Statistik> ProcessXmlFile(Stream xmlFileStream)
         {
             BufferedStream bufferedStream = new BufferedStream(xmlFileStream, _bufferSize);
             XmlReaderSettings settings = new XmlReaderSettings
@@ -56,7 +57,7 @@ namespace MotorRegister.Infrastrucutre.XmlDeserialization
                 if (reader.NodeType == XmlNodeType.Element && reader.Name == "ns:Statistik")
                 {
                     
-                    XmlVehicle xmlVehicle = xmlSerializer.Deserialize(reader) as XmlVehicle;
+                    Statistik xmlVehicle = xmlSerializer.Deserialize(reader) as Statistik;
                     if (xmlVehicle != null)
                     {
                         yield return xmlVehicle;

@@ -6,7 +6,7 @@ namespace MotorRegister.Infrastrucutre.Database;
 
 public sealed class MotorRegisterDbContext : DbContext
 {
-    public DbSet<Vehicle> Vehicles { get; set; }
+    public DbSet<Ko> Vehicles { get; set; }
     public DbSet<InspectionResult> InspectionResults { get; set; }
 
     public MotorRegisterDbContext(DbContextOptions<MotorRegisterDbContext> contextOptions) : base(contextOptions)
